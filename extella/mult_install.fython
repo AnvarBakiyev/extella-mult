@@ -4,7 +4,7 @@ include("import os", [])
 def mult_install(kind: str = "2d", bundle_url: str = "", bundle_sha256: str = "", blender_path: str = "", download_blender: bool = True) -> dict:
     """Installs Extella Mult on this device. kind=2d: drawn films, no Blender. kind=3d: also the CC0 model library and Blender (downloaded from blender.org if missing)."""
     with_3d = str(kind) == "3d"
-    REL = "https://github.com/AnvarBakiyev/extella-mult/releases/download/v1/"
+    REL = "https://github.com/AnvarBakiyev/extella-mult/releases/download/v2/"
     if not bundle_url:
         bundle_url = REL + ("extella-mult-3d.tar.gz" if with_3d else "extella-mult-2d.tar.gz")
     import os, sys, json, subprocess, tarfile, tempfile, hashlib, shutil, platform, urllib.request, glob
@@ -165,7 +165,7 @@ def scene(code = "", filtered_source_code = "", func_name = "", **extra):
     # 5. self-test: check a 2-second 2d film
     test = os.path.join(home, "out", "selftest.scene")
     os.makedirs(os.path.dirname(test), exist_ok=True)
-    open(test, "w").write('film fps=24 size=640x268\nscene 0-2s: night_sky stars moon rooftop\nfox stand at 0.5 0-2s\ntext "Extella" font at 0.5,0.3 size=0.15 color=#fff4d8 0-1.5s hold=1\n')
+    open(test, "w").write('film style=felt fps=24 size=640x268\nscene 0-2s: sky hills(top=0.6) round_tree(x=0.8,y=0.66)\ngirl wave at 0.4 0-2s y=0.95\ncat sit at 0.55 0-2s y=0.96\ntext "Extella" font at 0.5,0.25 size=0.12 color=#c5583e 0-1.5s hold=1\n')
     r = subprocess.run(env=env, args=[py, "-m", "handler.main", test, "--check"], cwd=home, capture_output=True, text=True, timeout=120)
     ok = r.returncode == 0
     steps.append("self-test " + ("ok" if ok else "failed: " + r.stderr[-300:]))

@@ -12,6 +12,10 @@ def _vocab(style):
     """(elements, {actor: actions}) of one visual style; a film never mixes styles."""
     if style in ('3d', 'toon'):
         return ELEMENTS3D, ACTORS3D
+    if style == 'felt':
+        from .felt_elements import FE
+        from .felt_actors import FA
+        return set(FE), {n: a for n, (_, a) in FA.items()}
     return set(ELEMENTS), {n: a for n, (_, a) in ACTORS.items()}
 
 
@@ -32,6 +36,7 @@ class Program:
         self.sfx = []
         self.length = 0.0
         self.style = '2d'
+        self.look = ''
 
 
 def _need_time(st, what):
@@ -68,8 +73,11 @@ def validate(stmts):
         prog.fps = int(f.params.get('fps', prog.fps))
         prog.size = tuple(f.params.get('size', prog.size))
         prog.style = str(f.params.get('style', '2d'))
-        if prog.style not in ('2d', '3d', 'toon'):
-            raise SceneError(f"line {f.line}: style must be 2d, 3d or toon")
+        prog.look = str(f.params.get('look', ''))
+        if prog.look not in ('', 'flat', 'felt'):
+            raise SceneError(f"line {f.line}: look must be flat or felt")
+        if prog.style not in ('2d', '3d', 'toon', 'felt'):
+            raise SceneError(f"line {f.line}: style must be felt, 2d, 3d or toon")
         if not (8 <= prog.fps <= 60):
             raise SceneError(f"line {f.line}: fps must be between 8 and 60")
     scenes = sorted([s for s in stmts if s.kind == 'scene'], key=lambda s: s.t0)
@@ -118,8 +126,12 @@ def validate(stmts):
                 raise SceneError(f"line {st.line}: {name} cannot '{st.words[1]}'; it can: {', '.join(actions)}")
             _need_time(st, f"{name} {st.words[1]}")
             _check_pos(st, st.frm); _check_pos(st, st.to); _check_pos(st, st.pos)
-            if (st.frm is None) != (st.to is None):
-                raise SceneError(f"line {st.line}: 'from' and 'to' go together (from left to center)")
+            if (st.frm is None) != (st.to is None):  # one end given: come in from, or go out to, the nearer side
+                from .lib3d import _x
+                if st.frm is None:
+                    st.frm = 'offleft' if _x(st.to) >= 0.5 else 'offright'
+                else:
+                    st.to = 'offright' if _x(st.frm) <= 0.5 else 'offleft'
             st.scene = _scene_for(prog, st, f"{name} {st.words[1]}")
         elif st.kind == 'camera':
             if not st.words or st.words[0] not in CAMERA_MOVES:
@@ -135,8 +147,11 @@ def validate(stmts):
         elif st.kind == 'effect':
             if prog.style in ('3d', 'toon'):
                 raise SceneError(f"line {st.line}: effects are drawn 2d and cannot be used in a style=3d or style=toon film; use actors, text, fade, camera, sfx and music")
-            if not st.words or st.words[0] not in EFFECTS:
-                raise SceneError(f"line {st.line}: unknown effect '{st.words[0] if st.words else ''}'; known effects: {', '.join(sorted(k for k in EFFECTS if k != 'handwrite'))}")
+            effs = EFFECTS
+            if prog.style == 'felt':
+                from .felt_effects import FX as effs
+            if not st.words or st.words[0] not in effs:
+                raise SceneError(f"line {st.line}: unknown effect '{st.words[0] if st.words else ''}'; known effects: {', '.join(sorted(k for k in effs if k not in ('handwrite', 'font_text')))}")
             _need_time(st, f"effect {st.words[0]}")
             st.scene = _scene_for(prog, st, f"effect {st.words[0]}")
         elif st.kind == 'text':

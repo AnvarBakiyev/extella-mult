@@ -25,7 +25,7 @@ scn.render.engine = 'BLENDER_EEVEE_NEXT'
 if TOON:  # cartoon look: banded light, dark outlines (Freestyle)
     scn.render.use_freestyle = True
     scn.render.line_thickness_mode = 'ABSOLUTE'
-    scn.render.line_thickness = 1.6
+    scn.render.line_thickness = 0.9
     ls = scn.view_layers[0].freestyle_settings.linesets[0] if scn.view_layers[0].freestyle_settings.linesets else scn.view_layers[0].freestyle_settings.linesets.new('l')
     ls.select_by_visibility, ls.select_silhouette, ls.select_border, ls.select_crease = True, True, True, False
     ls.linestyle.color = (0.1, 0.07, 0.05)
@@ -273,6 +273,12 @@ if TOON:
         if m.use_nodes:
             toonify(m)
     scn.view_settings.view_transform, scn.view_settings.look = 'Standard', 'None'
+    flat = {'day': (0.62, 0.82, 0.97), 'dawn': (0.99, 0.80, 0.62), 'sunset': (0.98, 0.66, 0.50), 'night': (0.10, 0.12, 0.30)}[sky]
+    for n in list(nt.nodes):
+        if n.type == 'TEX_SKY':
+            nt.nodes.remove(n)
+    bg.inputs[0].default_value = (*flat, 1)
+    bg.inputs[1].default_value = 1.0
 scn.frame_start, scn.frame_end = 1, frame(plan['t1']) - 1
 for f in range(scn.frame_start, scn.frame_end + 1):
     scn.frame_set(f)

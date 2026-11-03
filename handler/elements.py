@@ -457,3 +457,4 @@ def plant(ctx, t, tl, p):
     for i in range(7):
         a = -1.9 + i * 0.6
         L.curve([(0, 0), (math.cos(a) * 0.6, -0.5), (math.cos(a) * 1.1, -0.9 - 0.15 * (i % 2))], '#4f8a4a', 0.1)
+

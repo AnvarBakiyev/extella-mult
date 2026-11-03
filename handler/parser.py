@@ -53,6 +53,24 @@ def _pos(tok, line):
     raise SceneError(f"line {line}: '{tok}' is not a position (use a name like left/center/right or x,y)")
 
 
+def _elements(joined, n):
+    """Elements may contain spaces inside parentheses: split on top-level spaces."""
+    out = []
+    for el in _split_top(joined):
+        m2 = ELEMENT.match(el)
+        if not m2:
+            raise SceneError(f"line {n}: '{el}' is not an element name (letters, digits, underscore, optional (k=v,...))")
+        params = {}
+        if m2.group(2):
+            for kv in m2.group(2).split(','):
+                if '=' not in kv:
+                    raise SceneError(f"line {n}: element parameter '{kv}' must be key=value")
+                k, v = kv.split('=', 1)
+                params[k.strip()] = _value(v.strip())
+        out.append((m2.group(1), params))
+    return out
+
+
 def parse(text):
     stmts = []
     for n, raw in enumerate(text.splitlines(), 1):
@@ -75,21 +93,13 @@ def parse(text):
             rest = toks[2:]
             if rest and rest[0] == ':':
                 rest = rest[1:]
-            # elements may contain spaces inside parentheses: re-join and split on top-level spaces
-            joined = ' '.join(rest)
-            for el in _split_top(joined):
-                m2 = ELEMENT.match(el)
-                if not m2:
-                    raise SceneError(f"line {n}: '{el}' is not an element name (letters, digits, underscore, optional (k=v,...))")
-                params = {}
-                if m2.group(2):
-                    for kv in m2.group(2).split(','):
-                        if '=' not in kv:
-                            raise SceneError(f"line {n}: element parameter '{kv}' must be key=value")
-                        k, v = kv.split('=', 1)
-                        params[k.strip()] = _value(v.strip())
-                st.elements.append((m2.group(1), params))
+            st.elements.extend(_elements(' '.join(rest), n))
             stmts.append(st)
+            continue
+        # a line with no time on it, right under a scene, adds elements to that scene: 'lamp(x=0.2,y=0.97)'
+        if not re.search(r'\d(\.\d+)?s\b', line) and head not in ('film', 'music') and stmts and any(x.kind == 'scene' for x in stmts):
+            last = [x for x in stmts if x.kind == 'scene'][-1]
+            last.elements.extend(_elements(line, n))
             continue
         kind = head if head in ('film', 'music', 'camera', 'effect', 'text', 'fade', 'sfx') else 'actor'
         st = Stmt(kind, n, raw)

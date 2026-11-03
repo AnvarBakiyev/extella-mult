@@ -1,80 +1,72 @@
-# SCENE — a small language for animated shorts
-
-One statement per line. `#` starts a comment (at line start or after a space). Times are seconds: `2-6s` is a range, `at 12s` a moment. Positions are `x,y` fractions of the frame (0,0 = top-left) or names: `offleft left center right offright`. Parameters are `key=value` (`0.5`, `0.3,0.7`, `#ffd890`, `1920x804`, words).
-
-Run: `python -m handler.main film.scene` (renders `film.mp4`), `--check` only validates, `--preview` renders a small silent preview, `--frames 3,10 --dir stills` dumps stills.
-
-## Statements
-
-| line | meaning |
+# SCENE, felt style
+A film is a text program, one statement per line. The first line picks the look: `film title="..." style=felt fps=24 size=1920x804`. Every element, character part and effect is drawn as a felt cut-out: a soft rounded edge, a fibre texture and a shadow on what lies beneath.
+```
+film title="Дома лучше всего" style=felt fps=24 size=1920x804
+music mood=cozy key=G tempo=100
+scene 0-6s: sky(time=night) hills(top=0.62) forest(base=0.66)
+grandpa walk from offleft to 0.4 0-4s y=0.95 holds=lantern
+fox jump at 0.55 4-6s y=0.96 facing=-1
+text "Дома лучше всего" font at 0.5,0.2 size=0.11 color=#f5d742 4-6s hold=1
+```
+Scenes touch (`0-6s`, `6-12s` ...). Elements go back to front on the scene line or on their own lines under it; the renderer puts them in depth order (sky, far, ground, props). Positions are 0..1 of the frame, (0,0) is the top-left. A night sky dims the whole scene.
+## Characters
+People: `girl`, `boy`, `mom`, `dad`, `granny`, `grandpa`. Actions: stand, walk, run, wave, jump, sit, dance, look_up.
+Animals: `cat`, `fox`, `dog`, `bunny`, `bear`. Actions: stand, walk, run, jump, sit, look_up. `bird`: fly, stand.
+`girl walk from offleft to 0.45 0-5s y=0.95`, `dog sit at 0.3 2-8s y=0.96 facing=-1`. Params: `y` (feet line), `size`, `facing` (1 or -1), `color`, `hair`, `holds=lantern|balloon|flower|book|gift|umbrella`. One end of a move is enough: `walk to 0.4` comes in from the nearer side. A character does one action at a time.
+## Elements
+| name | what it is |
 |---|---|
-| `film title="Fable" fps=24 size=1920x804` | optional header |
-| `music mood=wonder key=D tempo=72 [from 31s]` | score section; moods: `wonder dark bright tense cozy calm`; keys `C D E F G A B Bb Eb Ab` |
-| `scene 0-7s: night_sky moon(x=0.13,y=0.2) cloud_sea(palette=night) island tower` | a shot: background elements in back-to-front order, each with optional `(k=v,...)`. Scenes must touch (no gaps, no overlaps) and start at 0s |
-| `fox walk from offleft to center 7.5-12s size=0.12 y=0.86` | actor action inside one scene. `from .. to ..` moves (facing follows direction), `at pos` holds. `facing=-1` flips |
-| `camera pan down 0-7s [amount=0.1 zoom=1.15]` | slow pan (`up down left right`) |
-| `camera zoom 1.0-1.12 20-26s [center=x,y]` | push-in or pull-out |
-| `camera shake 36-37s amount=0.01` | decaying shake |
-| `effect paper_vortex 33.5-36.5s center=0.5,0.5 count=700` | animated effect; `hold=1` keeps its end state until the scene ends |
-| `text "Fable" handwritten at 0.49,0.63 size=0.13 54-57.5s [pen=tail anchor=x,y color=#.. hold=1]` | writes the text stroke by stroke; `pen=tail` draws the fox tail to the pen tip |
-| `fade in 0-1.5s` / `fade out 58-60s` | to/from black |
-| `sfx chime at 22s [gain=1 pan=0]` | sound effect |
+| `hills` | Two rolling hills; top = horizon height. |
+| `puff_cloud` | A puffy cloud: x, y, s; drifts slowly with speed. |
+| `round_tree` | A lollipop tree that sways a little: x, y (base), s. |
+| `house_row` | A street of tall colourful houses with windows: base = street line, grey=1 drains the colour. |
+| `felt_sun` | Sun or moon: x, y, r, kind=sun|moon. |
+| `felt_sea` | Sea with gentle waves from top down; a sandy shore if shore=1. |
+| `sky` | Gradient sky: time=day|dawn|sunset|night|space; night and space get stars. |
+| `mountains` | Soft rounded mountains with snowy tops along the horizon: top = highest peak. |
+| `pine_tree` | A felt fir tree: x, y (base), s; snow=1 adds white tips. |
+| `forest` | A row of round and pine trees along base. |
+| `bush` | A round bush, flowers=1 adds blossoms. |
+| `flowers` | A strip of small flowers along y between x0 and x1. |
+| `river` | A winding river from the horizon to the bottom of the frame. |
+| `bridge` | A little arched wooden bridge: x, y (deck), s. |
+| `house` | One house with a door and windows: x (centre), y (ground), s, color, lit=1 for warm night windows. |
+| `school` | A school with a clock and a flag: x, y (ground), s. |
+| `rainbow` | A felt rainbow arc: x, y (centre of the arc's foot), r. |
+| `planet` | A planet with continents and an optional ring: x, y, r, ring=1. |
+| `rocket` | A rocket: x, y (base), s; flying=1 shakes it and adds a flame. |
+| `moon_ground` | Grey cratered ground of the moon from top down. |
+| `snow_ground` | Snowy rolling ground. |
+| `snowman` | A snowman: x, y (ground), s. |
+| `fence` | A wooden fence along y from x0 to x1. |
+| `boat` | A sailing boat rocking on the water: x, y (waterline), s. |
+| `lighthouse` | A striped lighthouse with a turning beam at night: x, y (base), s. |
+| `room` | Inside a home: a wall (color), a wooden floor from floor= down, a window with the sky (time). |
+| `table` | A round-cornered table: x, y (floor), s. |
+| `cake` | A birthday cake with flickering candles: x, y (bottom), s, candles. |
+| `gift` | A wrapped present: x, y (bottom), s, color. |
+| `lamp` | A floor lamp: x, y (floor), s, on=1 glows. |
+| `bed` | A bed with a blanket: x, y (floor), s, color. |
+| `ground` | Flat ground from top down: kind=meadow|sand|road|path. |
 
-Actors, effects and text are drawn after the scene's elements, in program order (later lines on top). Each must lie inside one scene; split a motion at a cut.
+## Effects
+| name | what it is |
+|---|---|
+| `snow` | Felt snowflakes falling over the whole frame. |
+| `rain` | Felt rain drops. |
+| `hearts` | Hearts float up from at=x,y. |
+| `sparkles` | Twinkling four-point stars around at=x,y (radius r). |
+| `leaves` | Autumn leaves drifting down. |
+| `bubbles` | Bubbles rise from at=x,y. |
+| `balloons` | Balloons rise from the bottom over the effect's time. |
+| `butterflies` | Butterflies flutter around at=x,y. |
+| `notes` | Music notes float up from at=x,y. |
 
-## Vocabulary
-
-Elements: `night_sky dawn_sky morning_sky nebula stars moon sun cloud_sea(palette=night|dawn|gold,top,seed) mist island tower grass library(bright,grey,pillar,floor,rows) moonbeam floor_light pedestal_book shelf_closeup lantern parchment rooftop(view=wide|close,horizon)`
-
-Actors: `fox` — `walk run stand sit closeup` (params `size y facing lookup`)
-
-Effects: `paper_bird(start,end,size) dust(count,color) paper_storm(count) paper_vortex(center,count) light_burst(center) flash paper_crane(count,size) sheet_fall(land,w,h) confetti(count) quill`
-
-Sounds: `page_rustle wind whoosh chime sparkle thud paper_burst splash clink purr meow`
-
-Lettering glyphs: `a b c d e f g h i l m n o r s t u y A C F M S T` and space.
-
-## Errors
-
-The handler validates the whole program before rendering and stops with a sentence, e.g. `line 12: unknown element 'moom' (did you mean moon, moonbeam?)`, `line 20: scene 20-26s overlaps scene 18-22s (line 19)`, `line 31: fox cannot 'fly'; it can: walk, run, sit, closeup, stand`, `line 40: sfx at 70s is outside the film (0-60s)`.
-
-## Text in any language
-
-`text "С днём рождения, Мира!" font at 0.5,0.25 size=0.14 color=#fff4d8 9-12s hold=1` writes any text (Latin, Cyrillic, digits, punctuation) in the open Caveat font (OFL), revealed left to right. `handwritten` draws letters stroke by stroke but knows only `a b c d e f g h i l m n o r s t u y A C F M S T`.
-
-## Styles
-
-The first line picks one style for the whole film: `film title="..." style=2d` (default), `style=3d` or `style=toon`. The checker rejects a film that mixes them.
-
-- **2d**: the drawn vocabulary above, rendered with numpy and Pillow. No GPU, no Blender.
-- **3d**: Blender (EEVEE) renders every shot from a catalog of 582 CC0 models by Quaternius, 99 of them animated. Text, fades, music and sound are added on top by the same code as in 2d.
-- **toon**: the 3d library drawn flat with outlines (experimental).
-
-### 3d scenes
-
-`scene 0-6s: day meadow common_tree_1(x=0.2,z=6) pine_2(x=0.7,z=14,s=1.2)`
-
-- skies: `day dawn sunset night`; grounds: `meadow road sand snow`
-- props from the catalog: `x` = 0..1 across the frame, `z` = metres away from the stage line, `s` = scale, `rot` = degrees
-
-### 3d actors
-
-`knight_male walk from offleft to 0.4 0-4s`, `panda dance at 0.3 4-8s facing=front`, `eagle fly from offleft to offright 8-13s lift=4`
-
-- 51 people with 17 actions each (`walk run idle jump victory sit pickup punch swordslash roll hit death ...`), farm animals, dog, cat, wolf, eagle, cute creatures (panda, penguin, chicken, deer, bee, dragon, ghost, yeti ...), monsters, robots, sea creatures
-- params: `size` (height in metres), `z` (depth), `lift` (metres above the ground), `facing` (`1` right, `-1` left, `front` towards the camera), `speed`, `turn`
-- one actor name is one character within a shot, and it does one action at a time
-- a position can be one number (`to 0.4`): the actor keeps its line
-- the full list is `assets/lib3d/catalog.json` in the 3d bundle; rebuild it with `tools/build_catalog.py`
-
-Not allowed in 3d: the 2d effects (`paper_bird`, `steam`, `confetti` ...) and the drawn elements and actors.
+## Text, sound, camera
+`text "Привет!" font at 0.5,0.2 size=0.11 color=#c5583e 9-12s hold=1` writes any text. `music mood=bright key=C tempo=110` (moods wonder dark bright tense cozy calm), `sfx chime at 6s`, `fade in 0-1s`, `fade out 15-16s`, `camera zoom 1.0-1.1 0-6s`, `camera pan right 0-6s`.
 
 ## Films as Extella experts
+In Extella a film is an expert with `cspl=scene`; `{{name}}` places are filled from the run parameters, and the handler runs `check`, `render` or `status`. `extella/templates/` holds eight felt stories.
 
-In Extella a film is an expert with `cspl=scene`: its code is a SCENE program, `{{name}}` places are filled from the run parameters, and the handler on the device runs `check`, `render` or `status`:
-
-```
-run_expert film_tpl_park_3d  {"mode": "render", "person": "cowboy_male", "animal": "wolf", "sky2": "night", "title": "Moon"}
-```
-
-A template that fits the request gives a new film with no new lines. `extella/templates/` holds ten of them.
+## Other styles
+The handler also has a drawn `style=2d` and an experimental Blender-based `style=3d`; the agent uses felt only.

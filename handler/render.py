@@ -5,7 +5,7 @@ import subprocess
 import sys
 from multiprocessing import Pool
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageDraw
 from .draw import Ctx, ease
 from .elements import ELEMENTS
 from .actors import ACTORS
@@ -63,8 +63,64 @@ def render_frame(prog, t, out_size):
     if prog.style in ('3d', 'toon'):  # the shot was rendered by Blender; text and fades are drawn over it
         bg = Image.open(os.path.join(prog.bg_dir, f'{int(round(t * prog.fps)):05d}.png')).convert('RGBA')
         ctx.img.paste(bg.resize((W, H), Image.LANCZOS))
-    for name, params in ([] if prog.style in ('3d', 'toon') else sc.elements):
-        ELEMENTS[name](ctx, t, tl, params)
+    felt = prog.style == 'felt' or (getattr(prog, 'look', '') == 'felt' and prog.style == '2d')
+    elems, acts, effs = ELEMENTS, ACTORS, EFFECTS
+    if prog.style == 'felt':
+        from .felt_elements import FE
+        from .felt_actors import FA
+        from .felt_effects import FX
+        elems, acts, effs = FE, FA, FX
+    if felt:
+        from .felt import felt_composite
+
+        def blank():
+            lc = Ctx(W, H)
+            lc.img = Image.new('RGBA', (W, H), (0, 0, 0, 0))
+            lc.d = ImageDraw.Draw(lc.img)
+            lc.pieces = []
+
+            def piece():  # a body part on its own felt layer
+                pc = blank()
+                lc.pieces.append(pc)
+                return pc
+            lc.piece = piece
+            return lc
+
+        night = prog.style == 'felt' and not any(n == 'room' for n, _ in sc.elements) and any(n == 'sky' and p.get('time') == 'night' for n, p in sc.elements)
+        room_night = prog.style == 'felt' and any(n == 'room' and p.get('time') == 'night' for n, p in sc.elements)
+        tint = (0.55, 0.6, 0.85) if night else ((0.82, 0.78, 0.72) if room_night else None)
+
+        def shade(img):
+            if tint is None:
+                return
+            import numpy as np
+            a = np.asarray(img, np.float32)
+            a[..., :3] *= tint
+            img.paste(Image.fromarray(a.astype(np.uint8), 'RGBA'))
+
+        def layer(draw, depth=1.0, keep=False):
+            lc = blank()
+            draw(lc)
+            if not keep:
+                shade(lc.img)
+                for pc in lc.pieces:
+                    shade(pc.img)
+            ctx.img = felt_composite(ctx.img, lc.img, depth)
+            for pc in lc.pieces:
+                ctx.img = felt_composite(ctx.img, pc.img, 0.7)
+            ctx.d = ImageDraw.Draw(ctx.img)
+    order = list(sc.elements)
+    if prog.style == 'felt':  # depth order whatever order the program lists them in: sky, far, ground, the rest
+        DEPTH = {'sky': 0, 'felt_sky': 0, 'room': 0, 'mountains': 1, 'planet': 1, 'rainbow': 1, 'felt_sun': 1, 'puff_cloud': 1,
+                 'hills': 2, 'ground': 2, 'snow_ground': 2, 'moon_ground': 2, 'felt_sea': 2, 'river': 3}
+        order = sorted(order, key=lambda e: DEPTH.get(e[0], 4))
+        if any(n == 'room' for n, _ in order):
+            order = [e for e in order if e[0] not in ('sky', 'felt_sky')]
+    for k, (name, params) in enumerate([] if prog.style in ('3d', 'toon') else order):
+        if felt:
+            layer(lambda c, name=name, params=params: elems[name](c, t, tl, params), 0.35 if k == 0 else 1.0, keep=(name in ('sky', 'felt_sky')))
+        else:
+            elems[name](ctx, t, tl, params)
     # actors, effects, text in program order; 'hold=1' keeps an effect at its end state until the scene ends
     for st in prog.stmts:
         if st.kind not in ('actor', 'effect', 'text') or getattr(st, 'scene', None) is not sc:
@@ -76,9 +132,15 @@ def render_frame(prog, t, out_size):
         f = min(1.0, _progress(st, t))
         if st.kind == 'actor':
             if prog.style not in ('3d', 'toon'):
-                ACTORS[st.words[0]][0](ctx, t, tl, st, f)
+                if felt:
+                    layer(lambda c, st=st, f=f: acts[st.words[0]][0](c, t, tl, st, f))
+                else:
+                    ACTORS[st.words[0]][0](ctx, t, tl, st, f)
         elif st.kind == 'effect':
-            EFFECTS[st.words[0]](ctx, t, tl, st, f)
+            if felt:
+                layer(lambda c, st=st, f=f: effs[st.words[0]](c, t, tl, st, f), 0.6)
+            else:
+                EFFECTS[st.words[0]](ctx, t, tl, st, f)
         else:
             EFFECTS['font_text' if 'font' in st.words else 'handwrite'](ctx, t, tl, st, f)
     # camera: crop and resample

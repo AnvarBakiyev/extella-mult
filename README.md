@@ -2,34 +2,30 @@
 
 Extella is an extensible software environment that connects AI models, software tools and devices into working systems. Its core lets you configure and change how each module runs, from document processing to controlling sensors and robots.
 
-Extella Mult is a pair of Extella agents that make short animated films from a request in plain words. The agent does not write drawing code. It writes a short program in SCENE, a small language for cartoons, and a handler on your computer checks it and renders an mp4 with music and sound.
+Extella Mult is an Extella agent that makes short felt cartoons from a request in plain words: "a birthday cartoon for my daughter Aliya, she loves cats", "a fox cub gets lost in the forest and grandpa finds it with a lantern". The agent does not write drawing code. It writes a short program in SCENE, a small language for cartoons, and a handler on your computer checks it and renders an mp4 with music.
 
-| | Extella Mult 2D | Extella Mult 3D |
-|---|---|---|
-| look | flat drawn | low-poly 3D, rendered in Blender |
-| characters | a fox and a cat, about 20 drawn backgrounds, paper effects | 582 CC0 models by Quaternius: 51 people, animals, cute creatures, monsters, robots, sea life, trees, buildings, space |
-| needs | Python 3.10+ | Python 3.10+ and Blender 4.x (the installer downloads it) |
-| download | 0.3 MB | 134 MB |
-| speed (Apple M-series) | about 1 min for 15 s of film | 1 to 3 min for 15 s of film |
+The look is felt and plasticine: every tree, house and character part is a cut-out with a soft rounded edge, a fibre texture and a shadow. It runs on any computer with Python, no GPU.
 
-## What it looks like in numbers
+| | |
+|---|---|
+| characters | girl, boy, mom, dad, granny, grandpa, cat, fox, dog, bunny, bear, bird; walk, run, wave, jump, sit, dance, look up; things in hand |
+| places and things | 32: skies (day, dawn, sunset, night, space), hills, mountains, forest, river and bridge, houses, a school, a rainbow, the sea with a boat and a lighthouse, snow and a snowman, a planet and a rocket, a room with a bed, a lamp, a table, a cake and gifts |
+| effects | snow, rain, hearts, sparkles, falling leaves, bubbles, balloons, butterflies, music notes |
+| ready stories | eight templates: birthday, park, school, space, winter, sea, bedtime, friends |
+| download | 0.3 MB |
+| speed | about 3 minutes for a 15-second film on an Apple M-series laptop |
+
+## In numbers
 
 From our tests on 3 November 2026, agent on DeepSeek-V4-Flash:
 
-- a request that fits one of the ten templates ("a cowboy walks a wolf in the park, then night falls, title Moon") gives a film with **no new lines**: the agent fills four parameters;
-- a new request takes **12 to 44 lines** of SCENE and one or two checks; the checker answers in words, e.g. `line 6: fox is a 2d actor, the film is style=3d; do not mix styles`;
-- for comparison, a large model asked to make a similar one-minute film in plain Python wrote about 1,000 lines.
+- a request that fits a template gives a film with **no new lines**: the agent fills the hero, the pet and the title;
+- a new story ("a fox cub lost in the forest, grandpa with a lantern, granny at home") took **27 lines** of SCENE and passed the check on the first try;
+- the checker answers in words, so the agent can fix its own mistakes: `line 18: 'from' and 'to' go together`.
 
 ## Install
 
-In Extella, run the expert `mult_install` on your device:
-
-```
-run_expert mult_install {"kind": "2d"}
-run_expert mult_install {"kind": "3d"}
-```
-
-It downloads the bundle from this repository's release, checks its SHA-256 when given, installs numpy, scipy, Pillow and an ffmpeg binary, finds or downloads Blender for `3d`, registers the `cspl=scene` handler and runs a self-test.
+In Extella, run the expert `mult_install` on your device. It downloads `extella-mult-2d.tar.gz` from this repository's release, installs numpy, scipy, Pillow and an ffmpeg binary, registers the `cspl=scene` handler and renders a self-test scene.
 
 Without Extella:
 
@@ -41,22 +37,20 @@ python -m handler.main film.scene --out film.mp4
 
 ## Files
 
-- `handler/`: the SCENE language: parser, checker, 2d drawing, 3d shots in Blender (`blender_scene.py`), audio, ffmpeg muxing
-- `LANGUAGE.md`: the language reference
+- `LANGUAGE.md`: the SCENE language in felt style, generated from the handler's own descriptions
+- `handler/`: parser, checker, the felt pass (`felt.py`), felt elements, characters and effects, audio, ffmpeg muxing
 - `extella/scene_handler.py`: the `cspl=scene` handler; `extella/mult_install.fython`: the installer expert
-- `extella/templates/`: ten template films with their parameters
-- `extella/prompts/`: the instructions of the two agents
-- `tools/`: building the 3d catalog and the release bundles
+- `extella/templates/`: eight felt stories with their parameters
+- `extella/prompts/system_prompt.md`: the agent's instructions
+- `tools/`: building the release bundle
 
 ## Limits
 
-- The 2d vocabulary is small. People, animals and cities are 3d only.
-- Characters move along one stage line; there is no lip sync or speech.
-- On a server without a GPU, 3d rendering is slow.
-- The agent sometimes replaces what it cannot draw instead of asking. The checker catches unknown words, but not every change of meaning.
+- Characters move along the ground line; there is no speech or lip sync.
+- The agent's sense of composition is still uneven: it sometimes makes props too small or puts them in odd places. A composition guide in its concepts and the automatic depth order help.
+- The vocabulary is what is listed in `LANGUAGE.md`; anything else the agent should offer to replace and ask.
 
 ## Licences
 
 - Code: MIT, see `LICENSE`.
-- 3d models: CC0 1.0 by Quaternius (quaternius.com), taken from OpenGameArt. Each pack's licence file is inside the 3d bundle.
-- Font: Caveat, SIL Open Font License 1.1.
+- Font: Caveat, SIL Open Font License 1.1 (`assets/fonts/OFL.txt` in the bundle).

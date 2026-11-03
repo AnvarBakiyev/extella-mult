@@ -1,0 +1,14 @@
+film title="{{title}}" style=felt fps=24 size=1920x804
+music mood=wonder key=E tempo=84
+scene 0-6s: sky(time=space) planet(x=0.8,y=0.3,r=0.13,color=#e07a5a) moon_ground(top=0.72) rocket(x=0.62,y=0.86,s=1.4)
+{{hero}} walk from offleft to 0.35 0-4s y=0.95
+{{hero}} wave at 0.35 4-6s y=0.95
+fade in 0-1s
+scene 6-9s: sky(time=space) moon_ground(top=0.72) rocket(x=0.62,y=0.86,s=1.4,flying=1,rise=0.35)
+{{hero}} look_up at 0.35 6-9s y=0.95
+effect sparkles 6-9s at=0.62,0.75 r=0.12
+sfx whoosh at 6.3s
+scene 9-15s: sky(time=space) planet(x=0.5,y=0.6,r=0.22,ring=1) rocket(x=0.2,y=0.5,s=1.2,flying=1,rise=0.03)
+effect sparkles 9-15s at=0.5,0.4 r=0.4 count=16
+text "{{title}}" font at 0.5,0.18 size=0.11 color=#fff4d8 10-13.5s hold=1
+fade out 14-15s

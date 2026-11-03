@@ -1,0 +1,19 @@
+film title="{{title}}" style=felt fps=24 size=1920x804
+music mood=calm key=G tempo=90
+scene 0-7s: sky hills(top=0.6) puff_cloud(x=0.15,y=0.14) puff_cloud(x=0.6,y=0.1,s=0.8) round_tree(x=0.82,y=0.66) bush(x=0.3,y=0.72,flowers=1) flowers(y=0.85,x0=0.5,x1=1)
+{{hero}} walk from offleft to 0.45 0-6s y=0.95
+{{hero}} stand at 0.45 6-7s y=0.95
+{{pet}} run from offleft to 0.6 0.5-5s y=0.96
+{{pet}} stand at 0.6 5-7s y=0.96
+effect butterflies 1-7s at=0.7,0.5
+fade in 0-1s
+scene 7-10s: sky(time=dawn) hills(top=0.6) round_tree(x=0.82,y=0.66) bush(x=0.3,y=0.72,flowers=1)
+{{hero}} look_up at 0.45 7-10s y=0.95
+{{pet}} sit at 0.6 7-10s y=0.96
+effect rain 7-10s
+scene 10-16s: sky hills(top=0.6) rainbow(x=0.5,y=0.68,r=0.4) round_tree(x=0.82,y=0.66) bush(x=0.3,y=0.72,flowers=1) flowers(y=0.85,x0=0,x1=1)
+{{hero}} wave at 0.45 10-16s y=0.95
+{{pet}} jump at 0.6 10-16s y=0.96
+text "{{title}}" font at 0.5,0.2 size=0.11 color=#ffffff 11-14.5s hold=1
+sfx chime at 10.3s
+fade out 15-16s

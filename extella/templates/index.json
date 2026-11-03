@@ -1,97 +1,74 @@
 [
  {
-  "name": "film_tpl_cafe_2d",
-  "description": "Template, style=2d, 20 s: a sunny cafe, the drawn cat sits by a steaming cup, reaches out and knocks it over, coffee spills, a title. Fill: title (any text, Russian or English), mood (wonder dark bright tense cozy calm).",
+  "name": "film_felt_birthday",
+  "description": "Felt, 16 s: a birthday at home. The hero comes into the room, mom waits by the table with a cake, the hero jumps for joy, hearts and balloons, a greeting. Fill: hero: girl boy mom dad granny grandpa, pet: cat fox dog bunny bear, title.",
   "params": {
-   "title": "Morning",
-   "mood": "cozy"
+   "hero": "girl",
+   "pet": "cat",
+   "title": "С днём рождения!"
   }
  },
  {
-  "name": "film_tpl_chase_3d",
-  "description": "Template, style=3d, 14 s: a farm animal runs across the meadow, a person runs after it, both stop out of breath; title. Fill: animal (cow horse pig sheep llama zebra pug), person (any 3d person, e.g. chef_male, doctor_female_young, cowboy_male, knight_male, pirate_female, ninja_male, wizard, witch, viking_male, worker_female), title (any text, Russian or English).",
+  "name": "film_felt_park",
+  "description": "Felt, 16 s: a walk in the park. The hero walks across the hills with a pet, butterflies, after a short rain a rainbow, the hero waves. Fill: hero: girl boy mom dad granny grandpa, pet: cat fox dog bunny bear, title.",
   "params": {
-   "animal": "pig",
-   "person": "worker_male",
-   "title": "Catch"
+   "hero": "boy",
+   "pet": "dog",
+   "title": "Хороший день"
   }
  },
  {
-  "name": "film_tpl_duel_3d",
-  "description": "Template, style=3d, 14 s: a hero and a villain meet in a field, the villain strikes and misses, the hero strikes back, the villain falls, the hero celebrates; title. Fill: hero, villain (any 3d person, e.g. chef_male, doctor_female_young, cowboy_male, knight_male, pirate_female, ninja_male, wizard, witch, viking_male, worker_female; villains: goblin_male goblin_female zombie_male zombie_female pirate_male ninja_male), title (any text, Russian or English).",
+  "name": "film_felt_school",
+  "description": "Felt, 14 s: the first day at school. Dawn, the hero walks to school, a friend runs up and waves, they dance together. Fill: hero: girl boy mom dad granny grandpa, friend (another person), title.",
   "params": {
-   "hero": "knight_male",
-   "villain": "goblin_male",
-   "title": "Fable"
+   "hero": "girl",
+   "friend": "boy",
+   "title": "Первый день в школе"
   }
  },
  {
-  "name": "film_tpl_farm_3d",
-  "description": "Template, style=3d, 15 s: a quiet farm meadow with three animals, a farmer walks in carrying something, the sun goes down; title. Fill: a1, a2, a3 (three different of: cow horse pig sheep llama zebra pug), person (any 3d person, e.g. chef_male, doctor_female_young, cowboy_male, knight_male, pirate_female, ninja_male, wizard, witch, viking_male, worker_female), sky2 (dawn sunset night), title (any text, Russian or English).",
+  "name": "film_felt_space",
+  "description": "Felt, 15 s: a space trip. On the moon the hero waves, the rocket takes off, then flies past a ringed planet among stars. Fill: hero: girl boy mom dad granny grandpa, title.",
   "params": {
-   "a1": "cow",
-   "a2": "sheep",
-   "a3": "horse",
-   "person": "worker_female",
-   "sky2": "sunset",
-   "title": "Farm"
+   "hero": "boy",
+   "title": "К звёздам!"
   }
  },
  {
-  "name": "film_tpl_meeting_3d",
-  "description": "Template, style=3d, 14 s: two people walk toward each other in a meadow, stop, the first raises arms in victory, the second jumps for joy; title. Fill: person1, person2 (any 3d person, e.g. chef_male, doctor_female_young, cowboy_male, knight_male, pirate_female, ninja_male, wizard, witch, viking_male, worker_female), sky (day dawn sunset night), title (any text, Russian or English).",
+  "name": "film_felt_winter",
+  "description": "Felt, 14 s: a winter evening. Snow falls, the hero and a pet come to a snowman by a lit house, the hero jumps for joy. Fill: hero: girl boy mom dad granny grandpa, pet: cat fox dog bunny bear, title.",
   "params": {
-   "person1": "cowboy_male",
-   "person2": "chef_female",
-   "sky": "day",
-   "title": "Привет!"
+   "hero": "girl",
+   "pet": "bunny",
+   "title": "С Новым годом!"
   }
  },
  {
-  "name": "film_tpl_night_forest_3d",
-  "description": "Template, style=3d, 14 s: a night pine forest, an animal walks between the trees, an eagle flies over the moonlit sky; title. Fill: animal (dog cat wolf, or a farm animal: cow horse pig sheep llama zebra pug), title (any text, Russian or English).",
+  "name": "film_felt_sea",
+  "description": "Felt, 14 s: a sunset by the sea. A boat sails past the lighthouse, the hero sits on the sand with a pet and waves to the boat. Fill: hero: girl boy mom dad granny grandpa, pet: cat fox dog bunny bear, title.",
   "params": {
-   "animal": "wolf",
-   "title": "Ночной лес"
+   "hero": "grandpa",
+   "pet": "dog",
+   "title": "Лето"
   }
  },
  {
-  "name": "film_tpl_park_3d",
-  "description": "Template, style=3d, 16 s: a park, a person walks in and stops, an animal follows; then the sky changes; a title. Fill: person (any 3d person, e.g. chef_male, doctor_female_young), animal (dog cat wolf pug cow horse pig sheep llama zebra), sky2 (dawn sunset night), title.",
+  "name": "film_felt_bedtime",
+  "description": "Felt, 14 s: bedtime. Night in the room, the hero yawns on the bed, the lamp glows, a lullaby plays and stars twinkle in the window. Fill: hero: girl boy mom dad granny grandpa, pet: cat fox dog bunny bear, title.",
   "params": {
-   "person": "chef_male",
-   "animal": "dog",
-   "sky2": "sunset",
-   "title": "Sunday"
+   "hero": "boy",
+   "pet": "bear",
+   "title": "Спокойной ночи"
   }
  },
  {
-  "name": "film_tpl_party_3d",
-  "description": "Template, style=3d, 12 s: three friends run in, jump and celebrate together; title. Fill: p1, p2, p3 (any 3d person, e.g. chef_male, doctor_female_young, cowboy_male, knight_male, pirate_female, ninja_male, wizard, witch, viking_male, worker_female), sky (day dawn sunset night), title (any text, Russian or English).",
+  "name": "film_felt_friends",
+  "description": "Felt, 14 s: friends meet in a colourful street. The hero and a friend walk towards each other, wave and dance, hearts float up. Fill: hero: girl boy mom dad granny grandpa, friend (another person), pet: cat fox dog bunny bear, title.",
   "params": {
-   "p1": "ninja_female",
-   "p2": "wizard",
-   "p3": "chef_male",
-   "sky": "day",
-   "title": "Team"
-  }
- },
- {
-  "name": "film_tpl_rooftop_2d",
-  "description": "Template, style=2d, 15 s: night rooftop, the fox stands and looks at the moon, a paper bird flies over, a title. Fill: title (any text, Russian or English), mood (wonder dark bright tense cozy calm).",
-  "params": {
-   "title": "Stars",
-   "mood": "wonder"
-  }
- },
- {
-  "name": "film_tpl_street_3d",
-  "description": "Template, style=3d, 12 s: an evening street with lamps and parked cars, a person walks along, stops by a car and picks something up; title. Fill: person (any 3d person, e.g. chef_male, doctor_female_young, cowboy_male, knight_male, pirate_female, ninja_male, wizard, witch, viking_male, worker_female), car (basic_car cop_car race_car simple_car_high simple_car_short taxi), sky (day dawn sunset night), title (any text, Russian or English).",
-  "params": {
-   "person": "suit_male",
-   "car": "taxi",
-   "sky": "sunset",
-   "title": "City"
+   "hero": "girl",
+   "friend": "granny",
+   "pet": "cat",
+   "title": "Друзья"
   }
  }
 ]
