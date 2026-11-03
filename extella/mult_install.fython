@@ -11,7 +11,16 @@ def mult_install(kind: str = "2d", bundle_url: str = "", bundle_sha256: str = ""
     home = os.path.expanduser("~/extella-mult")
     os.makedirs(home, exist_ok=True)
     steps = []
+    # a stable interpreter: the listener may run from a cache folder that gets cleaned
     py = sys.executable or "python3"
+    cands = [shutil.which("python3.13"), shutil.which("python3.12"), shutil.which("python3.11"), shutil.which("python3.10"),
+             "/Library/Frameworks/Python.framework/Versions/Current/bin/python3", "/opt/homebrew/bin/python3", "/usr/local/bin/python3", shutil.which("python3"), shutil.which("python")]
+    for c in cands:
+        if c and os.path.exists(c) and "/.cache/" not in c:
+            v = subprocess.run([c, "-c", "import sys; print(sys.version_info >= (3, 10))"], capture_output=True, text=True).stdout.strip()
+            if v == "True":
+                py = c
+                break
     # 1. python packages
     need = []
     for mod, pkg in (("numpy", "numpy"), ("scipy", "scipy"), ("PIL", "pillow"), ("imageio_ffmpeg", "imageio-ffmpeg")):
@@ -19,7 +28,7 @@ def mult_install(kind: str = "2d", bundle_url: str = "", bundle_sha256: str = ""
         if r.returncode != 0:
             need.append(pkg)
     if need:
-        venv = getattr(sys, "base_prefix", sys.prefix) != sys.prefix
+        venv = subprocess.run([py, "-c", "import sys; print(sys.base_prefix != sys.prefix)"], capture_output=True, text=True).stdout.strip() == "True"
         r = subprocess.run([py, "-m", "pip", "install", "--quiet"] + ([] if venv else ["--user"]) + need, capture_output=True, text=True)
         if r.returncode != 0:
             return {"status": "error", "step": "pip", "error": (r.stderr or r.stdout)[-600:]}
