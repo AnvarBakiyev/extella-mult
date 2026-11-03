@@ -10,10 +10,11 @@ The look is felt and plasticine: every tree, house and character part is a cut-o
 |---|---|
 | characters | girl, boy, mom, dad, granny, grandpa, cat, fox, dog, bunny, bear, bird; walk, run, wave, jump, sit, dance, look up; things in hand |
 | places and things | 32: skies (day, dawn, sunset, night, space), hills, mountains, forest, river and bridge, houses, a school, a rainbow, the sea with a boat and a lighthouse, snow and a snowman, a planet and a rocket, a room with a bed, a lamp, a table, a cake and gifts |
-| effects | snow, rain, hearts, sparkles, falling leaves, bubbles, balloons, butterflies, music notes |
+| effects | snow, rain, hearts, sparkles, falling leaves, bubbles, balloons, butterflies, music notes, smoke |
+| voice | spoken lines through ElevenLabs with your own key, six voices, music ducks under speech; or your own recordings |
 | ready stories | eight templates: birthday, park, school, space, winter, sea, bedtime, friends |
 | download | 0.3 MB |
-| speed | about 3 minutes for a 15-second film on an Apple M-series laptop |
+| speed | about 35 seconds for a 16-second film on an Apple M-series laptop (v3; v2 took about 5 minutes) |
 
 ## In numbers
 

@@ -59,7 +59,7 @@ def _elements(joined, n):
     for el in _split_top(joined):
         m2 = ELEMENT.match(el)
         if not m2:
-            raise SceneError(f"line {n}: '{el}' is not an element name (letters, digits, underscore, optional (k=v,...))")
+            raise SceneError(f"line {n}: '{el}' is not an element name; write elements as name(k=v,...), e.g. planet(x=0.7,y=0.3,r=0.15) - numbers go inside the brackets")
         params = {}
         if m2.group(2):
             for kv in m2.group(2).split(','):
@@ -101,14 +101,14 @@ def parse(text):
             last = [x for x in stmts if x.kind == 'scene'][-1]
             last.elements.extend(_elements(line, n))
             continue
-        kind = head if head in ('film', 'music', 'camera', 'effect', 'text', 'fade', 'sfx') else 'actor'
+        kind = head if head in ('film', 'music', 'camera', 'effect', 'text', 'fade', 'sfx', 'voice') else 'actor'
         st = Stmt(kind, n, raw)
         if kind == 'actor':
             st.words.append(head)
         i = 1
         while i < len(toks):
             t = toks[i]
-            if kind == 'text' and st.text is None and i == 1:
+            if kind in ('text', 'voice') and st.text is None and i == 1 and '=' not in t:
                 st.text = t
             elif TIME_RANGE.match(t):
                 m = TIME_RANGE.match(t)

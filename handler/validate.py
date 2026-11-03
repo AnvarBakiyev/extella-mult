@@ -1,3 +1,4 @@
+import os
 """Validates a parsed program against the vocabulary; raises SceneError with messages in words."""
 from .parser import SceneError
 from .elements import ELEMENTS
@@ -34,6 +35,7 @@ class Program:
         self.scenes = []
         self.music = []
         self.sfx = []
+        self.voices = []
         self.length = 0.0
         self.style = '2d'
         self.look = ''
@@ -115,8 +117,13 @@ def validate(stmts):
             if name not in acts:
                 if name in _vocab(_other(prog.style))[1]:
                     raise SceneError(f"line {st.line}: {name} is a {_other(prog.style)} actor, the film is style={prog.style}; do not mix styles")
+                base = name.split('(')[0]
+                if base in _vocab(prog.style)[0]:
+                    raise SceneError(f"line {st.line}: {base} is an element, not an actor: elements have no seconds and no actions. "
+                                     f"Put '{base}(x=..,y=..)' on the scene line or on its own line under it, without a time; "
+                                     f"to move it use its parameters (rocket: flying=1 rise=.. drift=.. tilt=..)")
                 shown = ', '.join(sorted(acts)) if len(acts) <= 12 else f"{len(acts)} actors, search the concepts for the list"
-                raise SceneError(f"line {st.line}: '{name}' is not a known statement or actor in style={prog.style}; actors: {shown}; statements: film, scene, camera, effect, text, fade, sfx, music")
+                raise SceneError(f"line {st.line}: '{name}' is not a known statement or actor in style={prog.style}; actors: {shown}; statements: film, scene, camera, effect, text, fade, sfx, voice, music")
             actions = acts[name]
             if str(st.params.get('facing', 1)) == 'front' and prog.style == '2d':
                 raise SceneError(f"line {st.line}: facing=front works only in 3d films; in 2d use facing=1 or facing=-1")
@@ -180,6 +187,25 @@ def validate(stmts):
             if not (0 <= st.at <= prog.length):
                 raise SceneError(f"line {st.line}: sfx at {st.at:g}s is outside the film (0-{prog.length:g}s)")
             prog.sfx.append(st)
+        elif st.kind == 'voice':
+            from .audio import VOICES, voice_key
+            if st.at is None:
+                raise SceneError(f"line {st.line}: voice needs a start time: voice \"Привет!\" at 2s who=narrator")
+            if not (0 <= st.at < prog.length):
+                raise SceneError(f"line {st.line}: voice at {st.at:g}s is outside the film (0-{prog.length:g}s)")
+            if 'file' in st.params:
+                if not os.path.isfile(os.path.expanduser(str(st.params['file']))):
+                    raise SceneError(f"line {st.line}: voice file {st.params['file']} not found on this device")
+            elif not st.text:
+                raise SceneError(f"line {st.line}: voice needs the words in quotes or a ready file: voice \"Поехали!\" at 2s who=narrator, or voice file=~/a.mp3 at 2s")
+            else:
+                who = st.params.get('who', 'narrator')
+                if who not in VOICES:
+                    raise SceneError(f"line {st.line}: unknown voice who={who}; voices: {', '.join(VOICES)}")
+                if not voice_key():
+                    raise SceneError(f"line {st.line}: spoken lines need an ElevenLabs key on this device (\"elevenlabs_key\" in ~/extella-mult/config.json); "
+                                     "without it use a ready recording: voice file=~/line.mp3 at 2s, or tell the person and leave the line out")
+            prog.voices.append(st)
         elif st.kind == 'music':
             mood = st.params.get('mood')
             if mood not in MOODS:

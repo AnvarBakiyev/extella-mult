@@ -4,9 +4,11 @@ include("import os", [])
 def mult_install(kind: str = "2d", bundle_url: str = "", bundle_sha256: str = "", blender_path: str = "", download_blender: bool = True) -> dict:
     """Installs Extella Mult on this device. kind=2d: drawn films, no Blender. kind=3d: also the CC0 model library and Blender (downloaded from blender.org if missing)."""
     with_3d = str(kind) == "3d"
-    REL = "https://github.com/AnvarBakiyev/extella-mult/releases/download/v2/"
-    if not bundle_url:
-        bundle_url = REL + ("extella-mult-3d.tar.gz" if with_3d else "extella-mult-2d.tar.gz")
+    REL = "https://github.com/AnvarBakiyev/extella-mult/releases/download/"
+    if not bundle_url:  # 2d: the felt release v3 (voice, speed); 3d is frozen at v1
+        bundle_url = REL + ("v1/extella-mult-3d.tar.gz" if with_3d else "v3/extella-mult-2d.tar.gz")
+        if not with_3d and not bundle_sha256:
+            bundle_sha256 = "754c8c1719d4a61251372bb82f7d674877c0c0e1508b83d205e9485e7de16844"
     import os, sys, json, subprocess, tarfile, tempfile, hashlib, shutil, platform, urllib.request, glob
     home = os.path.expanduser("~/extella-mult")
     os.makedirs(home, exist_ok=True)

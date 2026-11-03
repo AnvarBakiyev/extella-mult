@@ -10,11 +10,25 @@ _grain = {}
 def _grain_for(w, h):
     if (w, h) not in _grain:
         rng = np.random.default_rng(7)
-        fine = gaussian_filter(rng.standard_normal((h, w)).astype(np.float32), 0.8)
-        fibre = gaussian_filter(rng.standard_normal((h, w)).astype(np.float32), (0.6, 2.5))  # short horizontal fibres
-        g = 0.6 * fine / (fine.std() + 1e-6) + 0.4 * fibre / (fibre.std() + 1e-6)
+        k = h / 1608.0  # tuned for the 2x supersampled frame; finer and fainter when drawn at the final size
+        fine = gaussian_filter(rng.standard_normal((h, w)).astype(np.float32), 0.8 * k)
+        fibre = gaussian_filter(rng.standard_normal((h, w)).astype(np.float32), (0.6 * k, 2.5 * k))  # short horizontal fibres
+        g = (0.6 * fine / (fine.std() + 1e-6) + 0.4 * fibre / (fibre.std() + 1e-6)) * (0.6 if k < 0.75 else 1.0)
         _grain[(w, h)] = g
     return _grain[(w, h)]
+
+
+def _blur(a, sigma):
+    """Gaussian blur done at half (or quarter) resolution and scaled back: the blur is soft, so the loss is invisible
+    and it is 4-16x cheaper."""
+    k = 4 if sigma >= 8 else 2
+    h, w = a.shape
+    if sigma < 3 or h < 4 * k or w < 4 * k:
+        return gaussian_filter(a, sigma, mode='nearest')
+    im = Image.fromarray(a, 'F')
+    small = np.asarray(im.resize((max(1, w // k), max(1, h // k)), Image.BILINEAR), np.float32)
+    small = gaussian_filter(small, sigma / k, mode='nearest')
+    return np.asarray(Image.fromarray(small, 'F').resize((w, h), Image.BILINEAR), np.float32)
 
 
 def felt_composite(base, layer, depth=1.0):
@@ -29,8 +43,11 @@ def felt_composite(base, layer, depth=1.0):
     x0, y0, x1, y1 = max(0, box[0] - m), max(0, box[1] - m), min(W, box[2] + m), min(H, box[3] + m)
     arr = np.asarray(layer.crop((x0, y0, x1, y1)), np.float32) / 255.0
     a = arr[..., 3]
+    if H < 1200:  # no supersampling: soften the drawn edge by a pixel so it does not stair-step
+        a = gaussian_filter(a, 0.7)
+        arr[..., 3] = a
     # bevel: a blurred alpha is a height map; light from the top-left
-    hgt = gaussian_filter(a, 9 * s, mode='nearest')
+    hgt = _blur(a, 9 * s)
     gy, gx = np.gradient(hgt)
     light = -(gx * 0.7 + gy * 0.7) * 22 * s * depth
     rim = np.clip(1 - hgt * 1.8, 0, 1) * a  # darker towards the edge, like a rounded pad
@@ -39,7 +56,7 @@ def felt_composite(base, layer, depth=1.0):
     rgb = np.clip(arr[..., :3] * shade[..., None], 0, 1)
     # soft shadow on what lies beneath
     off = int(7 * s * depth)
-    sh = gaussian_filter(a, 6 * s)
+    sh = _blur(a, 6 * s)
     sh2 = np.zeros_like(sh)  # shift down-right without wrapping around
     dx = off // 2
     sh2[off:, dx:] = sh[:sh.shape[0] - off or None, :sh.shape[1] - dx or None]

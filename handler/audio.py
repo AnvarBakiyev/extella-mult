@@ -215,6 +215,52 @@ SFX = {'page_rustle': sfx_page_rustle, 'wind': sfx_wind, 'whoosh': sfx_whoosh, '
        'thud': sfx_thud, 'paper_burst': sfx_paper_burst, 'splash': sfx_splash, 'clink': sfx_clink, 'purr': sfx_purr, 'meow': sfx_meow}
 
 
+# who=... -> an ElevenLabs voice; lines may carry tags like [excited], [whispering], [laughs]
+VOICES = {'narrator': 'VlXLedwkU4YDM3HBGpiI',   # Miron, lively storyteller
+          'deep': 'pM78bgjPVk0JXtaEnFoj',       # Nester, deep and serious: mock-epic lines
+          'odessa': 'RLRdvNFwJJct2XZOgfzy',     # Mishka, Odessa accent, dry irony
+          'gogi': 'XNrB7jz2HCkpU5yK08kP',       # Gogi, Georgian accent, comedy
+          'fairy': 'RxivyypsDodFBfmDDOZF',      # Mila, high and sweet
+          'calm': 'RD1wW20GjG2W8Fc8vVvm'}       # El, calm and friendly
+
+
+def voice_key():
+    import json
+    import os
+    try:
+        return json.load(open(os.path.expanduser('~/extella-mult/config.json'))).get('elevenlabs_key')
+    except Exception:
+        return None
+
+
+def _voice_file(st):
+    """The recording for one voice line: a given file, or ElevenLabs speech cached by text and voice."""
+    import hashlib
+    import json
+    import os
+    import urllib.request
+    if 'file' in st.params:
+        return os.path.expanduser(str(st.params['file']))
+    vid = VOICES[st.params.get('who', 'narrator')]
+    cache = os.path.expanduser('~/extella-mult/assets/voice_cache')
+    os.makedirs(cache, exist_ok=True)
+    path = os.path.join(cache, hashlib.sha1(f'{vid}|{st.text}'.encode()).hexdigest()[:16] + '.mp3')
+    if not os.path.isfile(path):
+        req = urllib.request.Request(f'https://api.elevenlabs.io/v1/text-to-speech/{vid}?output_format=mp3_44100_128',
+                                     data=json.dumps({'text': st.text, 'model_id': 'eleven_v3'}).encode(),
+                                     headers={'xi-api-key': voice_key(), 'Content-Type': 'application/json'})
+        with urllib.request.urlopen(req, timeout=120) as r:
+            open(path, 'wb').write(r.read())
+    return path
+
+
+def _decode(path):
+    import subprocess
+    from .config import ffmpeg
+    raw = subprocess.run([ffmpeg(), '-v', 'error', '-i', path, '-f', 'f32le', '-ac', '1', '-ar', str(SR), '-'], capture_output=True, check=True).stdout
+    return np.frombuffer(raw, np.float32).copy()
+
+
 def render_audio(prog, path):
     length = prog.length
     sections = [(m.at, m.params['mood'], str(m.params.get('key', 'C')), float(m.params.get('tempo', 72))) for m in prog.music]
@@ -223,6 +269,15 @@ def render_audio(prog, path):
     for s in prog.sfx:
         sig = SFX[s.words[0]](rng)
         add(buf, sig, s.at, float(s.params.get('gain', 1.0)), float(s.params.get('pan', 0.0)))
+    voices = getattr(prog, 'voices', [])
+    if voices:
+        vbuf = np.zeros_like(buf)
+        for v in voices:
+            add(vbuf, _decode(_voice_file(v)) * 1.4, v.at, float(v.params.get('gain', 1.0)), float(v.params.get('pan', 0.0)))
+        env = np.abs(vbuf).max(axis=1)
+        k = int(0.25 * SR)  # duck the music under speech, with a soft attack and release
+        env = np.convolve((env > 0.02).astype(np.float32), np.ones(k, np.float32) / k, mode='same')
+        buf = buf * (1 - 0.65 * np.clip(env * 2, 0, 1))[:, None] + vbuf
     buf = buf[:int(length * SR)]
     # master: soft limiter + end fade
     buf = np.tanh(buf * 1.2) * 0.85

@@ -132,3 +132,23 @@ def notes(ctx, t, tl, st, f):
         L.ellipse(0, 0, 0.32, 0.24, '#5a4a8a', angle=-0.4)
         L.line([(0.27, -0.05), (0.27, -1.0)], '#5a4a8a', 0.1)
         L.line([(0.27, -1.0), (0.6, -0.8)], '#5a4a8a', 0.1)
+
+
+@effect('smoke')
+def smoke(ctx, t, tl, st, f):
+    """Puffy felt smoke clouds that billow out sideways and up from at=x,y (a rocket launch, a crash, a cough);
+    r = how far they spread; color=#efebe4."""
+    x0, y0 = st.params.get('at', (0.5, 0.85))
+    R = st.params.get('r', 0.25)
+    col = st.params.get('color', '#efebe4')
+    r = _rng(st, 3)
+    g = min(1.0, tl / 1.2)  # grows for the first second
+    for i in range(_count(st, 12)):
+        side = -1 if i % 2 else 1
+        d = r.random()
+        x = x0 + side * d * R * g * ctx.H / ctx.W * 1.6
+        y = y0 - (0.05 + 0.25 * r.random()) * R * g - 0.01 * tl
+        sz = (0.03 + 0.05 * r.random()) * (0.5 + g) * (1 + 0.05 * math.sin(tl * 2 + i))
+        pc = ctx.piece()
+        pc.circle(x, y, sz, col)
+        pc.circle(x + 0.4 * sz * ctx.H / ctx.W, y - 0.3 * sz, sz * 0.7, col)

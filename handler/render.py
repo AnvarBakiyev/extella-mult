@@ -14,6 +14,7 @@ from .effects import EFFECTS
 from .config import ffmpeg as _ffmpeg
 FFMPEG = _ffmpeg()
 SUPER = 2  # internal supersampling factor
+SUPER_FELT = float(os.environ.get('MULT_SUPER_FELT', 1))  # felt is soft; 1 is ~3x faster, see felt.py edge smoothing
 
 
 def _progress(st, t):
@@ -56,7 +57,8 @@ def camera_for(prog, sc, t):
 
 
 def render_frame(prog, t, out_size):
-    W, H = out_size[0] * SUPER, out_size[1] * SUPER
+    sup = SUPER_FELT if prog.style == 'felt' else SUPER
+    W, H = int(out_size[0] * sup), int(out_size[1] * sup)
     ctx = Ctx(W, H)
     sc = next((s for s in prog.scenes if s.t0 <= t < s.t1), prog.scenes[-1])
     tl = t - sc.t0
@@ -98,17 +100,42 @@ def render_frame(prog, t, out_size):
             a[..., :3] *= tint
             img.paste(Image.fromarray(a.astype(np.uint8), 'RGBA'))
 
-        def layer(draw, depth=1.0, keep=False):
+        # scene elements that come out the same as in the previous frame (the still background) are taken from a cache
+        # instead of being felted again; a picture is cached once its layers have been seen twice in a row
+        prefix = []
+        still = [True]
+
+        def layer(draw, depth=1.0, keep=False, cache=False):
             lc = blank()
             draw(lc)
             if not keep:
                 shade(lc.img)
                 for pc in lc.pieces:
                     shade(pc.img)
+            key = None
+            if cache and still[0]:
+                prefix.append(hash((depth, lc.img.tobytes()) + tuple(pc.img.tobytes() for pc in lc.pieces)))
+                key = (id(sc), tuple(prefix))
+                if key in _STILL:
+                    ctx.img = _STILL[key].copy()
+                    ctx.d = ImageDraw.Draw(ctx.img)
+                    return
+            else:
+                still[0] = False
             ctx.img = felt_composite(ctx.img, lc.img, depth)
             for pc in lc.pieces:
                 ctx.img = felt_composite(ctx.img, pc.img, 0.7)
             ctx.d = ImageDraw.Draw(ctx.img)
+            if key is not None:
+                if _SEEN.get(key):
+                    if len(_STILL) > 40:
+                        _STILL.clear()
+                    _STILL[key] = ctx.img.copy()
+                else:
+                    if len(_SEEN) > 2000:
+                        _SEEN.clear()
+                    _SEEN[key] = True
+                    still[0] = False
     order = list(sc.elements)
     if prog.style == 'felt':  # depth order whatever order the program lists them in: sky, far, ground, the rest
         DEPTH = {'sky': 0, 'felt_sky': 0, 'room': 0, 'mountains': 1, 'planet': 1, 'rainbow': 1, 'felt_sun': 1, 'puff_cloud': 1,
@@ -118,7 +145,7 @@ def render_frame(prog, t, out_size):
             order = [e for e in order if e[0] not in ('sky', 'felt_sky')]
     for k, (name, params) in enumerate([] if prog.style in ('3d', 'toon') else order):
         if felt:
-            layer(lambda c, name=name, params=params: elems[name](c, t, tl, params), 0.35 if k == 0 else 1.0, keep=(name in ('sky', 'felt_sky')))
+            layer(lambda c, name=name, params=params: elems[name](c, t, tl, params), 0.35 if k == 0 else 1.0, keep=(name in ('sky', 'felt_sky')), cache=True)
         else:
             elems[name](ctx, t, tl, params)
     # actors, effects, text in program order; 'hold=1' keeps an effect at its end state until the scene ends
@@ -164,6 +191,8 @@ def render_frame(prog, t, out_size):
 
 
 _PROG = None
+_STILL = {}  # per worker: (scene, layer hashes) -> picture after those layers
+_SEEN = {}
 
 
 def _init(prog):
@@ -191,7 +220,7 @@ def render_film(prog, out_path, size=None, procs=6, frames_dir=None, step=1, aud
     jobs = [(k, i / prog.fps, size, os.path.join(frames_dir, f'{k:05d}.png')) for k, i in enumerate(range(0, n, step))]
     done = 0
     with Pool(procs, initializer=_init, initargs=(prog,)) as pool:
-        for _ in pool.imap_unordered(_job, jobs, chunksize=4):
+        for _ in pool.imap_unordered(_job, jobs, chunksize=max(4, len(jobs) // (procs * 3))):
             done += 1
             if done % 50 == 0 or done == len(jobs):
                 print(f'  frames {done}/{len(jobs)}', file=sys.stderr, flush=True)

@@ -292,32 +292,124 @@ def rainbow(ctx, t, tl, p):
 
 @element('planet')
 def planet(ctx, t, tl, p):
-    """A planet with continents and an optional ring: x, y, r, ring=1."""
+    """A planet with continents and an optional ring: x, y, r, ring=1, color. The ring passes behind and in front of the ball."""
     x, y, r = p.get('x', 0.5), p.get('y', 0.5), p.get('r', 0.2)
+    ring = p.get('ring', 0)
+    ang = -0.25
+
+    def band(lo, hi, rx, ry, w):  # part of the ring between angles lo..hi, as a closed strip
+        pts, inn = [], []
+        for i in range(41):
+            a = lo + (hi - lo) * i / 40
+            for R, out in ((1.0, pts), (1 - w, inn)):
+                u, v = rx * R * math.cos(a), ry * R * math.sin(a)
+                out.append((x + (u * math.cos(ang) - v * math.sin(ang)) * ctx.H / ctx.W, y + u * math.sin(ang) + v * math.cos(ang)))
+        return pts + inn[::-1]
+
+    if ring:
+        _poly(ctx, band(math.pi, 2 * math.pi, r * 1.7, r * 0.32, 0.28), '#c9a868')
     _ell(ctx, x, y, r, r, p.get('color', '#4a86c8'))
     rot = t * 0.02
     for dx, dy, rr in ((-0.35, -0.2, 0.3), (0.3, 0.1, 0.35), (-0.1, 0.45, 0.22)):
         cx = x + ((dx + rot) % 1.4 - 0.7) * r * ctx.ar * 1.2
         if abs(cx - x) < r * ctx.ar * 0.75:
             _ell(ctx, cx, y + dy * r, rr * r, rr * r * 0.8, '#6fbf6a')
-    if p.get('ring', 0):
-        ctx.ellipse(x, y, r * 1.6, r * 0.25, '#e8c98a', angle=-0.25)
+    if ring:
+        pc = ctx.piece()
+        _poly(pc, band(0, math.pi, r * 1.7, r * 0.32, 0.28), '#e8c98a')
+
+
+def _face(c, P, k, who):
+    """A small face for a rocket window: cat, boy, girl, dog, bunny."""
+    if who in ('cat', 'fox', 'dog', 'bunny', 'bear'):
+        fur = {'cat': '#f0a04b', 'fox': '#e8743b', 'dog': '#c9955c', 'bunny': '#f2ecea', 'bear': '#9a6a45'}[who]
+        if who == 'bunny':
+            for sx in (-1, 1):
+                c.ellipse(*P(0.06 * sx, -0.86), 0.022 * k, 0.06 * k, fur)
+        elif who in ('cat', 'fox'):
+            for sx in (-1, 1):
+                c.d.polygon([P(0.03 * sx, -0.77), P(0.085 * sx, -0.84), P(0.075 * sx, -0.74)], fill=fur)
+        else:
+            for sx in (-1, 1):
+                c.ellipse(*P(0.07 * sx, -0.79), 0.02 * k, 0.025 * k, fur)
+        c.ellipse(*P(0, -0.72), 0.075 * k, 0.065 * k, fur)
+    else:
+        c.ellipse(*P(0, -0.72), 0.068 * k, 0.07 * k, '#f3c9a0')
+        hair = '#3b2a20' if who == 'boy' else '#7a3e1e'
+        c.ellipse(*P(0, -0.77), 0.07 * k, 0.035 * k, hair)
+    for sx in (-1, 1):
+        c.ellipse(*P(0.028 * sx, -0.725), 0.012 * k, 0.016 * k, '#1d1a18')
+        c.ellipse(*P(0.024 * sx, -0.732), 0.004 * k, 0.005 * k, '#ffffff')
+    c.ellipse(*P(0, -0.695), 0.012 * k, 0.008 * k, '#e0607a')
 
 
 @element('rocket')
 def rocket(ctx, t, tl, p):
-    """A rocket: x, y (base), s; flying=1 shakes it and adds a flame."""
+    """A felt rocket: x, y (base), s (size); flying=1 adds a flickering flame and a shake; rise=0.2 lifts it 0.2 of the
+    frame per second; drift=0.1 moves it right per second; tilt=15 leans it (degrees, + to the right), spin=90 turns it
+    (degrees per second); pilot=cat|boy|girl|dog|bunny|fox|bear shows who looks out of the window; color=#e05a5a for
+    stripes and fins; pad=1 adds a launch tower; sputter=1 makes the flame cough."""
     x, y, s = p.get('x', 0.5), p.get('y', 0.8), p.get('s', 1.0)
-    y -= p.get('rise', 0) * tl  # rise=0.15 lifts it 0.15 of the frame per second
-    sh = 0.002 * math.sin(t * 40) if p.get('flying', 0) else 0
-    x += sh
-    if p.get('flying', 0):
-        fl = 0.04 * s * (1 + 0.3 * math.sin(t * 30))
-        _poly(ctx, [(x - 0.02 * s, y), (x + 0.02 * s, y), (x, y + fl + 0.03 * s)], '#f6a23e')
-    _poly(ctx, [(x - 0.045 * s, y), (x - 0.025 * s, y - 0.06 * s), (x - 0.025 * s, y - 0.01 * s)], '#e05a5a')
-    _poly(ctx, [(x + 0.045 * s, y), (x + 0.025 * s, y - 0.06 * s), (x + 0.025 * s, y - 0.01 * s)], '#e05a5a')
-    _poly(ctx, [(x - 0.028 * s, y), (x + 0.028 * s, y), (x + 0.028 * s, y - 0.16 * s), (x, y - 0.23 * s), (x - 0.028 * s, y - 0.16 * s)], '#f1f1f5')
-    _ell(ctx, x, y - 0.13 * s, 0.018 * s, 0.018 * s, '#6aaee8')
+    fly = p.get('flying', 0)
+    y -= p.get('rise', 0) * tl
+    x += p.get('drift', 0) * tl
+    a = math.radians(p.get('tilt', 0) + p.get('spin', 0) * tl)
+    if fly:
+        x += 0.0025 * s * math.sin(t * 47)
+        a += 0.02 * math.sin(t * 31)
+    h = 0.25 * s
+    ca, sa = math.cos(a), math.sin(a)
+
+    def P(u, v):  # u across, v along the rocket (0 at the base, -1 at the nose), in units of the rocket height
+        X, Y = u * h, v * h
+        return ((x + (X * ca - Y * sa) * ctx.H / ctx.W) * ctx.W, (y + X * sa + Y * ca) * ctx.H)
+
+    col = p.get('color', '#e05a5a')
+    k = h * ctx.H  # px per unit, for round parts
+
+    class C:  # a ctx wrapper that draws in pixels
+        def __init__(self, c):
+            self.d = c.d
+        def ellipse(self, cx, cy, rx, ry, colr):
+            self.d.ellipse([cx - rx, cy - ry, cx + rx, cy + ry], fill=colr)
+
+    if p.get('pad', 0):
+        tw = ctx.d
+        bx = x + 0.12 * s * ctx.H / ctx.W * 1.0
+        tw.rectangle([bx * ctx.W - 0.012 * k * 4, (y - h * 1.05) * ctx.H, bx * ctx.W + 0.012 * k * 4, y * ctx.H], fill='#8d8f99')
+        for i in range(7):
+            yy = (y - h * (0.1 + i * 0.14)) * ctx.H
+            tw.rectangle([bx * ctx.W - 0.15 * k, yy, bx * ctx.W + 0.05 * k, yy + 0.02 * k], fill='#6d6f79')
+        tw.rectangle([(x - 0.3 * s * ctx.H / ctx.W) * ctx.W, y * ctx.H - 0.02 * k, (x + 0.3 * s * ctx.H / ctx.W) * ctx.W, y * ctx.H + 0.06 * k], fill='#7d7f88')
+    base = C(ctx)
+    if fly:
+        cough = p.get('sputter', 0) and (math.sin(t * 7) + math.sin(t * 13)) > 0.6
+        fl = 0 if cough else (0.55 + 0.12 * math.sin(t * 37) + 0.08 * math.sin(t * 23))
+        if fl:
+            for w, L, colr in ((0.17, fl, '#f08a2e'), (0.12, fl * 0.75, '#f6c544'), (0.06, fl * 0.45, '#fff6d0')):
+                base.d.polygon([P(-w, 0.02), P(-w * 0.6, L * 0.4), P(0, L), P(w * 0.6, L * 0.4), P(w, 0.02)], fill=colr)
+        else:
+            for i in range(3):
+                base.ellipse(*P(0.05 * (i - 1), 0.12 + 0.05 * i), 0.05 * k, 0.05 * k, '#8a8a8a')
+    fins = C(ctx.piece())
+    for sx in (-1, 1):
+        fins.d.polygon([P(0.13 * sx, -0.12), P(0.3 * sx, 0.04), P(0.3 * sx, 0.1), P(0.13 * sx, 0.02)], fill=col)
+    body = C(ctx.piece())
+    body.d.polygon([P(-0.14, 0.04), P(0.14, 0.04)] + [P(0.14 * math.cos(q * math.pi / 2 / 12), -0.62 - 0.38 * math.sin(q * math.pi / 2 / 12)) for q in range(13)]
+                   + [P(-0.14 * math.cos(q * math.pi / 2 / 12), -0.62 - 0.38 * math.sin(q * math.pi / 2 / 12)) for q in range(12, -1, -1)], fill='#f3efe6')
+    body.d.polygon([P(-0.14, -0.2), P(0.14, -0.2), P(0.14, -0.28), P(-0.14, -0.28)], fill=col)
+    nose = C(ctx.piece())
+    nose.d.polygon([P(0.115 * math.cos(q * math.pi / 2 / 10), -0.8 - 0.2 * math.sin(q * math.pi / 2 / 10)) for q in range(11)]
+                   + [P(-0.115 * math.cos(q * math.pi / 2 / 10), -0.8 - 0.2 * math.sin(q * math.pi / 2 / 10)) for q in range(10, -1, -1)], fill=col)
+    win = C(ctx.piece())
+    win.ellipse(*P(0, -0.52), 0.095 * k, 0.095 * k, '#9aa0ad')
+    win.ellipse(*P(0, -0.52), 0.075 * k, 0.075 * k, '#7fc2ee')
+    who = p.get('pilot')
+    if who:
+        def Q(u, v):
+            return P(u, v + 0.2)
+        _face(win, Q, k, who)
+    win.ellipse(*P(-0.03, -0.555), 0.018 * k, 0.012 * k, '#e9f6ff')
 
 
 @element('moon_ground')

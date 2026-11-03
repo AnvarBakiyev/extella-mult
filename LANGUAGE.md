@@ -20,9 +20,9 @@ Animals: `cat`, `fox`, `dog`, `bunny`, `bear`. Actions: stand, walk, run, jump, 
 | `puff_cloud` | A puffy cloud: x, y, s; drifts slowly with speed. |
 | `round_tree` | A lollipop tree that sways a little: x, y (base), s. |
 | `house_row` | A street of tall colourful houses with windows: base = street line, grey=1 drains the colour. |
-| `felt_sun` | Sun or moon: x, y, r, kind=sun|moon. |
+| `felt_sun` | Sun or moon: x, y, r, kind=sun\|moon. |
 | `felt_sea` | Sea with gentle waves from top down; a sandy shore if shore=1. |
-| `sky` | Gradient sky: time=day|dawn|sunset|night|space; night and space get stars. |
+| `sky` | Gradient sky: time=day\|dawn\|sunset\|night\|space; night and space get stars. |
 | `mountains` | Soft rounded mountains with snowy tops along the horizon: top = highest peak. |
 | `pine_tree` | A felt fir tree: x, y (base), s; snow=1 adds white tips. |
 | `forest` | A row of round and pine trees along base. |
@@ -33,8 +33,8 @@ Animals: `cat`, `fox`, `dog`, `bunny`, `bear`. Actions: stand, walk, run, jump, 
 | `house` | One house with a door and windows: x (centre), y (ground), s, color, lit=1 for warm night windows. |
 | `school` | A school with a clock and a flag: x, y (ground), s. |
 | `rainbow` | A felt rainbow arc: x, y (centre of the arc's foot), r. |
-| `planet` | A planet with continents and an optional ring: x, y, r, ring=1. |
-| `rocket` | A rocket: x, y (base), s; flying=1 shakes it and adds a flame. |
+| `planet` | A planet with continents and an optional ring: x, y, r, ring=1, color. The ring passes behind and in front of the ball. |
+| `rocket` | A felt rocket: x, y (base), s (size); flying=1 adds a flickering flame and a shake; rise=0.2 lifts it 0.2 of the frame per second; drift=0.1 moves it right per second; tilt=15 leans it (degrees, + to the right), spin=90 turns it (degrees per second); pilot=cat\|boy\|girl\|dog\|bunny\|fox\|bear shows who looks out of the window; color=#e05a5a for stripes and fins; pad=1 adds a launch tower; sputter=1 makes the flame cough. |
 | `moon_ground` | Grey cratered ground of the moon from top down. |
 | `snow_ground` | Snowy rolling ground. |
 | `snowman` | A snowman: x, y (ground), s. |
@@ -47,7 +47,9 @@ Animals: `cat`, `fox`, `dog`, `bunny`, `bear`. Actions: stand, walk, run, jump, 
 | `gift` | A wrapped present: x, y (bottom), s, color. |
 | `lamp` | A floor lamp: x, y (floor), s, on=1 glows. |
 | `bed` | A bed with a blanket: x, y (floor), s, color. |
-| `ground` | Flat ground from top down: kind=meadow|sand|road|path. |
+| `ground` | Flat ground from top down: kind=meadow\|sand\|road\|path. |
+
+Elements have no seconds and no actions. To move one, use its parameters: `rocket(flying=1,rise=0.3,tilt=20,spin=40)`; a falling rocket is `rise=-0.1` with `spin`, a crashed one `tilt=84`.
 
 ## Effects
 | name | what it is |
@@ -61,9 +63,13 @@ Animals: `cat`, `fox`, `dog`, `bunny`, `bear`. Actions: stand, walk, run, jump, 
 | `balloons` | Balloons rise from the bottom over the effect's time. |
 | `butterflies` | Butterflies flutter around at=x,y. |
 | `notes` | Music notes float up from at=x,y. |
+| `smoke` | Puffy felt smoke clouds that billow out sideways and up from at=x,y (a rocket launch, a crash, a cough); r = how far they spread; color=#efebe4. |
 
 ## Text, sound, camera
 `text "Привет!" font at 0.5,0.2 size=0.11 color=#c5583e 9-12s hold=1` writes any text. `music mood=bright key=C tempo=110` (moods wonder dark bright tense cozy calm), `sfx chime at 6s`, `fade in 0-1s`, `fade out 15-16s`, `camera zoom 1.0-1.1 0-6s`, `camera pan right 0-6s`.
+
+## Voice
+`voice "Две тысячи двадцать шестой год. [pause] Человечество готово." at 0.3s who=deep` speaks the words from that second; the music gets quieter under speech. Voices (ElevenLabs): `narrator`, `deep`, `odessa`, `gogi`, `fairy`, `calm`. Tags in square brackets set the delivery: `[excited]`, `[whispering]`, `[sighs]`, `[pause]`, `[deadpan]`. Each line is generated once and cached. It needs your own ElevenLabs key as `"elevenlabs_key"` in `~/extella-mult/config.json`; without a key use a ready recording: `voice file=~/line.mp3 at 2s`.
 
 ## Films as Extella experts
 In Extella a film is an expert with `cspl=scene`; `{{name}}` places are filled from the run parameters, and the handler runs `check`, `render` or `status`. `extella/templates/` holds eight felt stories.
