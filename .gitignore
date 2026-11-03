@@ -1,0 +1,6 @@
+film_*.mp4
+*.mp4
+out/
+__pycache__/
+config.json
+dist/

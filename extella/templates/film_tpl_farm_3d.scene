@@ -1,0 +1,18 @@
+film title="{{title}}" style=3d fps=24 size=1920x804
+music mood=calm key=F tempo=76
+scene 0-8s: day meadow common_tree_1(x=0.08,z=14) common_tree_4(x=0.92,z=15) grass_common_tall(x=0.3,z=4) flower_4_group(x=0.7,z=5)
+{{a1}} idle at 0.25 0-8s facing=1
+{{a2}} walkslow from 0.5 to 0.6 0-8s
+{{a3}} idle at 0.82 0-8s facing=-1
+{{person}} walk_carry from offleft to 0.4 3-7.5s
+{{person}} idle at 0.4 7.5-8s
+fade in 0-1.5s
+sfx wind at 0.5s
+scene 8-15s: {{sky2}} meadow common_tree_1(x=0.08,z=14) common_tree_4(x=0.92,z=15) grass_common_tall(x=0.3,z=4)
+{{a1}} idle at 0.25 8-15s facing=1
+{{a2}} idle at 0.6 8-15s
+{{a3}} idle at 0.82 8-15s facing=-1
+{{person}} sit at 0.42 8-15s facing=1
+camera pan right 8-15s amount=0.05
+text "{{title}}" font at 0.5,0.22 size=0.15 color=#fff0d0 11-14s hold=1
+fade out 14-15s

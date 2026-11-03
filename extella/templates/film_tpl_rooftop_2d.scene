@@ -1,0 +1,16 @@
+film title="{{title}}" fps=24 size=1920x804
+music mood={{mood}} key=D tempo=72
+scene 0-9s: night_sky stars moon(x=0.7,y=0.25) rooftop(view=wide,horizon=0.8)
+fox stand at 0.5,0.9 size=0.15 facing=1 0-9s
+camera zoom 1.0-1.06 0-9s
+fade in 0-1.5s
+sfx wind at 0.5s
+scene 9-13s: night_sky stars moon(x=0.7,y=0.25) rooftop(view=wide,horizon=0.8)
+fox stand at 0.5,0.9 size=0.15 facing=1 9-13s
+effect paper_bird 9-12.5s start=0.2,0.5 end=0.85,0.15 size=0.04
+sfx whoosh at 9.5s
+scene 13-15s: night_sky stars moon(x=0.7,y=0.25) rooftop(view=wide,horizon=0.8)
+fox stand at 0.5,0.9 size=0.15 facing=1 13-15s
+text "{{title}}" font at 0.5,0.5 size=0.18 color=#f8f0e0 13-14.5s hold=1
+sfx chime at 13s
+fade out 14.5-15s

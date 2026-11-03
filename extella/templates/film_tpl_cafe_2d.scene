@@ -1,0 +1,20 @@
+film title="{{title}}" fps=24 size=1920x804
+music mood={{mood}} key=F tempo=84
+scene 0-7s: cafe(table=0.62) plant(x=0.93,y=0.6,s=0.12) saucer(x=0.6,y=0.74,r=0.1) cup(x=0.6,y=0.6,r=0.06)
+effect steam 0-7s at=0.6,0.6 h=0.28 count=5
+cat sit at 0.4,0.88 size=0.34 facing=1 0-7s
+camera zoom 1.0-1.08 0-7s
+fade in 0-1.2s
+sfx purr at 1s
+scene 7-11s: cafe(table=0.62) plant(x=0.93,y=0.6,s=0.12) saucer(x=0.6,y=0.74,r=0.1) cup(x=0.6,y=0.6,r=0.06)
+effect steam 7-11s at=0.6,0.6 h=0.28 count=5
+cat paw at 0.4,0.88 size=0.34 facing=1 7-11s
+sfx meow at 8.5s
+scene 11-20s: cafe(table=0.62) plant(x=0.93,y=0.6,s=0.12) saucer(x=0.6,y=0.74,r=0.1)
+effect cup_knock 11-16s at=0.6,0.6 r=0.06 hold=1
+cat look at 0.4,0.88 size=0.34 facing=1 11-20s
+camera shake 11.2-12s amount=0.012
+sfx thud at 11.3s
+sfx splash at 11.5s
+text "{{title}}" font at 0.5,0.9 size=0.16 color=#f8f0e0 16.5-19s hold=1
+fade out 18.8-20s

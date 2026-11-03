@@ -1,0 +1,21 @@
+film title="{{title}}" style=3d fps=24 size=1920x804
+music mood=bright key=C tempo=124
+scene 0-5s: {{sky}} meadow common_tree_2(x=0.1,z=13) common_tree_5(x=0.9,z=12) flower_3_group(x=0.5,z=6)
+{{p1}} run from offleft to 0.3 0-3s
+{{p1}} idle at 0.3 3-5s
+{{p2}} run from offright to 0.7 0.5-3.5s
+{{p2}} idle at 0.7 3.5-5s facing=-1
+{{p3}} run from offleft to 0.5 1-4s
+{{p3}} idle at 0.5 4-5s
+fade in 0-0.8s
+scene 5-12s: {{sky}} meadow common_tree_2(x=0.1,z=13) common_tree_5(x=0.9,z=12) flower_3_group(x=0.5,z=6)
+{{p1}} jump at 0.3 5-8s facing=1
+{{p2}} jump at 0.7 5.4-8s facing=-1
+{{p3}} victory at 0.5 5-12s facing=front
+{{p1}} victory at 0.3 8-12s facing=front
+{{p2}} victory at 0.7 8-12s facing=front
+camera zoom 1.0-1.12 5-12s
+sfx sparkle at 5.2s
+sfx chime at 8s
+text "{{title}}" font at 0.5,0.2 size=0.16 color=#fff4d8 8.5-11s hold=1
+fade out 11-12s

@@ -1,0 +1,161 @@
+$extens("include.py")
+include("import os", [])
+
+def mult_install(kind: str = "2d", bundle_url: str = "", bundle_sha256: str = "", blender_path: str = "", download_blender: bool = True) -> dict:
+    """Installs Extella Mult on this device. kind=2d: drawn films, no Blender. kind=3d: also the CC0 model library and Blender (downloaded from blender.org if missing)."""
+    with_3d = str(kind) == "3d"
+    REL = "https://github.com/AnvarBakiyev/extella-mult/releases/download/v1/"
+    if not bundle_url:
+        bundle_url = REL + ("extella-mult-3d.tar.gz" if with_3d else "extella-mult-2d.tar.gz")
+    import os, sys, json, subprocess, tarfile, tempfile, hashlib, shutil, platform, urllib.request, glob
+    home = os.path.expanduser("~/extella-mult")
+    os.makedirs(home, exist_ok=True)
+    steps = []
+    py = sys.executable or "python3"
+    # 1. python packages
+    need = []
+    for mod, pkg in (("numpy", "numpy"), ("scipy", "scipy"), ("PIL", "pillow"), ("imageio_ffmpeg", "imageio-ffmpeg")):
+        r = subprocess.run([py, "-c", "import " + mod], capture_output=True)
+        if r.returncode != 0:
+            need.append(pkg)
+    if need:
+        venv = getattr(sys, "base_prefix", sys.prefix) != sys.prefix
+        r = subprocess.run([py, "-m", "pip", "install", "--quiet"] + ([] if venv else ["--user"]) + need, capture_output=True, text=True)
+        if r.returncode != 0:
+            return {"status": "error", "step": "pip", "error": (r.stderr or r.stdout)[-600:]}
+    steps.append("python packages ok" + (" (installed " + ", ".join(need) + ")" if need else ""))
+    ff = subprocess.run([py, "-c", "import imageio_ffmpeg; print(imageio_ffmpeg.get_ffmpeg_exe())"], capture_output=True, text=True).stdout.strip()
+    steps.append("ffmpeg " + ("ok" if ff else "missing"))
+    # 2. the language bundle
+    if bundle_url:
+        tmp = tempfile.mkdtemp()
+        tar = os.path.join(tmp, "b.tar.gz")
+        if bundle_url.startswith("file://") or os.path.exists(bundle_url):
+            shutil.copy(bundle_url.replace("file://", ""), tar)
+        else:
+            urllib.request.urlretrieve(bundle_url, tar)
+        if bundle_sha256:
+            h = hashlib.sha256(open(tar, "rb").read()).hexdigest()
+            if h != bundle_sha256:
+                return {"status": "error", "step": "bundle", "error": "checksum mismatch, the download is damaged or not ours"}
+        with tarfile.open(tar) as t:
+            for m in t.getmembers():
+                if m.name.startswith("/") or ".." in m.name.split("/") or not (m.isfile() or m.isdir()):
+                    return {"status": "error", "step": "bundle", "error": "unsafe path in bundle: " + m.name}
+            t.extractall(home)
+        shutil.rmtree(tmp, ignore_errors=True)
+        steps.append("bundle unpacked into " + home)
+    if not os.path.isdir(os.path.join(home, "handler")):
+        return {"status": "error", "step": "bundle", "error": "no language files in ~/extella-mult; pass bundle_url"}
+    # 3. Blender for style=3d
+    blender = blender_path
+    if with_3d and not blender:
+        cands = ["/Applications/Blender.app/Contents/MacOS/Blender", shutil.which("blender") or ""]
+        cands += glob.glob("C:/Program Files/Blender Foundation/Blender*/blender.exe")
+        cands += glob.glob(os.path.join(home, "blender", "**", "blender"), recursive=True) + glob.glob(os.path.join(home, "blender", "**", "Blender"), recursive=True)
+        blender = next((c for c in cands if c and os.path.isfile(c)), "")
+        if not blender and download_blender:
+            sysname, mach = platform.system(), platform.machine().lower()
+            base = "https://download.blender.org/release/Blender4.3/blender-4.3.2-"
+            url = {("Darwin", "arm64"): "macos-arm64.dmg", ("Darwin", "x86_64"): "macos-x64.dmg", ("Linux", "x86_64"): "linux-x64.tar.xz",
+                   ("Windows", "amd64"): "windows-x64.zip"}.get((sysname, mach))
+            if url:
+                bdir = os.path.join(home, "blender")
+                os.makedirs(bdir, exist_ok=True)
+                pkg = os.path.join(bdir, url)
+                urllib.request.urlretrieve(base + url, pkg)
+                if url.endswith(".dmg"):
+                    mnt = tempfile.mkdtemp()
+                    subprocess.run(["hdiutil", "attach", "-nobrowse", "-quiet", "-mountpoint", mnt, pkg], check=True)
+                    try:
+                        shutil.copytree(os.path.join(mnt, "Blender.app"), os.path.join(bdir, "Blender.app"), symlinks=True)
+                    finally:
+                        subprocess.run(["hdiutil", "detach", "-quiet", mnt])
+                    blender = os.path.join(bdir, "Blender.app", "Contents", "MacOS", "Blender")
+                elif url.endswith(".tar.xz"):
+                    with tarfile.open(pkg) as t:
+                        t.extractall(bdir)
+                    blender = glob.glob(os.path.join(bdir, "blender-*", "blender"))[0]
+                else:
+                    import zipfile
+                    zipfile.ZipFile(pkg).extractall(bdir)
+                    blender = glob.glob(os.path.join(bdir, "blender-*", "blender.exe"))[0]
+                os.remove(pkg)
+                steps.append("Blender 4.3.2 downloaded from blender.org")
+        if not blender:
+            steps.append("Blender not found: install Blender 4.x from blender.org and run again, or pass blender_path")
+    if blender:
+        steps.append("blender " + blender)
+    # 4. config and the handler
+    json.dump({"python": py, "ffmpeg": ff, "blender": blender}, open(os.path.join(home, "config.json"), "w"), indent=1)
+    import disnet
+    handler_code = r"""
+def scene(code = "", filtered_source_code = "", func_name = "", **extra):
+    import os, re, time, uuid, subprocess
+    params = dict(extra)
+    if isinstance(extra.get("kwargs"), dict):
+        params.update(extra["kwargs"])
+    home = os.path.expanduser("~/extella-mult")
+    import json
+    try:
+        py = json.load(open(os.path.join(home, "config.json"))).get("python") or "python3"
+    except Exception:
+        py = "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3.12"
+    if not os.path.isdir(os.path.join(home, "handler")):
+        return {"status": "error", "error": "the scene language is not installed on this device (~/extella-mult)"}
+    out = os.path.join(home, "out")
+    os.makedirs(out, exist_ok=True)
+    mode = str(params.get("mode") or "check")
+    if mode == "status":
+        job = str(params.get("job") or "")
+        log = os.path.join(out, job + ".log")
+        if not job or not os.path.exists(log):
+            return {"status": "error", "error": "status needs job=<id> from mode=render"}
+        text = open(log, encoding="utf-8", errors="replace").read()
+        mp4 = os.path.join(out, job + ".mp4")
+        if "wrote " in text and os.path.exists(mp4):
+            return {"status": "done", "job": job, "video": mp4, "size_mb": round(os.path.getsize(mp4) / 1e6, 1)}
+        if "Traceback" in text or "ERROR" in text:
+            return {"status": "failed", "job": job, "error": text[-800:]}
+        return {"status": "running", "job": job, "last": text.strip().splitlines()[-1:] }
+    source = code or filtered_source_code or ""
+    # {{placeholders}} from kwargs, as godot_script does; an unfilled one is an error, not an empty string
+    def fill(m):
+        k = m.group(1)
+        return str(params[k]) if k in params else m.group(0)
+    program = re.sub(r"\{\{(\w+)\}\}", fill, source)
+    left = sorted(set(re.findall(r"\{\{(\w+)\}\}", program)))
+    lines = len([l for l in program.splitlines() if l.strip() and not l.strip().startswith("#")])
+    if left:
+        return {"status": "rejected", "errors": "fill the template values: " + ", ".join(left), "lines": lines, "film": func_name}
+    if not program.strip():
+        return {"status": "rejected", "errors": "the film program is empty", "film": func_name}
+    jid = time.strftime("%Y%m%d-%H%M%S") + "-" + uuid.uuid4().hex[:6]
+    path = os.path.join(out, jid + ".scene")
+    open(path, "w", encoding="utf-8").write(program)
+    chk = subprocess.run([py, "-m", "handler.main", path, "--check"], cwd=home, capture_output=True, text=True, timeout=120)
+    msg = (chk.stderr or "").strip()
+    if chk.returncode != 0:
+        return {"status": "rejected", "errors": msg.replace("ERROR: ", ""), "lines": lines, "film": func_name}
+    if mode == "check":
+        return {"status": "ok", "summary": msg.replace("ok: ", ""), "lines": lines, "film": func_name, "handler_version": 1}
+    if mode != "render":
+        return {"status": "error", "error": "mode must be check, render or status"}
+    log = open(os.path.join(out, jid + ".log"), "w")
+    subprocess.Popen([py, "-m", "handler.main", path, "--out", os.path.join(out, jid + ".mp4"), "--procs", "6"],
+                     cwd=home, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
+    return {"status": "started", "job": jid, "film": func_name, "summary": msg.replace("ok: ", ""), "lines": lines,
+            "next": "the video will be at ~/extella-mult/out/" + jid + ".mp4; check with mode=status job=" + jid + " only if the user asks"}
+"""
+    d = disnet.Disnet(url="https://disnet.extella.ai")
+    envelope = {"filtered_source_code": "", "func_name": "", "args": None, "kwargs": None, "cspl": "scene", "response_format": None}
+    d.container(code=handler_code, func_name="scene", container_path="scene", args=None, kwargs=envelope, cspl_type="fython", push=False)
+    steps.append("cspl=scene handler registered (version 1)")
+    # 5. self-test: check a 2-second 2d film
+    test = os.path.join(home, "out", "selftest.scene")
+    os.makedirs(os.path.dirname(test), exist_ok=True)
+    open(test, "w").write('film fps=24 size=640x268\nscene 0-2s: night_sky stars moon rooftop\nfox stand at 0.5 0-2s\ntext "Extella" font at 0.5,0.3 size=0.15 color=#fff4d8 0-1.5s hold=1\n')
+    r = subprocess.run([py, "-m", "handler.main", test, "--check"], cwd=home, capture_output=True, text=True, timeout=120)
+    ok = r.returncode == 0
+    steps.append("self-test " + ("ok" if ok else "failed: " + r.stderr[-300:]))
+    return {"status": "success" if ok else "error", "steps": steps, "device": platform.system() + " " + platform.machine(), "styles": ["2d"] + (["3d", "toon"] if blender else [])}

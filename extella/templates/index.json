@@ -1,0 +1,97 @@
+[
+ {
+  "name": "film_tpl_cafe_2d",
+  "description": "Template, style=2d, 20 s: a sunny cafe, the drawn cat sits by a steaming cup, reaches out and knocks it over, coffee spills, a title. Fill: title (any text, Russian or English), mood (wonder dark bright tense cozy calm).",
+  "params": {
+   "title": "Morning",
+   "mood": "cozy"
+  }
+ },
+ {
+  "name": "film_tpl_chase_3d",
+  "description": "Template, style=3d, 14 s: a farm animal runs across the meadow, a person runs after it, both stop out of breath; title. Fill: animal (cow horse pig sheep llama zebra pug), person (any 3d person, e.g. chef_male, doctor_female_young, cowboy_male, knight_male, pirate_female, ninja_male, wizard, witch, viking_male, worker_female), title (any text, Russian or English).",
+  "params": {
+   "animal": "pig",
+   "person": "worker_male",
+   "title": "Catch"
+  }
+ },
+ {
+  "name": "film_tpl_duel_3d",
+  "description": "Template, style=3d, 14 s: a hero and a villain meet in a field, the villain strikes and misses, the hero strikes back, the villain falls, the hero celebrates; title. Fill: hero, villain (any 3d person, e.g. chef_male, doctor_female_young, cowboy_male, knight_male, pirate_female, ninja_male, wizard, witch, viking_male, worker_female; villains: goblin_male goblin_female zombie_male zombie_female pirate_male ninja_male), title (any text, Russian or English).",
+  "params": {
+   "hero": "knight_male",
+   "villain": "goblin_male",
+   "title": "Fable"
+  }
+ },
+ {
+  "name": "film_tpl_farm_3d",
+  "description": "Template, style=3d, 15 s: a quiet farm meadow with three animals, a farmer walks in carrying something, the sun goes down; title. Fill: a1, a2, a3 (three different of: cow horse pig sheep llama zebra pug), person (any 3d person, e.g. chef_male, doctor_female_young, cowboy_male, knight_male, pirate_female, ninja_male, wizard, witch, viking_male, worker_female), sky2 (dawn sunset night), title (any text, Russian or English).",
+  "params": {
+   "a1": "cow",
+   "a2": "sheep",
+   "a3": "horse",
+   "person": "worker_female",
+   "sky2": "sunset",
+   "title": "Farm"
+  }
+ },
+ {
+  "name": "film_tpl_meeting_3d",
+  "description": "Template, style=3d, 14 s: two people walk toward each other in a meadow, stop, the first raises arms in victory, the second jumps for joy; title. Fill: person1, person2 (any 3d person, e.g. chef_male, doctor_female_young, cowboy_male, knight_male, pirate_female, ninja_male, wizard, witch, viking_male, worker_female), sky (day dawn sunset night), title (any text, Russian or English).",
+  "params": {
+   "person1": "cowboy_male",
+   "person2": "chef_female",
+   "sky": "day",
+   "title": "Привет!"
+  }
+ },
+ {
+  "name": "film_tpl_night_forest_3d",
+  "description": "Template, style=3d, 14 s: a night pine forest, an animal walks between the trees, an eagle flies over the moonlit sky; title. Fill: animal (dog cat wolf, or a farm animal: cow horse pig sheep llama zebra pug), title (any text, Russian or English).",
+  "params": {
+   "animal": "wolf",
+   "title": "Ночной лес"
+  }
+ },
+ {
+  "name": "film_tpl_park_3d",
+  "description": "Template, style=3d, 16 s: a park, a person walks in and stops, an animal follows; then the sky changes; a title. Fill: person (any 3d person, e.g. chef_male, doctor_female_young), animal (dog cat wolf pug cow horse pig sheep llama zebra), sky2 (dawn sunset night), title.",
+  "params": {
+   "person": "chef_male",
+   "animal": "dog",
+   "sky2": "sunset",
+   "title": "Sunday"
+  }
+ },
+ {
+  "name": "film_tpl_party_3d",
+  "description": "Template, style=3d, 12 s: three friends run in, jump and celebrate together; title. Fill: p1, p2, p3 (any 3d person, e.g. chef_male, doctor_female_young, cowboy_male, knight_male, pirate_female, ninja_male, wizard, witch, viking_male, worker_female), sky (day dawn sunset night), title (any text, Russian or English).",
+  "params": {
+   "p1": "ninja_female",
+   "p2": "wizard",
+   "p3": "chef_male",
+   "sky": "day",
+   "title": "Team"
+  }
+ },
+ {
+  "name": "film_tpl_rooftop_2d",
+  "description": "Template, style=2d, 15 s: night rooftop, the fox stands and looks at the moon, a paper bird flies over, a title. Fill: title (any text, Russian or English), mood (wonder dark bright tense cozy calm).",
+  "params": {
+   "title": "Stars",
+   "mood": "wonder"
+  }
+ },
+ {
+  "name": "film_tpl_street_3d",
+  "description": "Template, style=3d, 12 s: an evening street with lamps and parked cars, a person walks along, stops by a car and picks something up; title. Fill: person (any 3d person, e.g. chef_male, doctor_female_young, cowboy_male, knight_male, pirate_female, ninja_male, wizard, witch, viking_male, worker_female), car (basic_car cop_car race_car simple_car_high simple_car_short taxi), sky (day dawn sunset night), title (any text, Russian or English).",
+  "params": {
+   "person": "suit_male",
+   "car": "taxi",
+   "sky": "sunset",
+   "title": "City"
+  }
+ }
+]
