@@ -15,6 +15,7 @@ def scene(code = "", filtered_source_code = "", func_name = "", **extra):
         return {"status": "error", "error": "the scene language is not installed on this device (~/extella-mult)"}
     out = os.path.join(home, "out")
     os.makedirs(out, exist_ok=True)
+    env = {k: v for k, v in os.environ.items() if k not in ("PYTHONNOUSERSITE", "PYTHONHOME", "PYTHONPATH", "VIRTUAL_ENV", "UV_PROJECT_ENVIRONMENT")}
     mode = str(params.get("mode") or "check")
     if mode == "status":
         job = str(params.get("job") or "")
@@ -43,7 +44,7 @@ def scene(code = "", filtered_source_code = "", func_name = "", **extra):
     jid = time.strftime("%Y%m%d-%H%M%S") + "-" + uuid.uuid4().hex[:6]
     path = os.path.join(out, jid + ".scene")
     open(path, "w", encoding="utf-8").write(program)
-    chk = subprocess.run([py, "-m", "handler.main", path, "--check"], cwd=home, capture_output=True, text=True, timeout=120)
+    chk = subprocess.run([py, "-m", "handler.main", path, "--check"], cwd=home, env=env, capture_output=True, text=True, timeout=120)
     msg = (chk.stderr or "").strip()
     if chk.returncode != 0:
         return {"status": "rejected", "errors": msg.replace("ERROR: ", ""), "lines": lines, "film": func_name}
@@ -53,6 +54,6 @@ def scene(code = "", filtered_source_code = "", func_name = "", **extra):
         return {"status": "error", "error": "mode must be check, render or status"}
     log = open(os.path.join(out, jid + ".log"), "w")
     subprocess.Popen([py, "-m", "handler.main", path, "--out", os.path.join(out, jid + ".mp4"), "--procs", "6"],
-                     cwd=home, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
+                     cwd=home, env=env, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
     return {"status": "started", "job": jid, "film": func_name, "summary": msg.replace("ok: ", ""), "lines": lines,
             "next": "the video will be at ~/extella-mult/out/" + jid + ".mp4; check with mode=status job=" + jid + " only if the user asks"}

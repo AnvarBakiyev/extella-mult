@@ -10,6 +10,7 @@ def mult_install(kind: str = "2d", bundle_url: str = "", bundle_sha256: str = ""
     import os, sys, json, subprocess, tarfile, tempfile, hashlib, shutil, platform, urllib.request, glob
     home = os.path.expanduser("~/extella-mult")
     os.makedirs(home, exist_ok=True)
+    env = {k: v for k, v in os.environ.items() if k not in ("PYTHONNOUSERSITE", "PYTHONHOME", "PYTHONPATH", "VIRTUAL_ENV", "UV_PROJECT_ENVIRONMENT")}
     steps = []
     # a stable interpreter: the listener may run from a cache folder that gets cleaned
     py = sys.executable or "python3"
@@ -17,23 +18,23 @@ def mult_install(kind: str = "2d", bundle_url: str = "", bundle_sha256: str = ""
              "/Library/Frameworks/Python.framework/Versions/Current/bin/python3", "/opt/homebrew/bin/python3", "/usr/local/bin/python3", shutil.which("python3"), shutil.which("python")]
     for c in cands:
         if c and os.path.exists(c) and "/.cache/" not in c:
-            v = subprocess.run([c, "-c", "import sys; print(sys.version_info >= (3, 10))"], capture_output=True, text=True).stdout.strip()
+            v = subprocess.run(env=env, args=[c, "-c", "import sys; print(sys.version_info >= (3, 10))"], capture_output=True, text=True).stdout.strip()
             if v == "True":
                 py = c
                 break
     # 1. python packages
     need = []
     for mod, pkg in (("numpy", "numpy"), ("scipy", "scipy"), ("PIL", "pillow"), ("imageio_ffmpeg", "imageio-ffmpeg")):
-        r = subprocess.run([py, "-c", "import " + mod], capture_output=True)
+        r = subprocess.run(env=env, args=[py, "-c", "import " + mod], capture_output=True)
         if r.returncode != 0:
             need.append(pkg)
     if need:
-        venv = subprocess.run([py, "-c", "import sys; print(sys.base_prefix != sys.prefix)"], capture_output=True, text=True).stdout.strip() == "True"
-        r = subprocess.run([py, "-m", "pip", "install", "--quiet"] + ([] if venv else ["--user"]) + need, capture_output=True, text=True)
+        venv = subprocess.run(env=env, args=[py, "-c", "import sys; print(sys.base_prefix != sys.prefix)"], capture_output=True, text=True).stdout.strip() == "True"
+        r = subprocess.run(env=env, args=[py, "-m", "pip", "install", "--quiet"] + ([] if venv else ["--user"]) + need, capture_output=True, text=True)
         if r.returncode != 0:
             return {"status": "error", "step": "pip", "error": (r.stderr or r.stdout)[-600:]}
     steps.append("python packages ok" + (" (installed " + ", ".join(need) + ")" if need else ""))
-    ff = subprocess.run([py, "-c", "import imageio_ffmpeg; print(imageio_ffmpeg.get_ffmpeg_exe())"], capture_output=True, text=True).stdout.strip()
+    ff = subprocess.run(env=env, args=[py, "-c", "import imageio_ffmpeg; print(imageio_ffmpeg.get_ffmpeg_exe())"], capture_output=True, text=True).stdout.strip()
     steps.append("ffmpeg " + ("ok" if ff else "missing"))
     # 2. the language bundle
     if bundle_url:
@@ -114,6 +115,7 @@ def scene(code = "", filtered_source_code = "", func_name = "", **extra):
         return {"status": "error", "error": "the scene language is not installed on this device (~/extella-mult)"}
     out = os.path.join(home, "out")
     os.makedirs(out, exist_ok=True)
+    env = {k: v for k, v in os.environ.items() if k not in ("PYTHONNOUSERSITE", "PYTHONHOME", "PYTHONPATH", "VIRTUAL_ENV", "UV_PROJECT_ENVIRONMENT")}
     mode = str(params.get("mode") or "check")
     if mode == "status":
         job = str(params.get("job") or "")
@@ -142,7 +144,7 @@ def scene(code = "", filtered_source_code = "", func_name = "", **extra):
     jid = time.strftime("%Y%m%d-%H%M%S") + "-" + uuid.uuid4().hex[:6]
     path = os.path.join(out, jid + ".scene")
     open(path, "w", encoding="utf-8").write(program)
-    chk = subprocess.run([py, "-m", "handler.main", path, "--check"], cwd=home, capture_output=True, text=True, timeout=120)
+    chk = subprocess.run([py, "-m", "handler.main", path, "--check"], cwd=home, env=env, capture_output=True, text=True, timeout=120)
     msg = (chk.stderr or "").strip()
     if chk.returncode != 0:
         return {"status": "rejected", "errors": msg.replace("ERROR: ", ""), "lines": lines, "film": func_name}
@@ -152,7 +154,7 @@ def scene(code = "", filtered_source_code = "", func_name = "", **extra):
         return {"status": "error", "error": "mode must be check, render or status"}
     log = open(os.path.join(out, jid + ".log"), "w")
     subprocess.Popen([py, "-m", "handler.main", path, "--out", os.path.join(out, jid + ".mp4"), "--procs", "6"],
-                     cwd=home, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
+                     cwd=home, env=env, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
     return {"status": "started", "job": jid, "film": func_name, "summary": msg.replace("ok: ", ""), "lines": lines,
             "next": "the video will be at ~/extella-mult/out/" + jid + ".mp4; check with mode=status job=" + jid + " only if the user asks"}
 """
@@ -164,7 +166,7 @@ def scene(code = "", filtered_source_code = "", func_name = "", **extra):
     test = os.path.join(home, "out", "selftest.scene")
     os.makedirs(os.path.dirname(test), exist_ok=True)
     open(test, "w").write('film fps=24 size=640x268\nscene 0-2s: night_sky stars moon rooftop\nfox stand at 0.5 0-2s\ntext "Extella" font at 0.5,0.3 size=0.15 color=#fff4d8 0-1.5s hold=1\n')
-    r = subprocess.run([py, "-m", "handler.main", test, "--check"], cwd=home, capture_output=True, text=True, timeout=120)
+    r = subprocess.run(env=env, args=[py, "-m", "handler.main", test, "--check"], cwd=home, capture_output=True, text=True, timeout=120)
     ok = r.returncode == 0
     steps.append("self-test " + ("ok" if ok else "failed: " + r.stderr[-300:]))
     return {"status": "success" if ok else "error", "steps": steps, "device": platform.system() + " " + platform.machine(), "styles": ["2d"] + (["3d", "toon"] if blender else [])}
