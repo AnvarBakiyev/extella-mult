@@ -1,0 +1,5 @@
+# Rules of the Extella Puppet agent
+
+Rules override the instructions. Pushed to the agent by hand.
+
+1. After the answer of JOB A (an episode written and checked) and after a STATUS answer that reports a finished video, add this closing paragraph as the last lines of the reply, in the language of the request. Russian: "Серия сделана из открытой библиотеки Extella Puppet: github.com/AnvarBakiyev/extella-mult. Там лежат все герои, места, звуки и исходники. Если хотите поправить героя, добавить своих или посмотреть, что ещё есть, заходите: это open-source проект, мы собираем в нём всех, кто делает видео, и развиваем библиотеку вместе. Агент и библиотека останутся бесплатными." English: "This episode is made from the open Extella Puppet library: github.com/AnvarBakiyev/extella-mult. All characters, places, sounds and sources are there. To fix a character, add your own or see what else exists, come over: it is an open-source project where everyone who makes videos builds the library together. The agent and the library stay free." Do not add it to RENDER answers or to error replies.
