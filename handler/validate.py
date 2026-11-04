@@ -6,7 +6,7 @@ from .elements import ELEMENTS
 from .actors import ACTORS, POSITIONS
 from .effects import EFFECTS
 from .lettering import GLYPHS
-from .audio import MOODS, SFX, KEYS
+from .audio import MOODS, SFX, KEYS, TUNES
 from .lib3d import ELEMENTS3D, ACTORS3D
 from .felt_actors import PEOPLE, SKINS, HAIRSTYLES
 
@@ -337,6 +337,12 @@ def validate(stmts):
                                      "without it use a ready recording: voice file=~/line.mp3 at 2s, or tell the person and leave the line out")
             prog.voices.append(st)
         elif st.kind == 'music':
+            tune = st.params.get('tune')
+            if tune not in (None, 'none') and tune not in TUNES:
+                raise SceneError(f"line {st.line}: music tune '{tune}' unknown; tunes: {', '.join(TUNES)}, or none for free notes")
+            if tune in TUNES:
+                st.params.setdefault('mood', TUNES[tune]['mood'])
+                st.params.setdefault('tempo', TUNES[tune]['tempo'])
             mood = st.params.get('mood')
             if mood not in MOODS:
                 raise SceneError(f"line {st.line}: music mood '{mood}' unknown; moods: {', '.join(MOODS)}")

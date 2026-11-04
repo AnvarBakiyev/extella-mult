@@ -1,5 +1,5 @@
 film title="{{title}}" style=felt fps=24 size=1920x804
-music mood=wonder key=E tempo=84
+music tune=twinkle key=E tempo=88
 scene 0-6s: sky(time=space) planet(x=0.8,y=0.3,r=0.13,color=#e07a5a) moon_ground(top=0.72) rocket(x=0.62,y=0.86,s=1.4)
 {{hero}} walk from offleft to 0.35 0-4s y=0.95
 {{hero}} wave at 0.35 4-6s y=0.95

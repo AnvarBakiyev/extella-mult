@@ -12,7 +12,7 @@ mouse sit at 0.2 4-5s y=0.98 facing=1
 {{hero}} say "{{hero_line|Ура, торт!}}" 1.2-3.2s
 {{pet}} say "{{pet_line|Ура!}}" 3.4-4.9s
 fade in 0-1s
-music mood=bright key=G tempo=112
+music tune=birthday key=G tempo=160
 
 scene 5-10s: room(time=day,window=0.84,cozy=1,picture=0.16) garland(y=0.04,x0=0.02,x1=0.98,sag=0.04) balloon_bunch(x=0.05,y=0.74) balloon_bunch(x=0.96,y=0.74) table(x=0.5,y=0.97) cake(x=0.5,y=0.79,candles={{candles|age|5}}) gift(x=0.12,y=0.97,color=#e06c8c) gift(x=0.89,y=0.97) toys(x0=0.04,x1=0.96,y=0.99)
 {{hero}} jump at 0.33 5-7s y=0.97 facing=1
@@ -25,5 +25,4 @@ mouse jump at 0.2 6-8s y=0.98 facing=1
 mouse sit at 0.2 8-10s y=0.98 facing=1
 effect balloons 5-10s
 text "{{title}}" font at 0.43,0.26 size=0.125 5-7.5s hold=1
-music mood=bright key=C tempo=120
 fade out 9.3-10s

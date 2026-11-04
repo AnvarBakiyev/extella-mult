@@ -14,6 +14,39 @@ MOODS = {
     'cozy': dict(scale=[0, 2, 4, 5, 7, 9], chords=[(0, 'maj7'), (2, 'min7'), (5, 'maj7'), (7, 'sus')], pluck=0.8, bell=0.2, pad=0.35, octave=0),
     'calm': dict(scale=[0, 2, 4, 7, 9], chords=[(0, 'maj9'), (5, 'maj7')], pluck=0.3, bell=0.1, pad=0.5, octave=0),
 }
+# Short melodies: notes are (semitones from the key, beats), None is a rest; one chord lasts `per` beats. The first six were written
+# for this project, one per mood; the last four are old songs in the public domain. Every tune has as many beats as its chords.
+_C, _F, _G, _D = (0, 'maj'), (5, 'maj'), (7, 'maj'), (2, 'maj')
+_TW1 = [(0, 1), (0, 1), (7, 1), (7, 1), (9, 1), (9, 1), (7, 2), (5, 1), (5, 1), (4, 1), (4, 1), (2, 1), (2, 1), (0, 2)]
+_TW2 = [(7, 1), (7, 1), (5, 1), (5, 1), (4, 1), (4, 1), (2, 2)]
+_JB = [(4, 1), (4, 1), (4, 2), (4, 1), (4, 1), (4, 2), (4, 1), (7, 1), (0, 1.5), (2, 0.5), (4, 4), (5, 1), (5, 1), (5, 1.5), (5, 0.5), (5, 1), (4, 1), (4, 1), (4, 0.5), (4, 0.5)]
+TUNES = {
+    'hop': dict(mood='bright', tempo=112, per=4, chords=[_C, _F, (9, 'min7'), (7, 'sus')],
+                notes=[(7, .5), (4, .5), (7, .5), (12, .5), (12, 1), (7, 1), (9, .5), (5, .5), (9, .5), (12, .5), (9, 1), (5, 1),
+                       (9, .5), (12, .5), (16, .5), (12, .5), (9, 1), (12, 1), (14, .5), (12, .5), (11, .5), (7, .5), (7, 2)]),
+    'home': dict(mood='cozy', tempo=92, per=4, chords=[(0, 'maj7'), (2, 'min7'), (5, 'maj7'), (7, 'sus')],
+                 notes=[(4, 1.5), (5, .5), (7, 2), (5, 1.5), (4, .5), (2, 2), (9, 1), (7, 1), (5, 1), (4, 1), (2, 1.5), (4, .5), (7, 2)]),
+    'breeze': dict(mood='calm', tempo=76, per=4, chords=[(0, 'maj9'), (5, 'maj7'), (0, 'maj9'), (5, 'maj7')],
+                   notes=[(12, 2), (11, 1), (7, 1), (9, 3), (7, 1), (12, 1), (14, 1), (16, 2), (12, 3), (None, 1)]),
+    'stars': dict(mood='wonder', tempo=84, per=4, chords=[(0, 'maj9'), (9, 'min7'), (5, 'maj7'), (7, 'sus')],
+                  notes=[(7, 1), (14, 1), (12, 2), (12, 1), (16, 1), (14, 2), (9, 1), (12, 1), (16, 2), (14, 2), (7, 2)]),
+    'shadow': dict(mood='dark', tempo=72, per=4, chords=[(0, 'min'), (8, 'maj'), (5, 'min'), (7, 'min')],
+                   notes=[(0, 1), (3, 1), (2, 2), (0, 1), (3, 1), (8, 2), (5, 1), (8, 1), (7, 2), (3, 1), (2, 1), (0, 2)]),
+    'chase': dict(mood='tense', tempo=132, per=4, chords=[(0, 'min'), (0, 'min'), (3, 'maj'), (11, 'dim')],
+                  notes=[(0, .5), (0, .5), (3, .5), (0, .5), (7, .5), (0, .5), (3, .5), (2, .5)] * 2
+                  + [(3, .5), (7, .5), (10, .5), (7, .5), (3, .5), (7, .5), (10, .5), (12, .5), (11, 1), (14, 1), (11, 1), (8, 1)]),
+    'birthday': dict(mood='bright', tempo=140, per=3, chords=[_C, _C, _G, _G, _C, _C, _F, _G, _C],
+                     notes=[(None, 2), (-5, .75), (-5, .25), (-3, 1), (-5, 1), (0, 1), (-1, 2), (-5, .75), (-5, .25), (-3, 1), (-5, 1), (2, 1), (0, 2), (-5, .75), (-5, .25),
+                            (7, 1), (4, 1), (0, 1), (-1, 1), (-3, 1), (5, .75), (5, .25), (4, 1), (0, 1), (2, 1), (0, 3)]),
+    'twinkle': dict(mood='wonder', tempo=100, per=2, chords=[_C, _C, _F, _C, _F, _C, _G, _C, _C, _F, _C, _G, _C, _F, _C, _G, _C, _C, _F, _C, _F, _C, _G, _C],
+                    notes=_TW1 + _TW2 * 2 + _TW1),
+    'jingle': dict(mood='bright', tempo=132, per=4, chords=[_C, _C, _C, _C, _F, _C, _D, _G, _C, _C, _C, _C, _F, _C, _G, _C],
+                   notes=_JB + [(4, 1), (2, 1), (2, 1), (4, 1), (2, 2), (7, 2)] + _JB + [(7, 1), (7, 1), (5, 1), (2, 1), (0, 4)]),
+    'lullaby': dict(mood='calm', tempo=84, per=3, chords=[_C, _C, _C, _F, _C, _G, _G, _G, _C],
+                    notes=[(None, 2), (4, .5), (4, .5), (7, 2), (4, .5), (4, .5), (7, 2), (4, .5), (7, .5), (12, 1), (11, 1.5), (9, .5), (9, 1), (7, 1), (2, .5), (4, .5),
+                           (5, 2), (2, .5), (4, .5), (5, 2), (2, .5), (5, .5), (11, .5), (9, .5), (7, 1), (11, 1), (12, 2), (None, 1)]),
+}
+MOOD_TUNE = {'bright': 'hop', 'cozy': 'home', 'calm': 'breeze', 'wonder': 'stars', 'dark': 'shadow', 'tense': 'chase'}
 CHORD = {'maj': [0, 4, 7], 'min': [0, 3, 7], 'maj7': [0, 4, 7, 11], 'min7': [0, 3, 7, 10], 'maj9': [0, 4, 7, 11, 14], 'sus': [0, 5, 7], 'dim': [0, 3, 6]}
 
 
@@ -62,6 +95,14 @@ def bell(f, dur=3.0):
     return out * 0.35
 
 
+def music_box(f, dur):
+    """The voice of a melody: a soft pluck with a little bell on top, so it stands out from the chords."""
+    n = max(int((dur + 0.9) * SR), int(0.9 * SR))
+    out = pluck(f, n / SR)
+    b = bell(f * 2, n / SR)
+    return out + b[:len(out)] * 0.3
+
+
 def lowpass(x, fc, order=2):
     b, a = butter(order, fc / (SR / 2))
     return lfilter(b, a, x).astype(np.float32)
@@ -81,11 +122,33 @@ def add(buf, sig, at, gain=1.0, pan=0.0):
     buf[i:i + len(seg), 1] += seg * gain * (1 + min(0, pan))
 
 
+def _play_tune(buf, name, start, end, root, beat, pad):
+    """One tune over and over from start to end: chords, a bass note on each chord, the melody on top."""
+    T = TUNES[name]
+    tt, ci = start, 0
+    span = beat * T['per']
+    while tt < end:
+        deg, kind = T['chords'][ci % len(T['chords'])]
+        for iv in CHORD[kind]:
+            add(buf, pad_note(hz(root + deg + iv), span + 3.0, pad), tt, 0.16, (iv % 7 - 3) * 0.1)
+        add(buf, pluck(hz(root + deg - 12)), tt, 0.32)
+        tt += span
+        ci += 1
+    tt = start
+    while tt < end:
+        for note, beats in T['notes']:
+            if tt >= end:
+                break
+            if note is not None:
+                add(buf, music_box(hz(root + 12 + note), beats * beat), tt, 0.5, 0.1)
+            tt += beats * beat
+
+
 def music_track(sections, length):
-    """sections: list of (start, mood, key, tempo). Returns stereo buffer."""
+    """sections: list of (start, mood, key, tempo, tune). tune='none' plays free notes of the mood. Returns stereo buffer."""
     buf = np.zeros((int(length * SR) + SR, 2), np.float32)
     rng = np.random.default_rng(1)
-    for i, (start, mood, key, tempo) in enumerate(sections):
+    for i, (start, mood, key, tempo, tune) in enumerate(sections):
         end = sections[i + 1][0] if i + 1 < len(sections) else length
         M = MOODS[mood]
         root = 48 + KEYS[key] + 12 * M['octave']
@@ -93,7 +156,9 @@ def music_track(sections, length):
         bar = beat * 4
         tt = start
         ci = 0
-        while tt < end:
+        if tune != 'none':
+            _play_tune(buf, tune or MOOD_TUNE[mood], start, end, root, beat, M['pad'])
+        while tune == 'none' and tt < end:
             deg, kind = M['chords'][ci % len(M['chords'])]
             for iv in CHORD[kind]:
                 add(buf, pad_note(hz(root + deg + iv), bar + 3.0, M['pad']), tt, 0.22, (iv % 7 - 3) * 0.1)
@@ -263,7 +328,7 @@ def _decode(path):
 
 def render_audio(prog, path):
     length = prog.length
-    sections = [(m.at, m.params['mood'], str(m.params.get('key', 'C')), float(m.params.get('tempo', 72))) for m in prog.music]
+    sections = [(m.at, m.params['mood'], str(m.params.get('key', 'C')), float(m.params.get('tempo', 72)), m.params.get('tune')) for m in prog.music]
     buf = music_track(sections, length) if sections else np.zeros((int(length * SR) + SR, 2), np.float32)
     rng = np.random.default_rng(7)
     for s in prog.sfx:

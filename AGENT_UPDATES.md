@@ -29,3 +29,4 @@
 25. «Как сделать красиво»: героев ставить на `y=0.95`–`0.97`, перед мебелью. Для ночного города не добавлять `sky`: ночной свет на героях включается сам.
 26. Новые шаблоны: `film_felt_newyear`, `film_felt_march8`, `film_felt_firstsnow`, `film_felt_visit`, `film_felt_doctor`, `film_felt_farm`, `film_felt_fair`, `film_felt_undersea`, описания и параметры в `extella/templates/index.json`. Всего 16. Обновить и эксперта в агенте Mult.
 27. Новый герой `doctor`, всего 18 персонажей. Новый предмет `medicine`.
+28. Музыка: у `music` есть `tune=`, список мелодий, `tune=none`, у настроения своя мелодия, смена музыки строкой `music ... at 8s`. «Как сделать красиво»: `birthday` для дня рождения, `jingle` для зимы, `lullaby` перед сном.
