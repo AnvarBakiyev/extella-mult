@@ -10,8 +10,8 @@ doctor give {{patient}} medicine 5.4-7.4s
 doctor stand at 0.56 7.4-9s y=0.97 facing=-1
 fade in 0-1s
 scene 9-14s: room(time=day,window=0.8,cozy=1,picture=0.12) bed(x=0.3,y=0.95,s=1.3) table(x=0.88,y=0.97)
-{{patient}} jump at 0.6 9-11.5s y=0.97 mood=happy
-{{patient}} stand at 0.6 11.5-14s y=0.97 mood=happy
+{{patient}} jump at 0.6 9-11.5s y=0.97 size=0.26 mood=happy
+{{patient}} stand at 0.6 11.5-14s y=0.97 size=0.26 mood=happy
 doctor wave at 0.76 9-11.5s y=0.97 facing=-1
 doctor stand at 0.76 11.5-14s y=0.97 facing=-1
 {{patient}} say "{{patient_line|Спасибо!}}" 11.6-13s
