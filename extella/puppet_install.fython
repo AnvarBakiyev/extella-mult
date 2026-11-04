@@ -78,8 +78,9 @@ def puppet_install(packs: str = "all", version: str = "v4", bundle_dir: str = ""
                     if m.name.startswith("/") or ".." in m.name.split("/") or not (m.isfile() or m.isdir()):
                         return {"status": "error", "step": pack, "error": "unsafe path in archive: " + m.name}
                 t.extractall(home)
+            mb = round(os.path.getsize(tar) / 1e6)
             os.remove(tar)
-            steps.append(pack + ": " + fn + " unpacked (" + str(round(os.path.getsize(tar) / 1e6) if os.path.exists(tar) else "") + ")")
+            steps.append(pack + ": " + fn + " unpacked (" + str(mb) + " MB)")
     shutil.rmtree(tmp, ignore_errors=True)
     if not os.path.isdir(os.path.join(home, "handler")):
         return {"status": "error", "step": "handler", "error": "no language files in ~/extella-mult/handler after unpacking"}
@@ -151,12 +152,21 @@ def scene(code = "", filtered_source_code = "", func_name = "", **extra):
     # 4. self-test: check a short puppet film on code characters, and on a premium set when installed
     test = os.path.join(home, "out", "selftest_puppet.scene")
     os.makedirs(os.path.dirname(test), exist_ok=True)
-    prog = 'film title="Extella Puppet" style=puppet fps=24 size=1280x720 voices=off\ncast ch_fox on office at 0.5,0.95 size=0.62\nshot 0-3s: office push=0.04\ntext "Extella Puppet" at 0.5,0.9 size=0.05 font=ptsans color=#ffffff halo=0.8 0-3s\n'
+    prog = 'film title="Extella Puppet" style=puppet fps=24 size=1280x720 voices=off\n'
+    t0 = 0
+    if "core" in want:
+        prog += 'cast ch_fox on office at 0.5,0.95 size=0.62\nshot 0-3s: office push=0.04\ntext "Extella Puppet" at 0.5,0.9 size=0.05 font=ptsans color=#ffffff halo=0.8 0-3s\n'
+        t0 = 3
     if "premium" in want:
-        prog += 'shot 3-5s: fox_lawyer push=0.03\n'
-    open(test, "w", encoding="utf-8").write(prog)
-    r = subprocess.run(env=env, args=[py, "-m", "handler.main", test, "--check"], cwd=home, capture_output=True, text=True, timeout=120)
-    ok = r.returncode == 0
-    steps.append("self-test " + ("ok" if ok else "failed: " + r.stderr[-300:]))
+        prog += 'shot %d-%ds: fox_lawyer push=0.03\n' % (t0, t0 + 2)
+        t0 += 2
+    ok = True
+    if t0:
+        open(test, "w", encoding="utf-8").write(prog)
+        r = subprocess.run(env=env, args=[py, "-m", "handler.main", test, "--check"], cwd=home, capture_output=True, text=True, timeout=120)
+        ok = r.returncode == 0
+        steps.append("self-test " + ("ok" if ok else "failed: " + r.stderr[-300:]))
+    else:
+        steps.append("self-test skipped: no picture packs chosen")
     return {"status": "success" if ok else "error", "steps": steps, "packs": want, "device": platform.system() + " " + platform.machine(),
             "home": home}
