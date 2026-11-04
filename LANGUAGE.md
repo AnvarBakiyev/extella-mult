@@ -13,6 +13,7 @@ Scenes touch (`0-6s`, `6-12s` ...). Elements go back to front on the scene line 
 People: `girl`, `boy`, `mom`, `dad`, `granny`, `grandpa`. Actions: stand, walk, run, wave, jump, sit, dance, look_up.
 Animals: `cat`, `fox`, `dog`, `bunny`, `bear`, `hedgehog`, `mouse`, `frog`, `hen`, `elephant`. Actions: stand, walk, run, jump, sit, look_up. `bird`: fly, stand.
 `girl walk from offleft to 0.45 0-5s y=0.95`, `dog sit at 0.3 2-8s y=0.96 facing=-1`. Params: `y` (feet line), `size`, `facing` (1 or -1), `color`, `hair`, `holds=lantern|balloon|flower|book|gift|umbrella`. One end of a move is enough: `walk to 0.4` comes in from the nearer side. A character does one action at a time.
+`wave` raises one hand beside the head, `dance` raises both hands, one higher in turn, `jump` raises both hands and tucks the legs in the air.
 
 ## Elements
 | name | what it is |

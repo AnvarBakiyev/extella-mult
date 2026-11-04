@@ -52,7 +52,7 @@ def _mix(a, b, k):
 def _pose(action, t, tl, dur):
     """Angles in radians (0 = straight down) and body offsets for one moment of an action."""
     ph = t * 2 * math.pi
-    P = dict(leg_b=0.12, leg_f=-0.12, arm_b=0.2, arm_f=-0.2, bob=0.004 * math.sin(ph * 0.5), lean=0.0, lift=0.0, sit=0.0, head=0.0)
+    P = dict(leg_b=0.12, leg_f=-0.12, arm_b=0.2, arm_f=-0.2, bob=0.004 * math.sin(ph * 0.5), lean=0.0, lift=0.0, sit=0.0, head=0.0, tuck=0.0)
     if action == 'walk':
         sw = math.sin(ph * 1.6)
         P.update(leg_b=0.45 * sw, leg_f=-0.45 * sw, arm_b=-0.5 * sw, arm_f=0.5 * sw, bob=0.012 * abs(math.cos(ph * 1.6)))
@@ -60,15 +60,15 @@ def _pose(action, t, tl, dur):
         sw = math.sin(ph * 2.6)
         P.update(leg_b=0.8 * sw, leg_f=-0.8 * sw, arm_b=-0.9 * sw, arm_f=0.9 * sw, bob=0.03 * abs(math.cos(ph * 2.6)), lean=0.12)
     elif action == 'wave':
-        P.update(arm_f=-2.6 + 0.35 * math.sin(ph * 2.2), arm_b=0.15)
+        P.update(arm_f=2.5 + 0.17 * math.sin(ph * 2.2), arm_b=0.15)  # one hand up, beside the head
     elif action == 'jump':
         k = abs(math.sin(math.pi * ((tl * 1.4) % 1.0)))
-        P.update(lift=0.22 * k, arm_b=-2.3 * k + 0.2, arm_f=2.3 * k - 0.2, leg_b=0.3 * k, leg_f=-0.3 * k)
+        P.update(lift=0.22 * k, arm_b=-2.3 - 0.35 * k, arm_f=2.3 + 0.35 * k, leg_b=-0.12, leg_f=0.12, tuck=k)
     elif action == 'sit':
         P.update(sit=1.0, leg_b=1.45, leg_f=1.45, arm_b=0.35, arm_f=0.55)
     elif action == 'dance':
         sw = math.sin(ph * 1.8)
-        P.update(arm_b=-2.4 + 0.5 * sw, arm_f=2.4 + 0.5 * sw, leg_b=0.25 * sw, leg_f=-0.25 * sw, lean=0.12 * sw, bob=0.02 * abs(sw))
+        P.update(arm_b=-2.35 - 0.32 * sw, arm_f=2.35 - 0.32 * sw, leg_b=0.25 * sw, leg_f=-0.25 * sw, lean=0.12 * sw, bob=0.02 * abs(sw))  # both up, one higher in turn
     elif action == 'look_up':
         P.update(head=-0.35)
     return P
@@ -139,7 +139,8 @@ def _doll_head(piece, hx, hy, skin, hair, style, extra, ey, blink):
 
 def _doll(ctx, t, tl, st, f, look):
     """The base of every person, a felt doll: oval face, one layer of hair, clothes in coloured layers, soft limbs, mittens.
-    People differ only by colours, hair, outfit and one extra (glasses, moustache)."""
+    People differ only by colours, hair, outfit and one extra (glasses, moustache).
+    wave: one hand up beside the head; dance: both hands up, one higher in turn; jump: both hands up, legs tucked in the air."""
     skin, hair, top, bottom, shoes, style, outfit, extra = look
     top = st.params.get('color', top)
     hair = st.params.get('hair', hair)
@@ -154,8 +155,10 @@ def _doll(ctx, t, tl, st, f, look):
     def leg(a, shade, dx):
         L = piece()
         h = (hip[0] + dx, hip[1])
-        kx, ky = h[0] + 0.27 * math.sin(a), h[1] + 0.27 * math.cos(a)
-        L.line([h, (kx, ky)], _dark(legs_col, shade), 0.09)
+        up, down = a + 1.05 * P['tuck'], a - 0.75 * P['tuck']  # tucked: the knee forward, the shin back under it
+        nx, ny = h[0] + 0.135 * math.sin(up), h[1] + 0.135 * math.cos(up)
+        kx, ky = nx + 0.135 * math.sin(down), ny + 0.135 * math.cos(down)
+        L.line([h, (nx, ny), (kx, ky)], _dark(legs_col, shade), 0.09)
         if P['sit']:  # legs stretched out in front: the sole faces forward, toes up
             L.ellipse(kx + 0.01, ky - 0.04, 0.045, 0.065, _dark(shoes, shade))
         else:
@@ -164,8 +167,12 @@ def _doll(ctx, t, tl, st, f, look):
 
     def arm(a, shade):
         L = piece()
-        ax, ay = shoulder[0] + 0.24 * math.sin(a), shoulder[1] + 0.24 * math.cos(a)
-        L.line([shoulder, (ax, ay)], _dark(top, shade), 0.085)
+        up = min(1.0, max(0.0, (abs(a) - 1.2) / 0.7))  # a raised arm starts at the edge of the body and reaches past the head
+        out = math.copysign(up, a)
+        sx0, sy0 = shoulder[0] + 0.1 * out + P['lean'] * 0.3 * up, shoulder[1]
+        n = 0.24 + 0.17 * up
+        ax, ay = sx0 + n * math.sin(a), sy0 + n * math.cos(a)
+        L.curve([(sx0, sy0), ((sx0 + ax) / 2 + 0.07 * out, (sy0 + ay) / 2 + 0.03 * up), (ax, ay)], _dark(top, shade), 0.085)
         L.ellipse(ax, ay + 0.01, 0.045, 0.05, _dark(skin, shade))
         return ax, ay
     legs_b, legs_f = (P['leg_b'], P['leg_f']) if st.words[1] not in ('stand', 'wave', 'look_up') else (0.0, 0.0)
