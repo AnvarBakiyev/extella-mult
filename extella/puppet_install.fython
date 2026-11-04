@@ -94,7 +94,7 @@ def puppet_install(packs: str = "all", version: str = "v4", bundle_dir: str = ""
             urllib.request.urlretrieve(REPO_TAR, tar)
         with tarfile.open(tar) as t:
             members = t.getmembers()
-            top = members[0].name.split("/")[0] if members else ""
+            top = next((m.name.split("/")[0] for m in members if "/" in m.name), "")  # GitHub tarballs start with a pax header
             for pack in repo_packs:
                 for src, dst in FROM_REPO[pack]:
                     prefix = top + "/" + src + "/"

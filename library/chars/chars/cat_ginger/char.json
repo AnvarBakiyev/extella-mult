@@ -1,0 +1,68 @@
+{
+ "name": "cat_ginger",
+ "group": "animals",
+ "kind": "animal:cat",
+ "about": "рыжий кот",
+ "default_voice": "fairy",
+ "palette": {
+  "fur": "#d08a4a",
+  "iris": "#55704a",
+  "lip": "#885236",
+  "fur2": "#f2e6d6"
+ },
+ "parts": {
+  "kit": "cat",
+  "head": "wide",
+  "eyes": "round",
+  "brow": "neutral",
+  "nose": "cat",
+  "outfit": "fur",
+  "age": "adult",
+  "build": "normal",
+  "accessories": []
+ },
+ "size": [
+  1024,
+  1024
+ ],
+ "frames": {
+  "base": "base.png",
+  "visemes": {
+   "closed": "mouth_closed.png",
+   "A": "mouth_A.png",
+   "E": "mouth_E.png",
+   "O": "mouth_O.png",
+   "U": "mouth_U.png",
+   "MBP": "mouth_MBP.png"
+  },
+  "blink": "blink.png",
+  "expressions": {
+   "neutral": "expr_neutral.png",
+   "happy": "expr_happy.png",
+   "angry": "expr_angry.png",
+   "shocked": "expr_shocked.png"
+  }
+ },
+ "layering": "base.png is the full neutral frame. Every other png is a full-size, pixel-aligned overlay of only the changed face region (mouth region for visemes, eye region for blink, both for expressions): frame = base, then expr_<e>, then mouth_<v>, then blink, each alpha-composited.",
+ "anchors": {
+  "mouth": [
+   0.5,
+   0.5933
+  ],
+  "eyes": [
+   [
+    0.4193,
+    0.4724
+   ],
+   [
+    0.5807,
+    0.4724
+   ]
+  ],
+  "head_center": [
+   0.5,
+   0.5017
+  ],
+  "split_y": 0.5451
+ }
+}

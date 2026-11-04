@@ -1,0 +1,70 @@
+{
+ "name": "ch_goat",
+ "group": "writers",
+ "kind": "animal:goat",
+ "about": "Коза Изольда, ест всё в кадре",
+ "default_voice": "odessa",
+ "palette": {
+  "fur": "#ebe5d8",
+  "iris": "#c1892e",
+  "lip": "#96817e",
+  "fur2": "#f4f0e8"
+ },
+ "parts": {
+  "kit": "goat",
+  "head": "long",
+  "eyes": "round",
+  "brow": "neutral",
+  "nose": "nostrils",
+  "outfit": "fur",
+  "age": "adult",
+  "build": "normal",
+  "accessories": [
+   "bell"
+  ]
+ },
+ "size": [
+  1024,
+  1024
+ ],
+ "frames": {
+  "base": "base.png",
+  "visemes": {
+   "closed": "mouth_closed.png",
+   "A": "mouth_A.png",
+   "E": "mouth_E.png",
+   "O": "mouth_O.png",
+   "U": "mouth_U.png",
+   "MBP": "mouth_MBP.png"
+  },
+  "blink": "blink.png",
+  "expressions": {
+   "neutral": "expr_neutral.png",
+   "happy": "expr_happy.png",
+   "angry": "expr_angry.png",
+   "shocked": "expr_shocked.png"
+  }
+ },
+ "layering": "base.png is the full neutral frame. Every other png is a full-size, pixel-aligned overlay of only the changed face region (mouth region for visemes, eye region for blink, both for expressions): frame = base, then expr_<e>, then mouth_<v>, then blink, each alpha-composited.",
+ "anchors": {
+  "mouth": [
+   0.5,
+   0.5726
+  ],
+  "eyes": [
+   [
+    0.4406,
+    0.4152
+   ],
+   [
+    0.5594,
+    0.4152
+   ]
+  ],
+  "head_center": [
+   0.5,
+   0.4602
+  ],
+  "split_y": 0.5029
+ }
+}
