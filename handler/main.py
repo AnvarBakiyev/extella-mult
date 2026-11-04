@@ -31,6 +31,8 @@ def main():
         print(f'ERROR: file {a.scene} not found', file=sys.stderr)
         sys.exit(2)
     print(f"ok: '{prog.title}' {prog.length:g}s, {len(prog.scenes)} scenes, {prog.size[0]}x{prog.size[1]} @ {prog.fps} fps", file=sys.stderr)
+    for w in prog.warnings:
+        print(f'warning: {w}', file=sys.stderr)
     if a.check:
         return
     if a.frames:

@@ -170,6 +170,15 @@ def render_frame(prog, t, out_size):
                 EFFECTS[st.words[0]](ctx, t, tl, st, f)
         else:
             EFFECTS['font_text' if 'font' in st.words else 'handwrite'](ctx, t, tl, st, f)
+    # speech bubbles go last, over everything, so the words are never covered
+    from .felt_effects import say_layouts, say_cloud, say_words
+    for lay in say_layouts(ctx, t, prog, sc):
+        before = ctx.img.copy() if lay['opacity'] < 1 else None
+        layer(lambda c, lay=lay: say_cloud(c, lay), 1.0, keep=True)
+        say_words(ctx, lay)
+        if before is not None:
+            ctx.img = Image.blend(before, ctx.img, lay['opacity'])
+            ctx.d = ImageDraw.Draw(ctx.img)
     # camera: crop and resample
     zoom, cx, cy = camera_for(prog, sc, t) if prog.style not in ('3d', 'toon') else (1.0, 0.5, 0.5)
     cw, ch = W / zoom, H / zoom

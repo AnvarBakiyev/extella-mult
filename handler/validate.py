@@ -39,6 +39,7 @@ class Program:
         self.length = 0.0
         self.style = '2d'
         self.look = ''
+        self.warnings = []
 
 
 def _need_time(st, what):
@@ -140,6 +141,19 @@ def validate(stmts):
                 else:
                     st.to = 'offright' if _x(st.frm) <= 0.5 else 'offleft'
             st.scene = _scene_for(prog, st, f"{name} {st.words[1]}")
+        elif st.kind == 'say':
+            name = st.words[0]
+            if prog.style != 'felt':
+                raise SceneError(f"line {st.line}: say works only in style=felt films")
+            if name not in _vocab(prog.style)[1]:
+                raise SceneError(f"line {st.line}: '{name}' is not a known actor, so it cannot say anything")
+            if not st.text or not st.text.strip():
+                raise SceneError(f"line {st.line}: say needs the words in quotes: {name} say \"Привет!\" 3-5s")
+            if len(st.text) > 90 or st.text.count('\n') > 3:
+                raise SceneError(f"line {st.line}: this line is too long for one bubble (at most 90 letters and 4 lines); split it into two say lines one after the other")
+            _need_time(st, f"{name} say")
+            _check_pos(st, st.pos)
+            st.scene = _scene_for(prog, st, f"{name} say")
         elif st.kind == 'camera':
             if not st.words or st.words[0] not in CAMERA_MOVES:
                 raise SceneError(f"line {st.line}: camera move must be one of {', '.join(CAMERA_MOVES)}")
@@ -225,5 +239,11 @@ def validate(stmts):
         for b in acts[i + 1:]:
             if a.words[0] == b.words[0] and a.t0 < b.t1 - 1e-6 and b.t0 < a.t1 - 1e-6:
                 raise SceneError(f"line {b.line}: {b.words[0]} {b.words[1]} {b.t0:g}-{b.t1:g}s overlaps {a.words[0]} {a.words[1]} {a.t0:g}-{a.t1:g}s (line {a.line}); one {a.words[0]} does one action at a time, end the first action where the second starts")
+    for st in stmts:  # a bubble hangs over its speaker, so the speaker must be in the frame while it talks
+        if st.kind == 'say' and st.pos is None and not any(a.words[0] == st.words[0] and a.t0 < st.t1 and st.t0 < a.t1 for a in acts):
+            raise SceneError(f"line {st.line}: {st.words[0]} says something at {st.t0:g}-{st.t1:g}s but is not in the frame then; add a line like '{st.words[0]} stand at 0.5 {st.t0:g}-{st.t1:g}s' or give the bubble a place with at x,y")
+    if any(s.kind == 'say' for s in stmts):
+        from .felt_effects import say_warnings
+        prog.warnings += say_warnings(prog)
     prog.music.sort(key=lambda s: s.at)
     return prog

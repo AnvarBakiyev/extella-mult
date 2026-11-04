@@ -13,6 +13,7 @@ Scenes touch (`0-6s`, `6-12s` ...). Elements go back to front on the scene line 
 People: `girl`, `boy`, `mom`, `dad`, `granny`, `grandpa`. Actions: stand, walk, run, wave, jump, sit, dance, look_up.
 Animals: `cat`, `fox`, `dog`, `bunny`, `bear`. Actions: stand, walk, run, jump, sit, look_up. `bird`: fly, stand.
 `girl walk from offleft to 0.45 0-5s y=0.95`, `dog sit at 0.3 2-8s y=0.96 facing=-1`. Params: `y` (feet line), `size`, `facing` (1 or -1), `color`, `hair`, `holds=lantern|balloon|flower|book|gift|umbrella`. One end of a move is enough: `walk to 0.4` comes in from the nearer side. A character does one action at a time.
+
 ## Elements
 | name | what it is |
 |---|---|
@@ -64,6 +65,11 @@ Elements have no seconds and no actions. To move one, use its parameters: `rocke
 | `butterflies` | Butterflies flutter around at=x,y. |
 | `notes` | Music notes float up from at=x,y. |
 | `smoke` | Puffy felt smoke clouds that billow out sideways and up from at=x,y (a rocket launch, a crash, a cough); r = how far they spread; color=#efebe4. |
+
+## Speech bubbles
+`girl say "Привет, котик!" 3-5s` puts a felt speech bubble over the speaker, with a tail pointing at its head. The bubble fades in and out, follows the speaker while it walks and stays above everything else in the frame. Any letters work, Cyrillic too. Long lines wrap by themselves; `\n` inside the quotes always starts a new line: `bunny say "Первая строка\nвторая" 1-3s`.
+
+Params: `size` (letter height, 0.05), `width` (widest line as a fraction of the frame, 0.26), `side=left|right` (which way the bubble leans; by default towards the middle of the frame), `color` (the felt, #rrggbb), `at x,y` (a bubble with no speaker in the frame). A bubble holds up to 90 letters and 4 lines; longer speech goes in two `say` lines one after the other. The speaker must be in the frame at that time and the line must stay inside one scene. Give each line about a second per three words, and say lines one after the other when you can: two bubbles that would touch slide apart by themselves (sideways, or the later one up when there is no room), and `--check` prints a warning. `say` works only in `style=felt`; it draws words, it does not speak them.
 
 ## Text, sound, camera
 `text "Привет!" font at 0.5,0.2 size=0.11 color=#c5583e 9-12s hold=1` writes any text. `music mood=bright key=C tempo=110` (moods wonder dark bright tense cozy calm), `sfx chime at 6s`, `fade in 0-1s`, `fade out 15-16s`, `camera zoom 1.0-1.1 0-6s`, `camera pan right 0-6s`.

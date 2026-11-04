@@ -21,6 +21,194 @@ def _count(st, d):
     return int(st.params.get('count', d))
 
 
+_GLYPHS = {}
+LETTER_COLORS = ('#f28b6b', '#f6c453', '#4f9fd0', '#f2a0b8', '#8cc26a', '#a98bd8', '#f4a05a', '#e0526f')
+
+
+def _say_font(px):
+    if ('say', px) not in _GLYPHS:
+        import os
+        from PIL import ImageFont
+        path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'assets', 'fonts', 'Caveat.ttf')
+        fnt = ImageFont.truetype(path, px)
+        try:
+            fnt.set_variation_by_axes([700])
+        except Exception:
+            pass
+        _GLYPHS[('say', px)] = fnt
+    return _GLYPHS[('say', px)]
+
+
+def _say_wrap(fnt, text, width):
+    """Break the words to fit width; a \\n in the line always breaks."""
+    out = []
+    for para in text.split('\n'):
+        cur = ''
+        for w in para.split():
+            nxt = (cur + ' ' + w).strip()
+            if cur and fnt.getlength(nxt) > width:
+                out.append(cur)
+                cur = w
+            else:
+                cur = nxt
+        out.append(cur)
+    return out
+
+
+def _say_tip(ctx, prog, st, t):
+    """Where the bubble's tail points: just above the speaker's head at time t, following it while it moves."""
+    from .felt_actors import _place, PEOPLE, ANIMALS
+    if st.pos is not None:
+        from .actors import _lerp_pos
+        return _lerp_pos(st, 0.0, 0.5)
+    name = st.words[0]
+    lines = [a for a in prog.stmts if a.kind == 'actor' and a.words[0] == name and a.scene is st.scene]
+    a = next((a for a in lines if a.t0 <= t < a.t1), None) or min(lines, key=lambda a: min(abs(t - a.t0), abs(t - a.t1)))
+    x, y, facing = _place(a, min(1.0, max(0.0, (t - a.t0) / (a.t1 - a.t0))))
+    act = a.words[1]
+    if name in PEOPLE:
+        s, dx, top = a.params.get('size', 0.36), 0.02, 1.0 - (0.22 if act == 'sit' else 0.0)
+    elif name in ANIMALS:
+        s = a.params.get('size', 0.22)
+        dx, top = (0.05, 1.02) if act == 'sit' else (0.2, 0.95)
+        top += {'long': 0.32, 'pointy': 0.1, 'round': 0.05, 'big': 0.12, 'bulge': 0.1, 'comb': 0.08, 'small': 0.05}.get(ANIMALS[name][2], 0.0)
+    else:
+        s, dx, top = a.params.get('size', 0.1), 0.25, 0.8
+    if act == 'jump':
+        top += 0.22
+    return x + dx * s * ctx.ar * facing, y - (top + 0.05) * s
+
+
+def say_layout(ctx, t, st, prog):
+    """'<actor> say "Привет, котик!" 3-5s': a felt speech bubble over the speaker with a tail pointing at its head. The bubble
+    fades in and out, follows the speaker and wraps long lines (Cyrillic and \\n too). Two bubbles that would touch are moved
+    apart by themselves and --check warns about it. Params: size (letter height, 0.05),
+    width (widest line as a fraction of the frame, 0.26), side=left|right, color, at x,y (a bubble with no speaker in the frame)."""
+    W, H = ctx.W, ctx.H
+    fade = min(0.3, (st.t1 - st.t0) / 3)
+    op = min(1.0, (t - st.t0) / fade, (st.t1 - t) / fade)
+    op = op * op * (3 - 2 * op)
+    px = max(8, int(st.params.get('size', 0.05) * H * 1.25))
+    fnt = _say_font(px)
+    lines = _say_wrap(fnt, st.text, st.params.get('width', 0.26) * W)
+    lh = px * 0.95
+    pad = px * 0.62
+    bw = max(fnt.getlength(s) for s in lines) + 2 * pad
+    bh = lh * len(lines) + 2 * pad * 0.8
+    tx, ty = _say_tip(ctx, prog, st, t)
+    tx, ty = tx * W, ty * H
+    side = {'left': -1, 'right': 1}.get(st.params.get('side'), 1 if tx < W / 2 else -1)
+    m = 0.02 * H
+    left = min(max(tx + side * bw * 0.18 - bw / 2, m + px * 0.5), W - m - px * 0.5 - bw)
+    bottom = ty - 0.085 * H + (1 - op) * 0.012 * H
+    bottom = max(bottom, bh + m + px * 0.5)
+    return dict(opacity=op, px=px, fnt=fnt, lines=lines, lh=lh, left=left, right=left + bw, top=bottom - bh, bottom=bottom, tip=(tx, ty),
+                color=st.params.get('color', '#fffaf0'), start_x=_say_tip(ctx, prog, st, st.t0)[0])
+
+
+def _say_hit(a, b):
+    g = a['px'] * 0.9  # the puffs stick out past the box
+    return a['left'] < b['right'] + g and b['left'] < a['right'] + g and a['top'] < b['bottom'] + g and b['top'] < a['bottom'] + g
+
+
+def _say_push(ctx, a, b, w):
+    """Slide two touching bubbles apart, half the overlap each, or all of it when one is against the frame's edge. With no
+    room sideways the later one rises over the earlier. w < 1 while a bubble is fading: that is what makes the slide smooth."""
+    later, first = (b, a) if a['order'] < b['order'] else (a, b)
+    if a['start_x'] > b['start_x']:
+        a, b = b, a
+    g = a['px'] * 0.95
+    m = 0.02 * ctx.H + a['px'] * 0.5
+    need = (a['right'] + g - b['left']) * w
+    if need <= 0:
+        return
+    da = max(0.0, min(need / 2, a['left'] - m))
+    db = max(0.0, min(need - da, ctx.W - m - b['right']))
+    da = max(0.0, min(need - db, a['left'] - m))
+    a['left'] -= da
+    a['right'] -= da
+    b['left'] += db
+    b['right'] += db
+    if da + db < need - 1:
+        lift = max(0.0, min(later['bottom'] - first['top'] + g, later['top'] - m)) * w
+        later['top'] -= lift
+        later['bottom'] -= lift
+
+
+def say_layouts(ctx, t, prog, sc, full=False):
+    """All the bubbles to draw at time t, already moved apart. full=True ignores the fades (used by --check)."""
+    says = sorted((s for s in prog.stmts if s.kind == 'say' and s.scene is sc and s.t0 <= t < s.t1), key=lambda s: (s.t0, s.line))
+    lays = [say_layout(ctx, t, s, prog) for s in says]
+    for i, lay in enumerate(lays):
+        lay['order'], lay['st'] = i, says[i]
+    for _ in range(4):
+        for i, a in enumerate(lays):
+            for b in lays[i + 1:]:
+                if _say_hit(a, b):
+                    _say_push(ctx, a, b, 1.0 if full else min(a['opacity'], b['opacity']))
+    return lays
+
+
+class _Frame:
+    def __init__(self, size):
+        self.W, self.H = size
+        self.ar = self.H / self.W
+
+
+def say_warnings(prog):
+    """What --check says about bubbles that touch: moved apart automatically, or no room left to do it."""
+    out, c = [], _Frame(prog.size)
+    says = sorted((s for s in prog.stmts if s.kind == 'say'), key=lambda s: (s.t0, s.line))
+    for i, a in enumerate(says):
+        for b in says[i + 1:]:
+            if a.scene is not b.scene or b.t0 >= a.t1:
+                continue
+            times = [b.t0 + 0.25 * k for k in range(int((min(a.t1, b.t1) - b.t0) / 0.25) + 1)]
+            times = [t for t in times if t < min(a.t1, b.t1)]
+            def placed(t):
+                both = [x for x in say_layouts(c, t, prog, a.scene, full=True) if x['st'] in (a, b)]
+                return _say_hit(both[0], both[1])
+            stuck = next((t for t in times if placed(t)), None)
+            moved = next((t for t in times if _say_hit(say_layout(c, t, a, prog), say_layout(c, t, b, prog))), None)
+            if stuck is not None:
+                out.append(f"line {b.line}: the bubbles of {a.words[0]} (line {a.line}) and {b.words[0]} overlap at {stuck:g}s and there is no room to move them apart; shorten a line or say them one after the other")
+            elif moved is not None:
+                out.append(f"line {b.line}: the bubbles of {a.words[0]} (line {a.line}) and {b.words[0]} would overlap at {moved:g}s; they are moved apart, say them one after the other to keep each over its speaker")
+    return out
+
+
+def say_cloud(ctx, lay):
+    """The bubble itself: one felt piece, a puffy rounded cloud and its curved tail."""
+    d = ctx.d
+    l, r, tp, b, col = lay['left'], lay['right'], lay['top'], lay['bottom'], lay['color']
+    rad = lay['px'] * 0.5
+    d.rounded_rectangle([l, tp, r, b], radius=rad * 1.4, fill=col)
+    nx = max(2, int((r - l) / (rad * 1.75)))
+    ny = max(1, int((b - tp) / (rad * 1.75)))
+    for k in range(nx + 1):
+        x = l + rad + (r - l - 2 * rad) * k / nx
+        for y in (tp - rad * 0.05, b + rad * 0.05):
+            d.ellipse([x - rad, y - rad, x + rad, y + rad], fill=col)
+    for k in range(ny + 1):
+        y = tp + rad + (b - tp - 2 * rad) * k / ny
+        for x in (l - rad * 0.05, r + rad * 0.05):
+            d.ellipse([x - rad, y - rad, x + rad, y + rad], fill=col)
+    tx, ty = lay['tip']
+    half = rad * 1.5
+    base = min(max(tx, l + rad * 2.2), r - rad * 2.2)
+    bend = (base - tx) * 0.35
+    edge = lambda x0: [((1 - u) ** 2 * x0 + 2 * u * (1 - u) * (tx + bend) + u * u * tx, (1 - u) ** 2 * (b - rad) + 2 * u * (1 - u) * ((b + ty) / 2) + u * u * ty) for u in [i / 10 for i in range(11)]]
+    d.polygon(edge(base - half) + edge(base + half)[::-1], fill=col)
+
+
+def say_words(ctx, lay):
+    """The words go on top of the cloud, flat and dark, so they stay easy to read."""
+    cx = (lay['left'] + lay['right']) / 2
+    y0 = (lay['top'] + lay['bottom']) / 2 - lay['lh'] * len(lay['lines']) / 2
+    for i, s in enumerate(lay['lines']):
+        ctx.d.text((cx, y0 + lay['lh'] * (i + 0.5)), s, font=lay['fnt'], fill='#4a3228', anchor='mm')
+
+
 @effect('snow')
 def snow(ctx, t, tl, st, f):
     """Felt snowflakes falling over the whole frame."""

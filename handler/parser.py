@@ -9,7 +9,7 @@ class SceneError(Exception):
 
 class Stmt:
     def __init__(self, kind, line, raw):
-        self.kind = kind          # film, music, scene, camera, effect, text, fade, sfx, actor
+        self.kind = kind          # film, music, scene, camera, effect, text, fade, sfx, actor, say
         self.line = line          # 1-based line number
         self.raw = raw
         self.words = []           # bare words in order (after the keyword)
@@ -102,13 +102,19 @@ def parse(text):
             last.elements.extend(_elements(line, n))
             continue
         kind = head if head in ('film', 'music', 'camera', 'effect', 'text', 'fade', 'sfx', 'voice') else 'actor'
+        if kind == 'actor' and len(toks) > 1 and toks[1] == 'say':  # girl say "Привет, котик!" 3-5s
+            kind = 'say'
         st = Stmt(kind, n, raw)
-        if kind == 'actor':
+        if kind in ('actor', 'say'):
             st.words.append(head)
         i = 1
         while i < len(toks):
             t = toks[i]
-            if kind in ('text', 'voice') and st.text is None and i == 1 and '=' not in t:
+            if kind == 'say' and i == 1:
+                st.words.append(t)
+            elif kind == 'say' and i == 2 and not TIME_RANGE.match(t):
+                st.text = t.replace('\\n', '\n')
+            elif kind in ('text', 'voice') and st.text is None and i == 1 and '=' not in t:
                 st.text = t
             elif TIME_RANGE.match(t):
                 m = TIME_RANGE.match(t)
