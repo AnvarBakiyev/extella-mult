@@ -23,14 +23,19 @@ REPO_MULT = os.path.dirname(HANDLER_ROOT)            # mult/
 
 
 def lib_root():
-    for p in (os.environ.get('PUPPET_LIB'), os.path.expanduser('~/extella-mult/assets/lib'), REPO_MULT):
+    for p in (os.environ.get('PUPPET_LIB'), os.path.expanduser('~/extella-mult/assets/lib/mult'),
+              os.path.expanduser('~/extella-mult/assets/lib'), REPO_MULT):
         if p and os.path.isdir(os.path.join(p, 'puppet-characters-code')):
             return p
     return REPO_MULT
 
 
 def _p(*parts):
-    return os.path.join(lib_root(), *parts)
+    # an installed library keeps the pack folders under their release names (puppet-characters-body-felt3)
+    root = lib_root()
+    if parts and not os.path.isdir(os.path.join(root, parts[0])) and os.path.isdir(os.path.join(root, parts[0] + '-felt3')):
+        parts = (parts[0] + '-felt3',) + tuple(parts[1:])
+    return os.path.join(root, *parts)
 
 
 @functools.lru_cache(None)
