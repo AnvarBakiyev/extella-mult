@@ -26,6 +26,7 @@ ANIMALS = {  # fur, belly, ears, tail, muzzle, feet: everything else comes from 
 }
 PERSON_ACTIONS = ['stand', 'walk', 'run', 'wave', 'jump', 'sit', 'dance', 'look_up']
 ANIMAL_ACTIONS = ['stand', 'walk', 'run', 'jump', 'sit', 'look_up']
+FACE_MOODS = ['happy', 'sad', 'surprised', 'sleepy']
 
 
 def actor(name, actions):
@@ -74,6 +75,48 @@ def _pose(action, t, tl, dur):
     return P
 
 
+def _mood_eye(F, cx, cy, r, mood, col):
+    """surprised: a round white eye with a small pupil; sleepy: a closed eye, an arc that sags in the middle."""
+    if mood == 'surprised':
+        F.circle(cx, cy, r * 1.7, col)
+        F.circle(cx, cy, r * 1.45, '#ffffff')
+        F.circle(cx, cy, r * 0.75, col)
+    else:
+        F.curve([(cx - r * 1.25, cy - r * 0.3), (cx, cy + r * 1.1), (cx + r * 1.25, cy - r * 0.3)], col, r * 0.55)
+
+
+def _sad_brows(F, xs, y, r, col):
+    """Brows like a little roof: the inner ends go up. xs: the eyes; one eye (a bird) has its inner end towards the beak."""
+    mid = sum(xs) / len(xs) if len(xs) > 1 else xs[0] + 1
+    for cx in xs:
+        sgn = 1 if cx < mid else -1
+        F.line([(cx - sgn * r * 1.3, y + r * 0.55), (cx + sgn * r * 1.2, y - r * 0.55)], col, r * 0.6)
+
+
+def _tear(F, x, y, r, t):
+    """A tear that rolls down from under the eye, again and again."""
+    y += r * 3.2 * ((t * 0.55) % 1.0)
+    F.poly([(x, y - r * 1.9), (x + r * 0.8, y - r * 0.35), (x - r * 0.8, y - r * 0.35)], '#6fc0f2')
+    F.circle(x, y, r, '#6fc0f2')
+    F.circle(x - r * 0.3, y - r * 0.25, r * 0.28, '#ffffff')
+
+
+def _mouth(F, mood, cx, y, w, d, lw, col='#3a2828', smile=True):
+    """The mouth of a mood: a smile (w wide each way, d deep), the same arc turned over, a round 'o', a small quiet line.
+    smile=False: this face shows no mouth while it is happy."""
+    if mood == 'sad':
+        w = min(w * 1.25, 0.13)  # a frog's wide smile, turned over, would run off its face
+        F.curve([(cx - w, y + d), (cx, y - d * 0.7), (cx + w, y + d)], col, lw * 1.15)
+    elif mood == 'surprised':
+        rx = max(0.022, min(w * 0.7, 0.055))
+        F.ellipse(cx, y + d * 0.5, rx, rx * 1.3, col)
+        F.ellipse(cx, y + d * 0.5 + rx * 0.3, rx * 0.6, rx * 0.75, '#c0505a')
+    elif mood == 'sleepy':
+        F.curve([(cx - w * 0.6, y + d * 0.4), (cx, y + d * 0.7), (cx + w * 0.6, y + d * 0.4)], col, lw)
+    elif smile:
+        F.curve([(cx - w, y), (cx, y + d), (cx + w, y)], col, lw)
+
+
 def _doll_body(piece, outfit, top, bottom, sx):
     """The clothes, in simple coloured layers: coat over a dress, shirt and trousers, or a dress with a belt."""
     if outfit == 'coat':
@@ -94,7 +137,7 @@ def _doll_body(piece, outfit, top, bottom, sx):
         piece().poly([(-0.135 + sx * 0.5, -0.45), (0.165 + sx * 0.5, -0.45), (0.175, -0.4), (-0.145, -0.4)], _mix(top, '#ffffff', 0.55))
 
 
-def _doll_head(piece, hx, hy, skin, hair, style, extra, ey, blink):
+def _doll_head(piece, hx, hy, skin, hair, style, extra, ey, blink, mood, t):
     """Every person has the same head: an oval face, hair in one layer, button eyes, round cheeks. Only the hair and extras differ."""
     if style in ('bob', 'bun'):
         Hb = piece()
@@ -116,8 +159,13 @@ def _doll_head(piece, hx, hy, skin, hair, style, extra, ey, blink):
     elif style == 'short':
         piece().ellipse(hx + 0.015, hy - 0.105, 0.135, 0.052, hair)
     F = piece()
+    if mood == 'sad':  # the eyes sit a little lower, so the brows fit under the fringe
+        ey += 0.012
+        _sad_brows(F, [hx - 0.035, hx + 0.065], ey - 0.042, 0.022, '#3a2a2a')
     for ex in (-0.035, 0.065):
-        if blink:
+        if mood in ('surprised', 'sleepy'):
+            _mood_eye(F, hx + ex, ey, 0.021, mood, '#2a2020')
+        elif blink:
             F.line([(hx + ex - 0.018, ey), (hx + ex + 0.018, ey)], '#3a2a2a', 0.012)
         else:
             F.ellipse(hx + ex, ey, 0.019, 0.024, '#2a2020')
@@ -127,26 +175,32 @@ def _doll_head(piece, hx, hy, skin, hair, style, extra, ey, blink):
     if extra == 'moustache':
         F.ellipse(hx - 0.01, hy + 0.08, 0.04, 0.016, hair)
         F.ellipse(hx + 0.05, hy + 0.08, 0.04, 0.016, hair)
+        _mouth(F, mood, hx + 0.02, hy + 0.112, 0.0175, 0.02, 0.01, '#8a3a3a', smile=False)
     else:
-        F.curve([(hx + 0.0, hy + 0.085), (hx + 0.015, hy + 0.105), (hx + 0.035, hy + 0.085)], '#8a3a3a', 0.01)
+        _mouth(F, mood, hx + 0.0175, hy + 0.085, 0.0175, 0.02, 0.01, '#8a3a3a')
     if extra == 'glasses':
         for ex in (-0.035, 0.065):
             for k in range(14):
                 a_ = k * 0.449
                 F.circle(hx + ex + 0.04 * math.cos(a_), ey + 0.04 * math.sin(a_), 0.005, '#5a4a6a')
         F.line([(hx + 0.005, ey), (hx + 0.025, ey)], '#5a4a6a', 0.008)
+    if mood == 'sad':
+        _tear(F, hx - 0.06, ey + 0.045, 0.016, t)
 
 
 def _doll(ctx, t, tl, st, f, look):
     """The base of every person, a felt doll: oval face, one layer of hair, clothes in coloured layers, soft limbs, mittens.
     People differ only by colours, hair, outfit and one extra (glasses, moustache).
-    wave: one hand up beside the head; dance: both hands up, one higher in turn; jump: both hands up, legs tucked in the air."""
+    wave: one hand up beside the head; dance: both hands up, one higher in turn; jump: both hands up, legs tucked in the air.
+    mood=happy|sad|surprised|sleepy sets the face: happy is the usual smile; sad has roof-like brows, a mouth turned down and
+    a tear; surprised has round eyes and an 'o' mouth; sleepy has closed eyes, arcs. A new mood is a new line with its own seconds."""
     skin, hair, top, bottom, shoes, style, outfit, extra = look
     top = st.params.get('color', top)
     hair = st.params.get('hair', hair)
     x, y, facing = _place(st, f)
     s = st.params.get('size', 0.36)
     P = _pose(st.words[1], t + (x * 3.1), tl, st.t1 - st.t0)
+    mood = st.params.get('mood', 'happy')
     yb = y - (P['bob'] + P['lift'] - 0.22 * P['sit']) * s  # sitting: the seat, not the feet, rests on the y line
     piece = lambda: Local(ctx.piece(), x, yb, s, facing)
     hip, shoulder = (0.01, -0.3), (0.02, -0.56)
@@ -182,7 +236,7 @@ def _doll(ctx, t, tl, st, f, look):
     sx = P['lean'] * 0.3
     _doll_body(piece, outfit, top, bottom, sx)
     hx, hy = 0.02 + P['lean'] * 0.4, -0.78
-    _doll_head(piece, hx, hy, skin, hair, style, extra, hy + 0.02 + P['head'] * 0.05, (t * 0.37 + x) % 1.0 < 0.04)
+    _doll_head(piece, hx, hy, skin, hair, style, extra, hy + 0.02 + P['head'] * 0.05, (t * 0.37 + x) % 1.0 < 0.04, mood, t)
     ax, ay = arm(P['arm_f'], 1.0)
     held = st.params.get('holds')
     if held:
@@ -261,39 +315,43 @@ def _tail_none(T, x, y, t, fur, belly):
     pass
 
 
-def _muzzle_cat(M, F, hx, hy, hr, belly, fur):
+def _muzzle_cat(M, F, hx, hy, hr, belly, fur, mood):
     M.ellipse(hx + 0.03, hy + hr * 0.4, hr * 0.38, hr * 0.27, belly)
     F.poly([(hx + 0.0, hy + hr * 0.2), (hx + 0.06, hy + hr * 0.2), (hx + 0.03, hy + hr * 0.32)], '#e88aa3')
-    F.curve([(hx - 0.01, hy + hr * 0.46), (hx + 0.03, hy + hr * 0.54), (hx + 0.07, hy + hr * 0.46)], '#3a2828', 0.011)
+    _mouth(F, mood, hx + 0.03, hy + hr * 0.46, 0.04, hr * 0.08, 0.011)
     _whiskers(F, hx, hy, hr)
 
 
-def _muzzle_fox(M, F, hx, hy, hr, belly, fur):
+def _muzzle_fox(M, F, hx, hy, hr, belly, fur, mood):
     M.ellipse(hx - hr * 0.36, hy + hr * 0.36, hr * 0.42, hr * 0.32, belly)
     M.ellipse(hx + hr * 0.56, hy + hr * 0.36, hr * 0.42, hr * 0.32, belly)
     M.poly([(hx - hr * 0.5, hy + hr * 0.5), (hx + hr * 0.7, hy + hr * 0.5), (hx + 0.05, hy + hr * 0.9)], belly)
     F.ellipse(hx + 0.05, hy + hr * 0.42, 0.04, 0.03, '#2a2020')
+    _mouth(F, mood, hx + 0.05, hy + hr * 0.58, 0.04, hr * 0.08, 0.011, smile=False)
 
 
-def _muzzle_dog(M, F, hx, hy, hr, belly, fur):
+def _muzzle_dog(M, F, hx, hy, hr, belly, fur, mood):
     M.ellipse(hx + 0.03, hy + hr * 0.44, hr * 0.58, hr * 0.4, belly)
     F.ellipse(hx + 0.03, hy + hr * 0.24, 0.058, 0.04, '#2a2020')
     F.line([(hx + 0.03, hy + hr * 0.36), (hx + 0.03, hy + hr * 0.5)], '#3a2828', 0.011)
-    F.curve([(hx - 0.05, hy + hr * 0.52), (hx + 0.03, hy + hr * 0.64), (hx + 0.11, hy + hr * 0.52)], '#3a2828', 0.012)
+    _mouth(F, mood, hx + 0.03, hy + hr * 0.52, 0.08, hr * 0.12, 0.012)
 
 
-def _muzzle_bunny(M, F, hx, hy, hr, belly, fur):
+def _muzzle_bunny(M, F, hx, hy, hr, belly, fur, mood):
     M.ellipse(hx + 0.03, hy + hr * 0.4, hr * 0.34, hr * 0.26, '#ffffff')
     F.ellipse(hx + 0.03, hy + hr * 0.26, 0.03, 0.022, '#e88aa3')
     F.line([(hx + 0.03, hy + hr * 0.34), (hx + 0.03, hy + hr * 0.46)], '#3a2828', 0.009)
-    F.poly([(hx + 0.008, hy + hr * 0.47), (hx + 0.052, hy + hr * 0.47), (hx + 0.052, hy + hr * 0.6), (hx + 0.008, hy + hr * 0.6)], '#ffffff')
-    F.line([(hx + 0.03, hy + hr * 0.47), (hx + 0.03, hy + hr * 0.6)], '#c8c0c8', 0.005)
+    if mood == 'happy':
+        F.poly([(hx + 0.008, hy + hr * 0.47), (hx + 0.052, hy + hr * 0.47), (hx + 0.052, hy + hr * 0.6), (hx + 0.008, hy + hr * 0.6)], '#ffffff')
+        F.line([(hx + 0.03, hy + hr * 0.47), (hx + 0.03, hy + hr * 0.6)], '#c8c0c8', 0.005)
+    else:
+        _mouth(F, mood, hx + 0.03, hy + hr * 0.5, 0.04, hr * 0.08, 0.01)
 
 
-def _muzzle_bear(M, F, hx, hy, hr, belly, fur):
+def _muzzle_bear(M, F, hx, hy, hr, belly, fur, mood):
     M.ellipse(hx + 0.03, hy + hr * 0.42, hr * 0.5, hr * 0.42, belly)
     F.ellipse(hx + 0.03, hy + hr * 0.26, 0.05, 0.034, '#3a2828')
-    F.curve([(hx - 0.02, hy + hr * 0.54), (hx + 0.03, hy + hr * 0.63), (hx + 0.08, hy + hr * 0.54)], '#3a2828', 0.012)
+    _mouth(F, mood, hx + 0.03, hy + hr * 0.54, 0.05, hr * 0.09, 0.012)
 
 
 def _ears_small(E, Ei, hx, hy, hr, fur, belly):
@@ -353,34 +411,41 @@ def _whiskers(F, hx, hy, hr, col='#5a5a66'):
             F.line([(hx + ex, hy + hr * 0.3 + dy), (hx + ex + sgn * 0.13, hy + hr * 0.27 + dy * 1.6)], col, 0.007)
 
 
-def _muzzle_hedgehog(M, F, hx, hy, hr, belly, fur):
+def _muzzle_hedgehog(M, F, hx, hy, hr, belly, fur, mood):
     M.ellipse(hx + 0.05, hy + hr * 0.42, hr * 0.46, hr * 0.32, belly)
     F.circle(hx + 0.05, hy + hr * 0.28, 0.04, '#2a2020')
-    F.curve([(hx + 0.0, hy + hr * 0.52), (hx + 0.05, hy + hr * 0.6), (hx + 0.1, hy + hr * 0.52)], '#3a2828', 0.011)
+    _mouth(F, mood, hx + 0.05, hy + hr * 0.52, 0.05, hr * 0.08, 0.011)
 
 
-def _muzzle_mouse(M, F, hx, hy, hr, belly, fur):
+def _muzzle_mouse(M, F, hx, hy, hr, belly, fur, mood):
     M.ellipse(hx + 0.03, hy + hr * 0.42, hr * 0.34, hr * 0.26, belly)
     F.circle(hx + 0.03, hy + hr * 0.3, 0.03, '#e88aa3')
-    F.curve([(hx - 0.01, hy + hr * 0.5), (hx + 0.03, hy + hr * 0.57), (hx + 0.07, hy + hr * 0.5)], '#3a2828', 0.01)
+    _mouth(F, mood, hx + 0.03, hy + hr * 0.5, 0.04, hr * 0.07, 0.01)
     _whiskers(F, hx, hy, hr)
 
 
-def _muzzle_frog(M, F, hx, hy, hr, belly, fur):
+def _muzzle_frog(M, F, hx, hy, hr, belly, fur, mood):
     F.circle(hx - 0.0, hy + hr * 0.08, 0.012, '#3a5a2a')
     F.circle(hx + 0.06, hy + hr * 0.08, 0.012, '#3a5a2a')
-    F.curve([(hx - 0.14, hy + hr * 0.28), (hx + 0.03, hy + hr * 0.62), (hx + 0.2, hy + hr * 0.28)], '#2f6a3a', 0.016)
+    _mouth(F, mood, hx + 0.03, hy + hr * 0.28, 0.17, hr * 0.34, 0.016, '#2f6a3a')
 
 
-def _muzzle_beak(M, F, hx, hy, hr, belly, fur):
+def _muzzle_beak(M, F, hx, hy, hr, belly, fur, mood):
+    if mood == 'surprised':  # the beak opens
+        M.ellipse(hx + 0.04, hy + hr * 0.4, 0.06, 0.05, '#7a2a2a')
+        M.poly([(hx - 0.05, hy + hr * 0.14), (hx + 0.13, hy + hr * 0.14), (hx + 0.04, hy + hr * 0.36)], '#f08a3a')
+        M.poly([(hx - 0.02, hy + hr * 0.5), (hx + 0.1, hy + hr * 0.5), (hx + 0.04, hy + hr * 0.72)], '#f08a3a')
+        F.ellipse(hx + 0.04, hy + hr * 0.84, 0.03, 0.04, '#e0526f')
+        return
     M.poly([(hx - 0.04, hy + hr * 0.14), (hx + 0.12, hy + hr * 0.14), (hx + 0.04, hy + hr * 0.5)], '#f08a3a')
     F.ellipse(hx + 0.04, hy + hr * 0.66, 0.035, 0.05, '#e0526f')
 
 
-def _muzzle_trunk(M, F, hx, hy, hr, belly, fur):
+def _muzzle_trunk(M, F, hx, hy, hr, belly, fur, mood):
     M.curve([(hx + 0.03, hy + hr * 0.1), (hx + 0.05, hy + hr * 0.8), (hx + 0.2, hy + hr * 1.2), (hx + 0.32, hy + hr * 0.95)], _mix(fur, belly, 0.2), 0.12, n=30)
     for k in (0.35, 0.55, 0.75):
         F.line([(hx - 0.02, hy + hr * k), (hx + 0.09, hy + hr * k)], _dark(fur, 0.75), 0.008)
+    _mouth(F, mood, hx - 0.09, hy + hr * 0.62, 0.04, hr * 0.08, 0.011, smile=False)
 
 
 EARS = {'pointy': _ears_pointy, 'long': _ears_long, 'round': _ears_round, 'floppy': _ears_floppy, 'small': _ears_small,
@@ -391,26 +456,35 @@ MUZZLES = {'cat': _muzzle_cat, 'fox': _muzzle_fox, 'dog': _muzzle_dog, 'bunny': 
            'hedgehog': _muzzle_hedgehog, 'mouse': _muzzle_mouse, 'frog': _muzzle_frog, 'beak': _muzzle_beak, 'trunk': _muzzle_trunk}
 
 
-def _eyes(F, hx, hy, hr, x, t, gaps=(-0.07, 0.12)):
-    """Button eyes with a glint, the same for every animal and bird; they blink now and then."""
+def _eyes(F, hx, hy, hr, x, t, mood, gaps=(-0.07, 0.12)):
+    """Button eyes with a glint, the same for every animal and bird; they blink now and then. The mood changes them, see _animal."""
     blink = (t * 0.33 + x) % 1.0 < 0.04
     ey = hy - hr * 0.12
+    if mood == 'sad':
+        _sad_brows(F, [hx + ex for ex in gaps], ey - 0.08, 0.036, '#3a2828')
     for ex in gaps:
-        if blink:
+        if mood in ('surprised', 'sleepy'):
+            _mood_eye(F, hx + ex, ey, 0.036, mood, '#231a1a')
+        elif blink:
             F.line([(hx + ex - 0.025, ey), (hx + ex + 0.025, ey)], '#2a2020', 0.016)
         else:
             F.circle(hx + ex, ey, 0.04, '#231a1a')
             F.circle(hx + ex + 0.013, ey - 0.014, 0.012, '#ffffff')
+    if mood == 'sad':
+        _tear(F, hx + gaps[0] - 0.03, ey + 0.085, 0.026, t)
 
 
 def _animal(ctx, t, tl, st, f, look):
     """The base of every animal: a big round head, a small body with a pale belly, short thick legs with pads, button eyes
-    and round cheeks. An animal is only its colours, ears, tail, muzzle and, for a hen, two feet."""
+    and round cheeks. An animal is only its colours, ears, tail, muzzle and, for a hen, two feet.
+    mood=happy|sad|surprised|sleepy sets the face as for people: happy is the usual look; sad has roof-like brows, a mouth turned
+    down and a tear; surprised has round eyes and an 'o' mouth (a hen opens its beak); sleepy has closed eyes, arcs."""
     fur, belly, ears, tail, muzzle, feet = look
     fur = st.params.get('color', fur)
     x, y, facing = _place(st, f)
     s = st.params.get('size', 0.22)
     P = _pose(st.words[1], t + x * 2.3, tl, st.t1 - st.t0)
+    mood = st.params.get('mood', 'happy')
     yb = y - (P['bob'] * 1.5 + P['lift']) * s
     piece = lambda: Local(ctx.piece(), x, yb, s, facing)
     sit = st.words[1] == 'sit'
@@ -456,17 +530,18 @@ def _animal(ctx, t, tl, st, f, look):
     if ears == 'floppy':
         EARS[ears](piece(), piece(), hx, hy, hr, fur, belly)
     M, F = piece(), piece()
-    MUZZLES[muzzle](M, F, hx, hy, hr, belly, fur)
+    MUZZLES[muzzle](M, F, hx, hy, hr, belly, fur, mood)
     if ears == 'bulge':
-        _eyes(F, hx, hy - hr * 0.6, hr, x, t, gaps=(-0.11, 0.15))
+        _eyes(F, hx, hy - hr * 0.6, hr, x, t, mood, gaps=(-0.11, 0.15))
     else:
-        _eyes(F, hx, hy, hr, x, t)
+        _eyes(F, hx, hy, hr, x, t, mood)
     for ex in (-0.15, 0.2):
         F.circle(hx + ex, hy + hr * 0.3, 0.04, '#f4a6b4')
 
 
 def _bird(ctx, t, tl, st, f):
-    """A bird on the same base: a big round head, a small body with a pale belly, button eye, cheek; a wing and a beak instead of legs and muzzle."""
+    """A bird on the same base: a big round head, a small body with a pale belly, button eye, cheek; a wing and a beak instead of legs and muzzle.
+    mood= works as for animals, on the eye and brow only: a beak has no mouth to change."""
     x, y, facing = _place(st, f)
     s = st.params.get('size', 0.1)
     col = st.params.get('color', '#f2c14e')
@@ -486,7 +561,7 @@ def _bird(ctx, t, tl, st, f):
     piece().poly([(hx + hr * 0.75, hy - 0.04), (hx + hr + 0.17, hy + 0.04), (hx + hr * 0.75, hy + 0.11)], '#f08a3a')
     piece().ellipse(-0.08, -0.38 - 0.16 * flap, 0.2, 0.1, _dark(col, 0.82), angle=-0.5 * flap)
     F = piece()
-    _eyes(F, hx, hy, hr, x, t, gaps=(0.08,))
+    _eyes(F, hx, hy, hr, x, t, st.params.get('mood', 'happy'), gaps=(0.08,))
     F.circle(hx - 0.04, hy + hr * 0.3, 0.04, '#f4a6b4')
 
 

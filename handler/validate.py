@@ -132,6 +132,12 @@ def validate(stmts):
                 raise SceneError(f"line {st.line}: {name} needs an action: {', '.join(actions)}")
             if st.words[1] not in actions:
                 raise SceneError(f"line {st.line}: {name} cannot '{st.words[1]}'; it can: {', '.join(actions)}")
+            if 'mood' in st.params:
+                if prog.style != 'felt':
+                    raise SceneError(f"line {st.line}: mood= works only in style=felt films")
+                from .felt_actors import FACE_MOODS
+                if st.params['mood'] not in FACE_MOODS:
+                    raise SceneError(f"line {st.line}: mood '{st.params['mood']}' unknown; moods: {', '.join(FACE_MOODS)}")
             _need_time(st, f"{name} {st.words[1]}")
             _check_pos(st, st.frm); _check_pos(st, st.to); _check_pos(st, st.pos)
             if (st.frm is None) != (st.to is None):  # one end given: come in from, or go out to, the nearer side

@@ -15,6 +15,7 @@ Animals: `cat`, `fox`, `dog`, `bunny`, `bear`, `hedgehog`, `mouse`, `frog`, `hen
 `girl walk from offleft to 0.45 0-5s y=0.95`, `dog sit at 0.3 2-8s y=0.96 facing=-1`. Params: `y` (feet line), `size`, `facing` (1 or -1), `color`, `hair`, `holds=lantern|balloon|flower|book|gift|umbrella`. One end of a move is enough: `walk to 0.4` comes in from the nearer side. A character does one action at a time.
 `wave` raises one hand beside the head, `dance` raises both hands, one higher in turn, `jump` raises both hands and tucks the legs in the air.
 
+`mood=happy|sad|surprised|sleepy` sets the face of a person, an animal or a bird: `fox sit at 0.5 0-4s y=0.96 mood=sad`. `happy` is the usual smile and the default; `sad` gives brows like a little roof, a mouth turned down and a tear; `surprised` gives round eyes and an "o" mouth (a hen opens its beak); `sleepy` gives closed eyes, arcs. A bird changes only its eye and brow. To change the mood, write a new line with the next seconds: `fox sit at 0.5 4-8s y=0.96 mood=happy`. This `mood` is about the face; `music mood=` is a different word for the sound.
 ## Elements
 | name | what it is |
 |---|---|
