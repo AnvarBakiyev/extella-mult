@@ -1,0 +1,72 @@
+{
+ "name": "doctor_aibek",
+ "kind": "person",
+ "about": "терапевт, спокойный как утро",
+ "default_voice": "calm",
+ "palette": {
+  "skin": "#b88257",
+  "outfit": "#3c7775",
+  "outfit2": "#ebe2cd",
+  "accent": "#c49638",
+  "iris": "#5a3a26",
+  "lip": "#7c4e3c",
+  "hair": "#2a2422"
+ },
+ "parts": {
+  "head": "oval",
+  "hair": "short",
+  "eyes": "narrow",
+  "brow": "neutral",
+  "nose": "button",
+  "outfit": "labcoat",
+  "age": "adult",
+  "build": "normal",
+  "accessories": [
+   "stethoscope"
+  ]
+ },
+ "size": [
+  1024,
+  1024
+ ],
+ "frames": {
+  "base": "base.png",
+  "visemes": {
+   "closed": "mouth_closed.png",
+   "A": "mouth_A.png",
+   "E": "mouth_E.png",
+   "O": "mouth_O.png",
+   "U": "mouth_U.png",
+   "MBP": "mouth_MBP.png"
+  },
+  "blink": "blink.png",
+  "expressions": {
+   "neutral": "expr_neutral.png",
+   "happy": "expr_happy.png",
+   "angry": "expr_angry.png",
+   "shocked": "expr_shocked.png"
+  }
+ },
+ "layering": "base.png is the full neutral frame. Every other png is a full-size, pixel-aligned overlay of only the changed face region (mouth region for visemes, eye region for blink, both for expressions): frame = base, then expr_<e>, then mouth_<v>, then blink, each alpha-composited.",
+ "anchors": {
+  "mouth": [
+   0.5,
+   0.5495
+  ],
+  "eyes": [
+   [
+    0.433,
+    0.4037
+   ],
+   [
+    0.567,
+    0.4037
+   ]
+  ],
+  "head_center": [
+   0.5,
+   0.4391
+  ],
+  "split_y": 0.4791
+ }
+}

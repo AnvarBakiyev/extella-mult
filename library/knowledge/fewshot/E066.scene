@@ -1,0 +1,27 @@
+# format: F11 Игровое шоу
+# logline: Робот и чатбот блестяще проходят капчу, а восьмидесятилетний Бахтияр-ата никак не может доказать, что он человек.
+# why it works: Rules more absurd than the questions: machines pass the human test, the human fails, the host stays perfectly neutral.
+film title="Докажи, что ты не робот" style=puppet fps=24 size=1920x1080
+shot 0-5s: ch_inna pull=0.25 pan=right
+fade in 0-0.6s
+say ch_inna "«Докажи, что ты не робот»!" at 0.3s
+shot 5-11s: ch_inna push=0.1
+say ch_inna "Отметьте все квадраты со светофорами. Время пошло!" at 5.3s
+shot 11-15s: ch_robot whip=right
+say ch_robot "Готово. Девять из девяти." at 11.3s
+shot 15-19s: ch_robot whip=left push=0.04 focus=0.5,0.4
+say ch_robot "Готово! Отличное задание!" at 15.3s
+shot 19-26s: ch_bakhtiyar push=0.1 whip=right
+say ch_bakhtiyar "Это светофор или фонарь? Раньше их было три на район." at 19.3s
+shot 26-31s: ch_inna push=0.02
+say ch_inna "Второе задание: введите кривые буквы." at 26.3s
+shot 31-36s: ch_bakhtiyar dutch=-10
+say ch_bakhtiyar "Без очков не вижу. Вижу только, что кривые." at 31.3s
+shot 36-41s: ch_inna push=0.1 snap=36.3 focus=0.5,0.5
+say ch_inna "Человеком по итогам игры признан... Вольт!" at 36.3s
+shot 41-45s: ch_bakhtiyar push=0.06 focus=0.5,0.4
+say ch_bakhtiyar "Я восемьдесят лет человек." at 41.3s
+shot 45-50s: ch_inna push=0.06 focus=0.5,0.4 snap=45.3
+say ch_inna "[deadpan] Подтвердите. Отметьте все пожарные гидранты." at 45.3s
+music mood=bright tempo=118 0-31s
+fade out 49.6-50s

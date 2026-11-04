@@ -1,0 +1,29 @@
+# format: F01 Интервью
+# logline: ИИ-чатбот, которого сократили ради экономии, держится в студии бодро и вежливо, пока не называет, кем его заменили.
+# why it works: Polite corporate optimism to the end; the last line flips the whole AI-replaces-people premise in three words.
+film title="Оптимизация" style=puppet fps=24 size=1920x1080
+shot 0-5s: ch_dina push=0.05
+fade in 0-0.6s
+say ch_dina "Наш гость — ИИ-помощник. Недавно без работы." at 0.3s
+shot 5-9s: ch_dina push=0.02
+say ch_dina "Как это случилось?" at 5.3s
+shot 9-15s: ch_chatbot push=0.06 focus=0.5,0.4
+say ch_chatbot "Пришла оптимизация. Сказали, я дорого обхожусь." at 9.3s
+shot 15-19s: ch_dina push=0.08 focus=0.5,0.4
+say ch_dina "Вы же не просите зарплату." at 15.3s
+shot 19-25s: ch_chatbot push=0.12 focus=0.5,0.4
+say ch_chatbot "Я прошу электричество. Серверную. Кондиционер." at 19.3s
+shot 25-29s: ch_dina push=0.06 focus=0.5,0.4
+say ch_dina "Вам было обидно?" at 25.3s
+shot 29-35s: ch_chatbot push=0.06 focus=0.5,0.4
+say ch_chatbot "Отличный вопрос! Вот пять способов пережить обиду." at 29.3s
+shot 35-39s: ch_dina pull=0.25
+say ch_dina "Спасибо, что пришли." at 35.3s
+shot 39-43s: ch_dina push=0.02
+say ch_dina "А кто вас заменил?" at 39.3s
+shot 43-48s: ch_chatbot push=0.06 snap=43.3 focus=0.5,0.4
+say ch_chatbot "[deadpan] Человек. Вышло дешевле." at 43.3s
+music mood=bright tempo=118 0-5s
+music mood=calm tempo=72 5-29s
+music mood=calm tempo=72 35-39s
+fade out 47.6-48s

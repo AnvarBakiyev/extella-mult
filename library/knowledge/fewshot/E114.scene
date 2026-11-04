@@ -1,0 +1,25 @@
+# format: F19 Семейный ужин
+# logline: Бабушка и дедушка после пятидесяти лет брака объявляют о разводе — исключительно из уважения к пенсионной системе.
+# why it works: A divorce announced with warmth for benefit reasons; the grandfather already plans the remarriage bonus.
+film title="Две надбавки" style=puppet fps=24 size=1920x1080
+shot 0-5s: ch_leyla pan=down
+fade in 0-0.6s
+say ch_leyla "Мама, папа, садитесь. Плов остывает." at 0.3s
+shot 5-9s: ch_bakhtiyar whip=left
+say ch_bakhtiyar "Пятьдесят лет остывает. Не остынет." at 5.3s
+shot 9-13s: ch_oleg whip=right
+say ch_oleg "Бахтияр-ата, как давление?" at 9.3s
+shot 13-18s: ch_zuhra whip=left
+say ch_zuhra "Давление в норме. Пенсия нет." at 13.3s
+shot 18-24s: ch_leyla push=0.14 focus=0.5,0.4
+say ch_leyla "Вы оба какие-то торжественные. Что-то случилось?" at 18.3s
+shot 24-30s: ch_zuhra push=0.06 focus=0.5,0.4
+say ch_zuhra "Мы разводимся. После пятидесяти лет." at 24.3s
+shot 30-36s: ch_bakhtiyar push=0.02
+say ch_bakhtiyar "Одиноким пенсионерам надбавка. Две надбавки больше одной." at 30.3s
+shot 36-41s: ch_zuhra push=0.06 focus=0.5,0.4
+say ch_zuhra "И каждому положен соцработник. Два чая в день." at 36.3s
+shot 41-44s: ch_leyla push=0.06 focus=0.5,0.4
+shot 44-49.2s: ch_bakhtiyar push=0.06 snap=44.3 focus=0.5,0.4
+say ch_bakhtiyar "[deadpan] А через год снова поженимся. Молодым семьям дают выплату." at 44.3s
+fade out 48.8-49.2s

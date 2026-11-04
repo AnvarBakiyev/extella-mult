@@ -1,0 +1,28 @@
+# format: F02 Ток-шоу
+# logline: Одинокий носок три года ждёт на батарее пропавшую пару, а на шоу выходит та, кто знает, куда она делась.
+# why it works: Talk-show drama for a lost sock; the surprise guest confesses with snobbish calm.
+film title="Он не вернулся из стирки" style=puppet fps=24 size=1920x1080
+shot 0-5s: ch_arsen pull=0.25
+fade in 0-0.6s
+say ch_arsen "Тема вечера: «Ушёл и не вернулся»." at 0.3s
+shot 5-11s: ch_sock push=0.05
+say ch_sock "Мы были парой с самого магазина." at 5.3s
+shot 11-16s: ch_sock push=0.05
+say ch_sock "Потом стирка. Я вышел. Он — нет." at 11.3s
+shot 16-21s: ch_sock push=0.14 focus=0.5,0.4
+say ch_sock "Три года на батарее. Я всё ещё тёплый." at 16.3s
+shot 21-26s: ch_gennady handheld=1 push=0.02
+say ch_gennady "А в барабане смотрели? Там бывает." at 21.3s
+shot 26-30s: ch_sock push=0.02
+say ch_sock "Смотрел. Там только чужие." at 26.3s
+shot 30-34s: ch_arsen whip=right
+say ch_arsen "А теперь к нам выходит... она!" at 30.3s
+shot 34-38s: ch_leyla push=0.02
+say ch_leyla "Здравствуй, сынок." at 34.3s
+shot 38-41s: ch_sock push=0.09 focus=0.5,0.4
+shot 41-46s: ch_leyla push=0.06 snap=41.3 focus=0.5,0.4
+say ch_leyla "[deadpan] Это я его выбросила. Хлопок — не наш уровень." at 41.3s
+music mood=bright tempo=118 0-5s
+music mood=wonder tempo=70 5-30s
+music mood=bright tempo=118 30-34s
+fade out 45.6-46s

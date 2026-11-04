@@ -1,0 +1,26 @@
+# format: F06 Собеседование
+# logline: Хомяк с восьмилетним стажем в колесе идеально подходит корпоративной культуре — пока не спрашивает про оборудование.
+# why it works: Interview questions answered with total honesty; the HR line reuses the candidate's own image as policy.
+film title="Колесо своё" style=puppet fps=24 size=1920x1080
+shot 0-4s: pl_hr_room push=0.02
+fade in 0-0.6s
+shot 4-8s: ch_alina push=0.02
+say ch_alina "Расскажите немного о себе." at 4.3s
+shot 8-14s: ch_hamster push=0.05
+say ch_hamster "Восемь лет в колесе. Без отпуска. Ни шагу вперёд." at 8.3s
+shot 14-18s: ch_alina push=0.04
+say ch_alina "Стабильность. Это очень ценно." at 14.3s
+shot 18-22s: ch_alina push=0.02
+say ch_alina "Ваши слабые стороны?" at 18.3s
+shot 22-28s: ch_hamster push=0.09 focus=0.5,0.4
+say ch_hamster "Иногда ночью хочу наружу. Потом проходит." at 22.3s
+shot 28-32s: ch_alina push=0.06 focus=0.5,0.4
+say ch_alina "У нас это лечится. Есть ДМС." at 28.3s
+shot 32-37s: ch_hamster push=0.06 focus=0.5,0.4
+say ch_hamster "А какой у вас диаметр колеса?" at 32.3s
+shot 37-41s: ch_alina push=0.02 focus=0.5,0.4
+say ch_alina "Вы нам подходите." at 37.3s
+shot 41-45s: ch_alina push=0.02 snap=41.3
+say ch_alina "[deadpan] Колесо — своё." at 41.3s
+music mood=calm tempo=72 0-32s
+fade out 44.6-45s

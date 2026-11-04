@@ -28,6 +28,10 @@ A second agent on the same handler, for grown-ups: deadpan TV formats, an absurd
 
 The agent works in three calls, each under the platform's 120-second limit: write an episode; `render ep_<name>`; `status ep_<name> <job>`. A 40-second film renders in about a minute on an Apple M-series laptop.
 
+### The library is open to contributions
+
+`library/` in this repository holds the picture sets, the media and the sources of the code packs; the rendered pictures of the code packs live in the release archives. Add a set, a sound or a character by pull request: the format, the licence (CC0 / CC BY / OFL) and the check are in [CONTRIBUTING.md](CONTRIBUTING.md). A merged pull request reaches users with their next install, and `tools/build_vocabulary.py` puts it into the agent's vocabulary.
+
 ## In numbers
 
 From our tests on 3 November 2026, agent on DeepSeek-V4-Flash:

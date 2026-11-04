@@ -1,0 +1,22 @@
+# format: F12 Пресс-конференция
+# logline: Пресс-секретарь банка объясняет, что кнопка «Перевести» после обновления не пропала, а стала интуитивной.
+# why it works: Press-speak turns a missing button into a feature; the secretary himself gives up on the app.
+film title="Интуитивная кнопка" style=puppet fps=24 size=1920x1080
+shot 0-8s: ch_pavel push=0.02
+fade in 0-0.6s
+say ch_pavel "Обновление сделало приложение банка легче. На одну кнопку." at 0.3s
+shot 8-13s: ch_timur handheld=1 push=0.02
+say ch_timur "Это была кнопка «Перевести»?" at 8.3s
+shot 13-20s: ch_pavel push=0.14 focus=0.5,0.4
+say ch_pavel "Кнопка не удалена. Она стала интуитивной. Её нужно почувствовать." at 13.3s
+shot 20-25s: ch_sabina handheld=1 push=0.02
+say ch_sabina "Я неделю чувствую. Не переводится." at 20.3s
+shot 25-31s: ch_pavel push=0.06 focus=0.5,0.4
+say ch_pavel "Значит, вы на верном пути. Довольны девяносто процентов пользователей." at 25.3s
+shot 31-36s: ch_timur push=0.1 handheld=1
+say ch_timur "А как вы сами переводите деньги?" at 31.3s
+shot 36-40s: ch_pavel push=0.06 snap=36.3 focus=0.5,0.4
+say ch_pavel "Без комментариев. Спасибо всем." at 36.3s
+shot 40-47s: ch_pavel handheld=1 push=0.02 snap=40.3
+say ch_pavel "[deadpan] Выдай наличными. Я туда больше не зайду." at 40.3s
+fade out 46.6-47s

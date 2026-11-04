@@ -1,0 +1,2167 @@
+{
+ "count": 99,
+ "frame": "RGBA 1920x1080 (scale<1 effects stored smaller; render() makes any size)",
+ "effects": [
+  {
+   "name": "rain_light",
+   "category": "weather",
+   "about": "Light felt rain: thin blue drops falling straight down.",
+   "params": {
+    "seed": 1,
+    "density": 70
+   },
+   "loop": true,
+   "duration": 2.0,
+   "fps": 24,
+   "frames": 48,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/rain_light/%04d.png",
+   "preview": "preview/rain_light.mp4",
+   "function": "effects_lib.rain_light(t, params)"
+  },
+  {
+   "name": "rain_heavy",
+   "category": "weather",
+   "about": "Heavy felt rain: dense slanted drops with little splash crowns on the floor.",
+   "params": {
+    "seed": 1,
+    "density": 340,
+    "floor": 0.92
+   },
+   "loop": true,
+   "duration": 2.0,
+   "fps": 24,
+   "frames": 48,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/rain_heavy/%04d.png",
+   "preview": "preview/rain_heavy.mp4",
+   "function": "effects_lib.rain_heavy(t, params)"
+  },
+  {
+   "name": "rain_wind",
+   "category": "weather",
+   "about": "Wind-driven rain: long drops at a steep angle, gusting.",
+   "params": {
+    "seed": 1,
+    "density": 150
+   },
+   "loop": true,
+   "duration": 2.0,
+   "fps": 24,
+   "frames": 48,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/rain_wind/%04d.png",
+   "preview": "preview/rain_wind.mp4",
+   "function": "effects_lib.rain_wind(t, params)"
+  },
+  {
+   "name": "snow_light",
+   "category": "weather",
+   "about": "Gentle snowfall: soft round felt flakes swaying as they fall.",
+   "params": {
+    "seed": 1,
+    "density": 70
+   },
+   "loop": true,
+   "duration": 4.0,
+   "fps": 24,
+   "frames": 96,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/snow_light/%04d.png",
+   "preview": "preview/snow_light.mp4",
+   "function": "effects_lib.snow_light(t, params)"
+  },
+  {
+   "name": "snow_heavy",
+   "category": "weather",
+   "about": "Heavy snow: large six-arm felt crystals turning slowly among many small flakes.",
+   "params": {
+    "seed": 1,
+    "density": 110
+   },
+   "loop": true,
+   "duration": 4.0,
+   "fps": 24,
+   "frames": 96,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/snow_heavy/%04d.png",
+   "preview": "preview/snow_heavy.mp4",
+   "function": "effects_lib.snow_heavy(t, params)"
+  },
+  {
+   "name": "blizzard",
+   "category": "weather",
+   "about": "Blizzard: dense fast snow driven sideways, wind haze bands and a white veil.",
+   "params": {
+    "seed": 1,
+    "density": 320
+   },
+   "loop": true,
+   "duration": 2.0,
+   "fps": 24,
+   "frames": 48,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/blizzard/%04d.png",
+   "preview": "preview/blizzard.mp4",
+   "function": "effects_lib.blizzard(t, params)"
+  },
+  {
+   "name": "fog_drift",
+   "category": "weather",
+   "about": "Fog: layers of sheer felt mist drifting sideways at different speeds (parallax).",
+   "params": {
+    "seed": 1
+   },
+   "loop": true,
+   "duration": 6.0,
+   "fps": 12,
+   "frames": 72,
+   "size": [
+    960,
+    540
+   ],
+   "seq": "seq/fog_drift/%04d.png",
+   "preview": "preview/fog_drift.mp4",
+   "function": "effects_lib.fog_drift(t, params)"
+  },
+  {
+   "name": "wind_leaves",
+   "category": "weather",
+   "about": "Wind with leaves: autumn leaves tumbling across the frame with curly wind strokes.",
+   "params": {
+    "seed": 1,
+    "density": 42
+   },
+   "loop": true,
+   "duration": 3.0,
+   "fps": 24,
+   "frames": 72,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/wind_leaves/%04d.png",
+   "preview": "preview/wind_leaves.mp4",
+   "function": "effects_lib.wind_leaves(t, params)"
+  },
+  {
+   "name": "wind_gusts",
+   "category": "weather",
+   "about": "Cartoon wind gusts: curly white felt strokes sweeping across.",
+   "params": {
+    "seed": 1
+   },
+   "loop": true,
+   "duration": 2.0,
+   "fps": 24,
+   "frames": 48,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/wind_gusts/%04d.png",
+   "preview": "preview/wind_gusts.mp4",
+   "function": "effects_lib.wind_gusts(t, params)"
+  },
+  {
+   "name": "lightning_flash",
+   "category": "weather",
+   "about": "Thunderstorm: dark felt cloud, a stitched yellow bolt strikes twice with white flashes.",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.18
+    ]
+   },
+   "loop": true,
+   "duration": 3.0,
+   "fps": 24,
+   "frames": 72,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/lightning_flash/%04d.png",
+   "preview": "preview/lightning_flash.mp4",
+   "function": "effects_lib.lightning_flash(t, params)"
+  },
+  {
+   "name": "hail",
+   "category": "weather",
+   "about": "Hail: pale felt pellets falling hard and bouncing on the floor.",
+   "params": {
+    "seed": 1,
+    "density": 60,
+    "floor": 0.9
+   },
+   "loop": true,
+   "duration": 2.0,
+   "fps": 24,
+   "frames": 48,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/hail/%04d.png",
+   "preview": "preview/hail.mp4",
+   "function": "effects_lib.hail(t, params)"
+  },
+  {
+   "name": "sandstorm",
+   "category": "weather",
+   "about": "Sandstorm: ochre grains and dusty felt bands streaming sideways under a sandy veil.",
+   "params": {
+    "seed": 1,
+    "density": 260
+   },
+   "loop": true,
+   "duration": 2.0,
+   "fps": 24,
+   "frames": 48,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/sandstorm/%04d.png",
+   "preview": "preview/sandstorm.mp4",
+   "function": "effects_lib.sandstorm(t, params)"
+  },
+  {
+   "name": "rain_cloud",
+   "category": "weather",
+   "about": "A single felt rain cloud bobbing at the top with rain falling from it.",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.2
+    ]
+   },
+   "loop": true,
+   "duration": 2.0,
+   "fps": 24,
+   "frames": 48,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/rain_cloud/%04d.png",
+   "preview": "preview/rain_cloud.mp4",
+   "function": "effects_lib.rain_cloud(t, params)"
+  },
+  {
+   "name": "sun_rays",
+   "category": "weather",
+   "about": "Felt sun: a stitched disc with alternating rays slowly turning and breathing.",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.45
+    ]
+   },
+   "loop": true,
+   "duration": 4.0,
+   "fps": 24,
+   "frames": 96,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/sun_rays/%04d.png",
+   "preview": "preview/sun_rays.mp4",
+   "function": "effects_lib.sun_rays(t, params)"
+  },
+  {
+   "name": "rainbow_grow",
+   "category": "weather",
+   "about": "A felt rainbow sweeps across from left to right, puffy clouds pop at its ends.",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.82
+    ]
+   },
+   "loop": false,
+   "duration": 3.0,
+   "fps": 24,
+   "frames": 73,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/rainbow_grow/%04d.png",
+   "preview": "preview/rainbow_grow.mp4",
+   "function": "effects_lib.rainbow_grow(t, params)"
+  },
+  {
+   "name": "clouds_drift",
+   "category": "weather",
+   "about": "Puffy white felt clouds drifting across the sky, looping seamlessly.",
+   "params": {
+    "seed": 1
+   },
+   "loop": true,
+   "duration": 6.0,
+   "fps": 12,
+   "frames": 72,
+   "size": [
+    960,
+    540
+   ],
+   "seq": "seq/clouds_drift/%04d.png",
+   "preview": "preview/clouds_drift.mp4",
+   "function": "effects_lib.clouds_drift(t, params)"
+  },
+  {
+   "name": "campfire",
+   "category": "fire",
+   "about": "Campfire: crossed felt logs and stones, flickering three-colour flames, rising embers and glow.",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.82
+    ],
+    "size": 1.25
+   },
+   "loop": true,
+   "duration": 2.0,
+   "fps": 24,
+   "frames": 48,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/campfire/%04d.png",
+   "preview": "preview/campfire.mp4",
+   "function": "effects_lib.campfire(t, params)"
+  },
+  {
+   "name": "candle",
+   "category": "fire",
+   "about": "Candle: stitched cream felt candle with a swaying teardrop flame and soft glow.",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.62
+    ],
+    "size": 1.25
+   },
+   "loop": true,
+   "duration": 2.0,
+   "fps": 24,
+   "frames": 48,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/candle/%04d.png",
+   "preview": "preview/candle.mp4",
+   "function": "effects_lib.candle(t, params)"
+  },
+  {
+   "name": "explosion_puff",
+   "category": "fire",
+   "about": "Cartoon explosion: spiky orange flash, then grey smoke puffs balloon out and fade, debris flies.",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.55
+    ]
+   },
+   "loop": false,
+   "duration": 2.5,
+   "fps": 24,
+   "frames": 61,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/explosion_puff/%04d.png",
+   "preview": "preview/explosion_puff.mp4",
+   "function": "effects_lib.explosion_puff(t, params)"
+  },
+  {
+   "name": "steam",
+   "category": "fire",
+   "about": "Steam: soft white puffs curling up from a point (cup, kettle, pot) and dissolving.",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.75
+    ],
+    "size": 1.6
+   },
+   "loop": true,
+   "duration": 3.0,
+   "fps": 24,
+   "frames": 72,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/steam/%04d.png",
+   "preview": "preview/steam.mp4",
+   "function": "effects_lib.steam(t, params)"
+  },
+  {
+   "name": "chimney_smoke",
+   "category": "fire",
+   "about": "Chimney smoke: grey puffs rising and drifting with the wind, growing as they go.",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.62,
+     0.62
+    ]
+   },
+   "loop": true,
+   "duration": 4.0,
+   "fps": 24,
+   "frames": 96,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/chimney_smoke/%04d.png",
+   "preview": "preview/chimney_smoke.mp4",
+   "function": "effects_lib.chimney_smoke(t, params)"
+  },
+  {
+   "name": "dust_cloud",
+   "category": "fire",
+   "about": "Dust cloud: beige felt puffs burst out sideways along the ground (skid, landing, stomp).",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.85
+    ]
+   },
+   "loop": false,
+   "duration": 2.0,
+   "fps": 24,
+   "frames": 49,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/dust_cloud/%04d.png",
+   "preview": "preview/dust_cloud.mp4",
+   "function": "effects_lib.dust_cloud(t, params)"
+  },
+  {
+   "name": "embers",
+   "category": "fire",
+   "about": "Embers: tiny glowing orange felt sparks rising and wavering.",
+   "params": {
+    "seed": 1,
+    "density": 70
+   },
+   "loop": true,
+   "duration": 3.0,
+   "fps": 24,
+   "frames": 72,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/embers/%04d.png",
+   "preview": "preview/embers.mp4",
+   "function": "effects_lib.embers(t, params)"
+  },
+  {
+   "name": "fire_edge",
+   "category": "fire",
+   "about": "A wall of felt flames flickering along the bottom edge of the frame.",
+   "params": {
+    "seed": 1
+   },
+   "loop": true,
+   "duration": 2.0,
+   "fps": 24,
+   "frames": 48,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/fire_edge/%04d.png",
+   "preview": "preview/fire_edge.mp4",
+   "function": "effects_lib.fire_edge(t, params)"
+  },
+  {
+   "name": "smoke_puffs",
+   "category": "fire",
+   "about": "Billowing smoke: puffy felt clouds bursting out sideways and up from a point (launch, crash).",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.85
+    ]
+   },
+   "loop": true,
+   "duration": 3.0,
+   "fps": 24,
+   "frames": 72,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/smoke_puffs/%04d.png",
+   "preview": "preview/smoke_puffs.mp4",
+   "function": "effects_lib.smoke_puffs(t, params)"
+  },
+  {
+   "name": "poof_vanish",
+   "category": "fire",
+   "about": "Cartoon poof: a ring of white felt puffs and little stars pops out and fades (disappearing).",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.55
+    ],
+    "size": 1.25
+   },
+   "loop": false,
+   "duration": 2.0,
+   "fps": 24,
+   "frames": 49,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/poof_vanish/%04d.png",
+   "preview": "preview/poof_vanish.mp4",
+   "function": "effects_lib.poof_vanish(t, params)"
+  },
+  {
+   "name": "splash",
+   "category": "water",
+   "about": "Water splash: a felt crown rises and blue drops shoot up and fall back.",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.8
+    ]
+   },
+   "loop": false,
+   "duration": 2.0,
+   "fps": 24,
+   "frames": 49,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/splash/%04d.png",
+   "preview": "preview/splash.mp4",
+   "function": "effects_lib.splash(t, params)"
+  },
+  {
+   "name": "ripples",
+   "category": "water",
+   "about": "Ripples: concentric felt rings spreading on a water surface and fading.",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.75
+    ]
+   },
+   "loop": true,
+   "duration": 3.0,
+   "fps": 24,
+   "frames": 72,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/ripples/%04d.png",
+   "preview": "preview/ripples.mp4",
+   "function": "effects_lib.ripples(t, params)"
+  },
+  {
+   "name": "bubbles",
+   "category": "water",
+   "about": "Bubbles: light blue felt bubbles with a white glint rising and wobbling.",
+   "params": {
+    "seed": 1,
+    "density": 22,
+    "at": [
+     0.5,
+     0.95
+    ]
+   },
+   "loop": true,
+   "duration": 3.0,
+   "fps": 24,
+   "frames": 72,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/bubbles/%04d.png",
+   "preview": "preview/bubbles.mp4",
+   "function": "effects_lib.bubbles(t, params)"
+  },
+  {
+   "name": "drip",
+   "category": "water",
+   "about": "Drip: a drop swells under a point, stretches, falls and makes a small splash ring.",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.2
+    ],
+    "floor": 0.85,
+    "size": 1.6
+   },
+   "loop": true,
+   "duration": 3.0,
+   "fps": 24,
+   "frames": 72,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/drip/%04d.png",
+   "preview": "preview/drip.mp4",
+   "function": "effects_lib.drip(t, params)"
+  },
+  {
+   "name": "waves_edge",
+   "category": "water",
+   "about": "Sea edge: three layers of felt waves rolling along the bottom with a stitched foam line.",
+   "params": {
+    "seed": 1
+   },
+   "loop": true,
+   "duration": 3.0,
+   "fps": 24,
+   "frames": 72,
+   "size": [
+    960,
+    540
+   ],
+   "seq": "seq/waves_edge/%04d.png",
+   "preview": "preview/waves_edge.mp4",
+   "function": "effects_lib.waves_edge(t, params)"
+  },
+  {
+   "name": "fountain",
+   "category": "water",
+   "about": "Fountain: a jet of felt water drops arcing up and falling back, endlessly.",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.85
+    ]
+   },
+   "loop": true,
+   "duration": 2.0,
+   "fps": 24,
+   "frames": 48,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/fountain/%04d.png",
+   "preview": "preview/fountain.mp4",
+   "function": "effects_lib.fountain(t, params)"
+  },
+  {
+   "name": "puddle_splashes",
+   "category": "water",
+   "about": "Rain on the ground: little splash crowns and rings popping up all over the floor.",
+   "params": {
+    "seed": 1,
+    "density": 40,
+    "floor": 0.78
+   },
+   "loop": true,
+   "duration": 2.0,
+   "fps": 24,
+   "frames": 48,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/puddle_splashes/%04d.png",
+   "preview": "preview/puddle_splashes.mp4",
+   "function": "effects_lib.puddle_splashes(t, params)"
+  },
+  {
+   "name": "tears_stream",
+   "category": "water",
+   "about": "Cartoon crying: two arcing streams of felt tear drops spurting from the eyes.",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.42
+    ],
+    "gap": 0.09,
+    "size": 1.6
+   },
+   "loop": true,
+   "duration": 1.5,
+   "fps": 24,
+   "frames": 36,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/tears_stream/%04d.png",
+   "preview": "preview/tears_stream.mp4",
+   "function": "effects_lib.tears_stream(t, params)"
+  },
+  {
+   "name": "confetti_fall",
+   "category": "celebration",
+   "about": "Confetti: rectangles, dots, triangles and stars fluttering down in festive colours.",
+   "params": {
+    "seed": 1,
+    "density": 120
+   },
+   "loop": true,
+   "duration": 3.0,
+   "fps": 24,
+   "frames": 72,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/confetti_fall/%04d.png",
+   "preview": "preview/confetti_fall.mp4",
+   "function": "effects_lib.confetti_fall(t, params)"
+  },
+  {
+   "name": "confetti_burst",
+   "category": "celebration",
+   "about": "Confetti cannons: two bursts from the bottom corners shoot confetti up, it flutters down.",
+   "params": {
+    "seed": 1,
+    "count": 90
+   },
+   "loop": false,
+   "duration": 3.0,
+   "fps": 24,
+   "frames": 73,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/confetti_burst/%04d.png",
+   "preview": "preview/confetti_burst.mp4",
+   "function": "effects_lib.confetti_burst(t, params)"
+  },
+  {
+   "name": "fireworks",
+   "category": "celebration",
+   "about": "Fireworks: felt rockets climb on a puff trail and burst into rings of stars and dots that droop and fade.",
+   "params": {
+    "seed": 1
+   },
+   "loop": true,
+   "duration": 3.0,
+   "fps": 24,
+   "frames": 72,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/fireworks/%04d.png",
+   "preview": "preview/fireworks.mp4",
+   "function": "effects_lib.fireworks(t, params)"
+  },
+  {
+   "name": "balloons_rise",
+   "category": "celebration",
+   "about": "Balloons: shiny felt balloons on strings rising and swaying.",
+   "params": {
+    "seed": 1,
+    "density": 8
+   },
+   "loop": true,
+   "duration": 4.0,
+   "fps": 24,
+   "frames": 96,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/balloons_rise/%04d.png",
+   "preview": "preview/balloons_rise.mp4",
+   "function": "effects_lib.balloons_rise(t, params)"
+  },
+  {
+   "name": "streamers_fall",
+   "category": "celebration",
+   "about": "Streamers: wavy felt ribbons twisting as they fall.",
+   "params": {
+    "seed": 1,
+    "density": 22
+   },
+   "loop": true,
+   "duration": 3.0,
+   "fps": 24,
+   "frames": 72,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/streamers_fall/%04d.png",
+   "preview": "preview/streamers_fall.mp4",
+   "function": "effects_lib.streamers_fall(t, params)"
+  },
+  {
+   "name": "sparkle_burst",
+   "category": "celebration",
+   "about": "Sparkle burst: four-point felt stars shoot out from a point, twinkle and shrink.",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.5
+    ],
+    "size": 1.6
+   },
+   "loop": false,
+   "duration": 2.0,
+   "fps": 24,
+   "frames": 49,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/sparkle_burst/%04d.png",
+   "preview": "preview/sparkle_burst.mp4",
+   "function": "effects_lib.sparkle_burst(t, params)"
+  },
+  {
+   "name": "bunting",
+   "category": "celebration",
+   "about": "Bunting: a garland of stitched felt flags across the top, swaying in the breeze.",
+   "params": {
+    "seed": 1
+   },
+   "loop": true,
+   "duration": 3.0,
+   "fps": 24,
+   "frames": 72,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/bunting/%04d.png",
+   "preview": "preview/bunting.mp4",
+   "function": "effects_lib.bunting(t, params)"
+  },
+  {
+   "name": "stars_shower",
+   "category": "celebration",
+   "about": "Star shower: golden stitched felt stars tumbling down and twinkling.",
+   "params": {
+    "seed": 1,
+    "density": 34
+   },
+   "loop": true,
+   "duration": 3.0,
+   "fps": 24,
+   "frames": 72,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/stars_shower/%04d.png",
+   "preview": "preview/stars_shower.mp4",
+   "function": "effects_lib.stars_shower(t, params)"
+  },
+  {
+   "name": "speed_lines_radial",
+   "category": "comic",
+   "about": "Focus speed lines: felt wedges flicking in from the frame edges toward the centre.",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.5
+    ]
+   },
+   "loop": true,
+   "duration": 1.0,
+   "fps": 24,
+   "frames": 24,
+   "size": [
+    960,
+    540
+   ],
+   "seq": "seq/speed_lines_radial/%04d.png",
+   "preview": "preview/speed_lines_radial.mp4",
+   "function": "effects_lib.speed_lines_radial(t, params)"
+  },
+  {
+   "name": "motion_lines",
+   "category": "comic",
+   "about": "Whoosh lines: horizontal felt strips streaking past (something moving fast).",
+   "params": {
+    "seed": 1,
+    "density": 16
+   },
+   "loop": true,
+   "duration": 1.0,
+   "fps": 24,
+   "frames": 24,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/motion_lines/%04d.png",
+   "preview": "preview/motion_lines.mp4",
+   "function": "effects_lib.motion_lines(t, params)"
+  },
+  {
+   "name": "impact_star",
+   "category": "comic",
+   "about": "Impact: a spiky red-yellow felt burst pops with overshoot and shakes, small stars fly off.",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.5
+    ],
+    "size": 1.25
+   },
+   "loop": false,
+   "duration": 1.5,
+   "fps": 24,
+   "frames": 37,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/impact_star/%04d.png",
+   "preview": "preview/impact_star.mp4",
+   "function": "effects_lib.impact_star(t, params)"
+  },
+  {
+   "name": "sweat_drops",
+   "category": "comic",
+   "about": "Nervous sweat: light-blue felt drops pop off the side of a head and fall.",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.56,
+     0.36
+    ],
+    "size": 1.6
+   },
+   "loop": true,
+   "duration": 2.0,
+   "fps": 24,
+   "frames": 48,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/sweat_drops/%04d.png",
+   "preview": "preview/sweat_drops.mp4",
+   "function": "effects_lib.sweat_drops(t, params)"
+  },
+  {
+   "name": "anger_vein",
+   "category": "comic",
+   "about": "Anger mark: a red four-part felt \"vein\" cross pulsing next to a head.",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.6,
+     0.3
+    ],
+    "size": 1.6
+   },
+   "loop": true,
+   "duration": 1.0,
+   "fps": 24,
+   "frames": 24,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/anger_vein/%04d.png",
+   "preview": "preview/anger_vein.mp4",
+   "function": "effects_lib.anger_vein(t, params)"
+  },
+  {
+   "name": "question_marks",
+   "category": "comic",
+   "about": "Confusion: felt question marks pop up one by one over a head and bob.",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.25
+    ],
+    "size": 1.6
+   },
+   "loop": true,
+   "duration": 3.0,
+   "fps": 24,
+   "frames": 72,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/question_marks/%04d.png",
+   "preview": "preview/question_marks.mp4",
+   "function": "effects_lib.question_marks(t, params)"
+  },
+  {
+   "name": "exclamation",
+   "category": "comic",
+   "about": "Surprise: a big felt exclamation mark pops up with overshoot and quivers, with small burst lines.",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.25
+    ],
+    "size": 1.6
+   },
+   "loop": false,
+   "duration": 2.0,
+   "fps": 24,
+   "frames": 49,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/exclamation/%04d.png",
+   "preview": "preview/exclamation.mp4",
+   "function": "effects_lib.exclamation(t, params)"
+  },
+  {
+   "name": "zzz",
+   "category": "comic",
+   "about": "Sleeping: felt Z letters drift up and to the side, growing and fading.",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.55,
+     0.35
+    ],
+    "size": 1.6
+   },
+   "loop": true,
+   "duration": 3.0,
+   "fps": 24,
+   "frames": 72,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/zzz/%04d.png",
+   "preview": "preview/zzz.mp4",
+   "function": "effects_lib.zzz(t, params)"
+  },
+  {
+   "name": "hearts_float",
+   "category": "comic",
+   "about": "Love: stitched pink felt hearts float up and sway.",
+   "params": {
+    "seed": 1,
+    "density": 8,
+    "at": [
+     0.5,
+     0.6
+    ],
+    "size": 1.6
+   },
+   "loop": true,
+   "duration": 3.0,
+   "fps": 24,
+   "frames": 72,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/hearts_float/%04d.png",
+   "preview": "preview/hearts_float.mp4",
+   "function": "effects_lib.hearts_float(t, params)"
+  },
+  {
+   "name": "heart_beat",
+   "category": "comic",
+   "about": "Heartbeat: one big stitched felt heart thumping lub-dub.",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.5
+    ],
+    "size": 1.25
+   },
+   "loop": true,
+   "duration": 2.0,
+   "fps": 24,
+   "frames": 48,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/heart_beat/%04d.png",
+   "preview": "preview/heart_beat.mp4",
+   "function": "effects_lib.heart_beat(t, params)"
+  },
+  {
+   "name": "dizzy_stars",
+   "category": "comic",
+   "about": "Dizzy: little felt stars circling around a head on a tilted orbit.",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.3
+    ],
+    "size": 1.6
+   },
+   "loop": true,
+   "duration": 1.5,
+   "fps": 24,
+   "frames": 36,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/dizzy_stars/%04d.png",
+   "preview": "preview/dizzy_stars.mp4",
+   "function": "effects_lib.dizzy_stars(t, params)"
+  },
+  {
+   "name": "dizzy_swirl",
+   "category": "comic",
+   "about": "Dizzy swirl: felt spirals spinning (over a head or as eyes).",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.35
+    ],
+    "gap": 0.07,
+    "size": 1.6
+   },
+   "loop": true,
+   "duration": 1.0,
+   "fps": 24,
+   "frames": 24,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/dizzy_swirl/%04d.png",
+   "preview": "preview/dizzy_swirl.mp4",
+   "function": "effects_lib.dizzy_swirl(t, params)"
+  },
+  {
+   "name": "idea_bulb",
+   "category": "comic",
+   "about": "Idea: a felt light bulb pops up over a head, lights up yellow with flashing rays and a glow.",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.25
+    ],
+    "size": 1.6
+   },
+   "loop": false,
+   "duration": 2.0,
+   "fps": 24,
+   "frames": 49,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/idea_bulb/%04d.png",
+   "preview": "preview/idea_bulb.mp4",
+   "function": "effects_lib.idea_bulb(t, params)"
+  },
+  {
+   "name": "music_notes",
+   "category": "comic",
+   "about": "Music: felt notes and beamed pairs float up along a wavy path.",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.55
+    ],
+    "size": 1.6
+   },
+   "loop": true,
+   "duration": 3.0,
+   "fps": 24,
+   "frames": 72,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/music_notes/%04d.png",
+   "preview": "preview/music_notes.mp4",
+   "function": "effects_lib.music_notes(t, params)"
+  },
+  {
+   "name": "shock_lines",
+   "category": "comic",
+   "about": "Shock: short felt strokes radiating around a head and vibrating.",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.4
+    ],
+    "size": 1.6
+   },
+   "loop": true,
+   "duration": 1.0,
+   "fps": 24,
+   "frames": 24,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/shock_lines/%04d.png",
+   "preview": "preview/shock_lines.mp4",
+   "function": "effects_lib.shock_lines(t, params)"
+  },
+  {
+   "name": "anger_steam",
+   "category": "comic",
+   "about": "Fuming: white steam puffs blasting out of both sides of a head in bursts.",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.4
+    ],
+    "gap": 0.11,
+    "size": 1.6
+   },
+   "loop": true,
+   "duration": 1.5,
+   "fps": 24,
+   "frames": 36,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/anger_steam/%04d.png",
+   "preview": "preview/anger_steam.mp4",
+   "function": "effects_lib.anger_steam(t, params)"
+  },
+  {
+   "name": "grawlix_cloud",
+   "category": "comic",
+   "about": "Cursing: a jittering cluster of felt symbols (spiral, bolt, star, cross) over a head.",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.25
+    ],
+    "size": 1.6
+   },
+   "loop": true,
+   "duration": 1.0,
+   "fps": 24,
+   "frames": 24,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/grawlix_cloud/%04d.png",
+   "preview": "preview/grawlix_cloud.mp4",
+   "function": "effects_lib.grawlix_cloud(t, params)"
+  },
+  {
+   "name": "shine_glint",
+   "category": "comic",
+   "about": "Shine: twinkling four-point glints popping on a shiny object (clean, new, sparkling).",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.5
+    ],
+    "size": 2.6
+   },
+   "loop": true,
+   "duration": 2.0,
+   "fps": 24,
+   "frames": 48,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/shine_glint/%04d.png",
+   "preview": "preview/shine_glint.mp4",
+   "function": "effects_lib.shine_glint(t, params)"
+  },
+  {
+   "name": "thought_bubble",
+   "category": "comic",
+   "about": "Thinking: three small felt circles pop in a trail, then an empty cloud bubble puffs up.",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.62,
+     0.3
+    ],
+    "size": 1.25
+   },
+   "loop": false,
+   "duration": 2.0,
+   "fps": 24,
+   "frames": 49,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/thought_bubble/%04d.png",
+   "preview": "preview/thought_bubble.mp4",
+   "function": "effects_lib.thought_bubble(t, params)"
+  },
+  {
+   "name": "speech_bubble_pop",
+   "category": "comic",
+   "about": "Speech bubble: an empty stitched felt speech bubble with a tail pops in and breathes.",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.55,
+     0.3
+    ],
+    "size": 1.25
+   },
+   "loop": false,
+   "duration": 2.0,
+   "fps": 24,
+   "frames": 49,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/speech_bubble_pop/%04d.png",
+   "preview": "preview/speech_bubble_pop.mp4",
+   "function": "effects_lib.speech_bubble_pop(t, params)"
+  },
+  {
+   "name": "bills_fall",
+   "category": "money",
+   "about": "Money rain: blank green felt banknotes fluttering and flipping down.",
+   "params": {
+    "seed": 1,
+    "density": 30
+   },
+   "loop": true,
+   "duration": 3.0,
+   "fps": 24,
+   "frames": 72,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/bills_fall/%04d.png",
+   "preview": "preview/bills_fall.mp4",
+   "function": "effects_lib.bills_fall(t, params)"
+  },
+  {
+   "name": "coins_rain",
+   "category": "money",
+   "about": "Coin rain: stitched gold felt coins spinning as they fall.",
+   "params": {
+    "seed": 1,
+    "density": 40
+   },
+   "loop": true,
+   "duration": 2.0,
+   "fps": 24,
+   "frames": 48,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/coins_rain/%04d.png",
+   "preview": "preview/coins_rain.mp4",
+   "function": "effects_lib.coins_rain(t, params)"
+  },
+  {
+   "name": "coin_burst",
+   "category": "money",
+   "about": "Jackpot: a fountain of spinning gold felt coins bursts up and falls back.",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.9
+    ],
+    "count": 60
+   },
+   "loop": false,
+   "duration": 2.5,
+   "fps": 24,
+   "frames": 61,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/coin_burst/%04d.png",
+   "preview": "preview/coin_burst.mp4",
+   "function": "effects_lib.coin_burst(t, params)"
+  },
+  {
+   "name": "coin_stack_grow",
+   "category": "money",
+   "about": "Savings: gold felt coins drop one by one onto three growing stacks.",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.85
+    ]
+   },
+   "loop": false,
+   "duration": 3.0,
+   "fps": 24,
+   "frames": 73,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/coin_stack_grow/%04d.png",
+   "preview": "preview/coin_stack_grow.mp4",
+   "function": "effects_lib.coin_stack_grow(t, params)"
+  },
+  {
+   "name": "gems_rain",
+   "category": "money",
+   "about": "Treasure: faceted felt gems falling, turning and twinkling.",
+   "params": {
+    "seed": 1,
+    "density": 22
+   },
+   "loop": true,
+   "duration": 3.0,
+   "fps": 24,
+   "frames": 72,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/gems_rain/%04d.png",
+   "preview": "preview/gems_rain.mp4",
+   "function": "effects_lib.gems_rain(t, params)"
+  },
+  {
+   "name": "glitter_trail",
+   "category": "magic",
+   "about": "Glitter trail: a bright felt star flies a figure-eight leaving twinkling sparkles that drift down.",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.45
+    ]
+   },
+   "loop": true,
+   "duration": 3.0,
+   "fps": 24,
+   "frames": 72,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/glitter_trail/%04d.png",
+   "preview": "preview/glitter_trail.mp4",
+   "function": "effects_lib.glitter_trail(t, params)"
+  },
+  {
+   "name": "stars_swirl",
+   "category": "magic",
+   "about": "Star vortex: felt stars spiralling around a centre, those near the middle shrink in.",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.5
+    ]
+   },
+   "loop": true,
+   "duration": 3.0,
+   "fps": 24,
+   "frames": 72,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/stars_swirl/%04d.png",
+   "preview": "preview/stars_swirl.mp4",
+   "function": "effects_lib.stars_swirl(t, params)"
+  },
+  {
+   "name": "portal",
+   "category": "magic",
+   "about": "Magic portal: rotating felt rings in purple and teal with spiral arms, pulsing, sparkles drawn in.",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.5
+    ]
+   },
+   "loop": true,
+   "duration": 3.0,
+   "fps": 24,
+   "frames": 72,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/portal/%04d.png",
+   "preview": "preview/portal.mp4",
+   "function": "effects_lib.portal(t, params)"
+  },
+  {
+   "name": "magic_dust",
+   "category": "magic",
+   "about": "Magic dust: tiny glowing felt motes rising and twinkling in a column.",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.85
+    ],
+    "width": 0.35
+   },
+   "loop": true,
+   "duration": 3.0,
+   "fps": 24,
+   "frames": 72,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/magic_dust/%04d.png",
+   "preview": "preview/magic_dust.mp4",
+   "function": "effects_lib.magic_dust(t, params)"
+  },
+  {
+   "name": "orbiting_orbs",
+   "category": "magic",
+   "about": "Orbiting orbs: glowing felt balls circling a centre on a tilted orbit, with fading trails.",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.5
+    ],
+    "size": 1.6
+   },
+   "loop": true,
+   "duration": 3.0,
+   "fps": 24,
+   "frames": 72,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/orbiting_orbs/%04d.png",
+   "preview": "preview/orbiting_orbs.mp4",
+   "function": "effects_lib.orbiting_orbs(t, params)"
+  },
+  {
+   "name": "shooting_star",
+   "category": "magic",
+   "about": "Shooting star: a felt star streaks diagonally across the sky with a tapering dotted tail.",
+   "params": {
+    "seed": 1
+   },
+   "loop": true,
+   "duration": 2.0,
+   "fps": 24,
+   "frames": 48,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/shooting_star/%04d.png",
+   "preview": "preview/shooting_star.mp4",
+   "function": "effects_lib.shooting_star(t, params)"
+  },
+  {
+   "name": "twinkle_field",
+   "category": "magic",
+   "about": "Night twinkle: felt stars across the top of the frame twinkling at different rhythms.",
+   "params": {
+    "seed": 1,
+    "density": 40
+   },
+   "loop": true,
+   "duration": 3.0,
+   "fps": 24,
+   "frames": 72,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/twinkle_field/%04d.png",
+   "preview": "preview/twinkle_field.mp4",
+   "function": "effects_lib.twinkle_field(t, params)"
+  },
+  {
+   "name": "glitch_blocks",
+   "category": "tech",
+   "about": "Glitch: felt blocks in cyan, magenta and off-white flicker and jump in horizontal bands.",
+   "params": {
+    "seed": 1
+   },
+   "loop": true,
+   "duration": 2.0,
+   "fps": 24,
+   "frames": 48,
+   "size": [
+    960,
+    540
+   ],
+   "seq": "seq/glitch_blocks/%04d.png",
+   "preview": "preview/glitch_blocks.mp4",
+   "function": "effects_lib.glitch_blocks(t, params)"
+  },
+  {
+   "name": "scanlines",
+   "category": "tech",
+   "about": "Old screen: dark felt scanlines with a lighter band rolling down the frame.",
+   "params": {
+    "seed": 1
+   },
+   "loop": true,
+   "duration": 2.0,
+   "fps": 24,
+   "frames": 48,
+   "size": [
+    960,
+    540
+   ],
+   "seq": "seq/scanlines/%04d.png",
+   "preview": "preview/scanlines.mp4",
+   "function": "effects_lib.scanlines(t, params)"
+  },
+  {
+   "name": "loading_spinner",
+   "category": "tech",
+   "about": "Loading spinner: a ring of felt dots with a bright dot chasing around (no text).",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.5
+    ],
+    "size": 1.6
+   },
+   "loop": true,
+   "duration": 1.0,
+   "fps": 24,
+   "frames": 24,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/loading_spinner/%04d.png",
+   "preview": "preview/loading_spinner.mp4",
+   "function": "effects_lib.loading_spinner(t, params)"
+  },
+  {
+   "name": "notification_dots",
+   "category": "tech",
+   "about": "Notifications: red felt badge dots pop in with a bounce at several spots and pulse.",
+   "params": {
+    "seed": 1
+   },
+   "loop": true,
+   "duration": 3.0,
+   "fps": 24,
+   "frames": 72,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/notification_dots/%04d.png",
+   "preview": "preview/notification_dots.mp4",
+   "function": "effects_lib.notification_dots(t, params)"
+  },
+  {
+   "name": "signal_waves",
+   "category": "tech",
+   "about": "Signal: felt arcs pulsing outward one after another from a dot (wireless, broadcast).",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.6
+    ],
+    "size": 1.6
+   },
+   "loop": true,
+   "duration": 1.5,
+   "fps": 24,
+   "frames": 36,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/signal_waves/%04d.png",
+   "preview": "preview/signal_waves.mp4",
+   "function": "effects_lib.signal_waves(t, params)"
+  },
+  {
+   "name": "typing_dots",
+   "category": "tech",
+   "about": "Typing indicator: three felt dots bouncing in turn inside a soft bubble (no text).",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.5
+    ],
+    "size": 1.6
+   },
+   "loop": true,
+   "duration": 1.2,
+   "fps": 24,
+   "frames": 29,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/typing_dots/%04d.png",
+   "preview": "preview/typing_dots.mp4",
+   "function": "effects_lib.typing_dots(t, params)"
+  },
+  {
+   "name": "data_blocks",
+   "category": "tech",
+   "about": "Data rain: columns of small green felt squares streaming down and fading.",
+   "params": {
+    "seed": 1,
+    "density": 60
+   },
+   "loop": true,
+   "duration": 2.0,
+   "fps": 24,
+   "frames": 48,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/data_blocks/%04d.png",
+   "preview": "preview/data_blocks.mp4",
+   "function": "effects_lib.data_blocks(t, params)"
+  },
+  {
+   "name": "radar_sweep",
+   "category": "tech",
+   "about": "Radar: a stitched felt radar disc with a rotating sweep wedge and blips lighting up.",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.5
+    ]
+   },
+   "loop": true,
+   "duration": 3.0,
+   "fps": 24,
+   "frames": 72,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/radar_sweep/%04d.png",
+   "preview": "preview/radar_sweep.mp4",
+   "function": "effects_lib.radar_sweep(t, params)"
+  },
+  {
+   "name": "butterflies",
+   "category": "nature",
+   "about": "Butterflies: felt butterflies with spotted wings flutter along looping paths.",
+   "params": {
+    "seed": 1,
+    "count": 5,
+    "size": 1.25
+   },
+   "loop": true,
+   "duration": 4.0,
+   "fps": 24,
+   "frames": 96,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/butterflies/%04d.png",
+   "preview": "preview/butterflies.mp4",
+   "function": "effects_lib.butterflies(t, params)"
+  },
+  {
+   "name": "fireflies",
+   "category": "nature",
+   "about": "Fireflies: little felt bugs with blinking warm glows wandering in the dusk.",
+   "params": {
+    "seed": 1,
+    "count": 26
+   },
+   "loop": true,
+   "duration": 4.0,
+   "fps": 24,
+   "frames": 96,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/fireflies/%04d.png",
+   "preview": "preview/fireflies.mp4",
+   "function": "effects_lib.fireflies(t, params)"
+  },
+  {
+   "name": "birds_flock",
+   "category": "nature",
+   "about": "Bird flock: small felt birds flapping across the sky in a loose V.",
+   "params": {
+    "seed": 1
+   },
+   "loop": true,
+   "duration": 4.0,
+   "fps": 24,
+   "frames": 96,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/birds_flock/%04d.png",
+   "preview": "preview/birds_flock.mp4",
+   "function": "effects_lib.birds_flock(t, params)"
+  },
+  {
+   "name": "petals_fall",
+   "category": "nature",
+   "about": "Petals: pink cherry petals tumbling and drifting down.",
+   "params": {
+    "seed": 1,
+    "density": 40
+   },
+   "loop": true,
+   "duration": 3.0,
+   "fps": 24,
+   "frames": 72,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/petals_fall/%04d.png",
+   "preview": "preview/petals_fall.mp4",
+   "function": "effects_lib.petals_fall(t, params)"
+  },
+  {
+   "name": "apples_fall",
+   "category": "nature",
+   "about": "Falling apples: shiny felt apples drop, bounce on the ground and roll away.",
+   "params": {
+    "seed": 1,
+    "floor": 0.86
+   },
+   "loop": true,
+   "duration": 3.0,
+   "fps": 24,
+   "frames": 72,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/apples_fall/%04d.png",
+   "preview": "preview/apples_fall.mp4",
+   "function": "effects_lib.apples_fall(t, params)"
+  },
+  {
+   "name": "dandelion_seeds",
+   "category": "nature",
+   "about": "Dandelion seeds: fluffy felt-and-thread parachutes floating up and across on the breeze.",
+   "params": {
+    "seed": 1,
+    "density": 16
+   },
+   "loop": true,
+   "duration": 4.0,
+   "fps": 24,
+   "frames": 96,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/dandelion_seeds/%04d.png",
+   "preview": "preview/dandelion_seeds.mp4",
+   "function": "effects_lib.dandelion_seeds(t, params)"
+  },
+  {
+   "name": "bees",
+   "category": "nature",
+   "about": "Bees: striped felt bees buzzing around in loops with blurry flapping wings.",
+   "params": {
+    "seed": 1,
+    "count": 4,
+    "at": [
+     0.5,
+     0.45
+    ],
+    "size": 1.6
+   },
+   "loop": true,
+   "duration": 3.0,
+   "fps": 24,
+   "frames": 72,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/bees/%04d.png",
+   "preview": "preview/bees.mp4",
+   "function": "effects_lib.bees(t, params)"
+  },
+  {
+   "name": "autumn_leaves",
+   "category": "nature",
+   "about": "Autumn leaves: veined felt leaves drifting down, swaying and flipping.",
+   "params": {
+    "seed": 1,
+    "density": 22
+   },
+   "loop": true,
+   "duration": 4.0,
+   "fps": 24,
+   "frames": 96,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/autumn_leaves/%04d.png",
+   "preview": "preview/autumn_leaves.mp4",
+   "function": "effects_lib.autumn_leaves(t, params)"
+  },
+  {
+   "name": "grass_edge",
+   "category": "nature",
+   "about": "Grass: a fringe of felt grass blades along the bottom, swaying in a breeze wave.",
+   "params": {
+    "seed": 1
+   },
+   "loop": true,
+   "duration": 3.0,
+   "fps": 24,
+   "frames": 72,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/grass_edge/%04d.png",
+   "preview": "preview/grass_edge.mp4",
+   "function": "effects_lib.grass_edge(t, params)"
+  },
+  {
+   "name": "flowers_pop",
+   "category": "nature",
+   "about": "Flowers: stems grow up from the ground and felt blossoms pop open one after another.",
+   "params": {
+    "seed": 1,
+    "floor": 0.95
+   },
+   "loop": false,
+   "duration": 3.0,
+   "fps": 24,
+   "frames": 73,
+   "size": [
+    1920,
+    1080
+   ],
+   "seq": "seq/flowers_pop/%04d.png",
+   "preview": "preview/flowers_pop.mp4",
+   "function": "effects_lib.flowers_pop(t, params)"
+  },
+  {
+   "name": "curtain_close",
+   "category": "transition",
+   "about": "Theatre curtain closes: red velvet felt drapes with gold stitched hems slide in from both sides.",
+   "params": {
+    "seed": 1
+   },
+   "loop": false,
+   "duration": 2.0,
+   "fps": 24,
+   "frames": 49,
+   "size": [
+    960,
+    540
+   ],
+   "seq": "seq/curtain_close/%04d.png",
+   "preview": "preview/curtain_close.mp4",
+   "function": "effects_lib.curtain_close(t, params)"
+  },
+  {
+   "name": "curtain_open",
+   "category": "transition",
+   "about": "Theatre curtain opens: red felt drapes part to reveal the scene.",
+   "params": {
+    "seed": 1
+   },
+   "loop": false,
+   "duration": 2.0,
+   "fps": 24,
+   "frames": 49,
+   "size": [
+    960,
+    540
+   ],
+   "seq": "seq/curtain_open/%04d.png",
+   "preview": "preview/curtain_open.mp4",
+   "function": "effects_lib.curtain_open(t, params)"
+  },
+  {
+   "name": "iris_close",
+   "category": "transition",
+   "about": "Iris out: a dark felt mask with a hand-stitched edge closes in a circle (focus at at=).",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.5
+    ]
+   },
+   "loop": false,
+   "duration": 2.0,
+   "fps": 24,
+   "frames": 49,
+   "size": [
+    960,
+    540
+   ],
+   "seq": "seq/iris_close/%04d.png",
+   "preview": "preview/iris_close.mp4",
+   "function": "effects_lib.iris_close(t, params)"
+  },
+  {
+   "name": "iris_open",
+   "category": "transition",
+   "about": "Iris in: the stitched felt mask opens from a point to reveal the scene.",
+   "params": {
+    "seed": 1,
+    "at": [
+     0.5,
+     0.5
+    ]
+   },
+   "loop": false,
+   "duration": 2.0,
+   "fps": 24,
+   "frames": 49,
+   "size": [
+    960,
+    540
+   ],
+   "seq": "seq/iris_open/%04d.png",
+   "preview": "preview/iris_open.mp4",
+   "function": "effects_lib.iris_open(t, params)"
+  },
+  {
+   "name": "page_tear",
+   "category": "transition",
+   "about": "Page tear: a felt sheet covering the frame rips along a jagged line and both halves fall away.",
+   "params": {
+    "seed": 1
+   },
+   "loop": false,
+   "duration": 2.5,
+   "fps": 24,
+   "frames": 61,
+   "size": [
+    960,
+    540
+   ],
+   "seq": "seq/page_tear/%04d.png",
+   "preview": "preview/page_tear.mp4",
+   "function": "effects_lib.page_tear(t, params)"
+  },
+  {
+   "name": "wipe_stitched",
+   "category": "transition",
+   "about": "Felt wipe: a felt panel with a zig-zag stitched leading edge slides across and covers the frame.",
+   "params": {
+    "seed": 1
+   },
+   "loop": false,
+   "duration": 1.5,
+   "fps": 24,
+   "frames": 37,
+   "size": [
+    960,
+    540
+   ],
+   "seq": "seq/wipe_stitched/%04d.png",
+   "preview": "preview/wipe_stitched.mp4",
+   "function": "effects_lib.wipe_stitched(t, params)"
+  },
+  {
+   "name": "patches_cover",
+   "category": "transition",
+   "about": "Patchwork cover: stitched felt squares drop in tile by tile until the frame is covered.",
+   "params": {
+    "seed": 1
+   },
+   "loop": false,
+   "duration": 2.5,
+   "fps": 24,
+   "frames": 61,
+   "size": [
+    960,
+    540
+   ],
+   "seq": "seq/patches_cover/%04d.png",
+   "preview": "preview/patches_cover.mp4",
+   "function": "effects_lib.patches_cover(t, params)"
+  }
+ ]
+}

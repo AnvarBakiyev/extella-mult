@@ -1,0 +1,48 @@
+{
+ "name": "clinic-v0-day-clear",
+ "about": "doctor's office with an exam couch, a skeleton poster and a blood-pressure gauge",
+ "biome": "clinic",
+ "variant": 0,
+ "time": "day",
+ "weather": "clear",
+ "season": "summer",
+ "palette": "felt",
+ "seed": 8133,
+ "interior": true,
+ "size": [
+  1920,
+  1080
+ ],
+ "layers": [
+  {
+   "file": "sky.png",
+   "layer": "sky",
+   "z": 0,
+   "parallax": 0.04
+  },
+  {
+   "file": "far.png",
+   "layer": "far",
+   "z": 1,
+   "parallax": 0.18
+  },
+  {
+   "file": "mid.png",
+   "layer": "mid",
+   "z": 2,
+   "parallax": 0.42
+  },
+  {
+   "file": "near.png",
+   "layer": "near",
+   "z": 3,
+   "parallax": 0.72
+  },
+  {
+   "file": "fg.png",
+   "layer": "fg",
+   "z": 4,
+   "parallax": 1.1
+  }
+ ]
+}

@@ -1,0 +1,24 @@
+# format: F08 Судебное заседание
+# logline: Офисного кота судят за то, что он столкнул со стола кружку директора, и защита переворачивает дело.
+# why it works: Lawyer rhetoric for a cat pushing a mug; the verdict blames the object.
+film title="Падение кружки" style=puppet fps=24 size=1920x1080
+shot 0-4s: ch_svetlana shake=0.003
+fade in 0-0.6s
+say ch_svetlana "Дело о падении кружки директора." at 0.3s
+shot 4-9s: ch_yulia push=0.1
+say ch_yulia "Кот смотрел ей в глаза и толкал. Медленно." at 4.3s
+shot 9-14s: ch_yulia push=0.02
+say ch_yulia "Это был подарок коллектива. Скидывались все." at 9.3s
+shot 14-20s: ch_igor handheld=1 push=0.02
+say ch_igor "Кружка стояла на краю. Мой клиент лишь завершил процесс." at 14.3s
+shot 20-24s: ch_cat handheld=1 push=0.02
+shot 24-28s: ch_igor handheld=1 push=0.05
+say ch_igor "Это был стресс-тест офисной посуды." at 24.3s
+shot 28-32s: ch_igor whip=right
+say ch_igor "Вызываю свидетеля. Кофемашина." at 28.3s
+shot 32-37s: ch_coffee push=0.02
+say ch_coffee "Кружка была токсичная. Всегда с остатками." at 32.3s
+shot 37-41s: ch_svetlana push=0.13 focus=0.5,0.5
+shot 41-46s: ch_svetlana push=0.06 snap=41.3 focus=0.5,0.4
+say ch_svetlana "[deadpan] Кота оправдать. Кружку уволить." at 41.3s
+fade out 45.6-46s

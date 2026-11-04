@@ -1,0 +1,24 @@
+# format: F03 Новости с полевым репортёром
+# logline: Во дворе многоэтажки обнаружено свободное парковочное место, и жильцы сходятся посмотреть на него как на природное явление.
+# why it works: A trivial thing (a parking spot) covered with full breaking-news gravity; the reporter himself becomes the witness.
+film title="Свободное место" style=puppet fps=24 size=1920x1080
+shot 0-5s: ch_dina push=0.02
+fade in 0-0.6s
+say ch_dina "В одном из дворов найдено свободное парковочное место." at 0.3s
+shot 5-9s: ch_dina push=0.02
+say ch_dina "Тимур, вы на месте?" at 5.3s
+shot 9-15s: ch_timur handheld=1 push=0.02
+say ch_timur "Да, Дина. Место настоящее. Не газон, не люк." at 9.3s
+shot 15-21s: ch_timur handheld=1 push=0.02
+say ch_timur "Жильцы приходят посмотреть. Некоторые — с детьми." at 15.3s
+shot 21-26s: pl_yard handheld=1 pan=right
+shot 26-32s: ch_gennady push=0.1 handheld=1
+say ch_gennady "Двадцать лет здесь живу. Впервые вижу асфальт." at 26.3s
+shot 32-37s: ch_gennady handheld=1 push=0.02
+say ch_gennady "Управляющая компания уже ищет, кто виноват." at 32.3s
+shot 37-41s: ch_dina push=0.02
+say ch_dina "Спасибо, Тимур. Возвращайтесь в студию." at 37.3s
+shot 41-44s: ch_timur push=0.06 focus=0.5,0.4
+shot 44-48s: ch_timur push=0.06 snap=44.3 focus=0.5,0.4
+say ch_timur "[deadpan] Не могу. Уйду — займут." at 44.3s
+fade out 47.6-48s

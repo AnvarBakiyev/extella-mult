@@ -1,0 +1,25 @@
+# format: F25 Свадебный тост
+# logline: Умная колонка, три года простоявшая на кухне пары, произносит тост обо всём, что она слышала.
+# why it works: A speaker's toast built from what it overheard; the last line repeats a private wish in public.
+film title="Колонка молодых" style=puppet fps=24 size=1920x1080
+shot 0-4s: ch_zhanna push=0.1 snap=0.3 focus=0.5,0.5
+fade in 0-0.6s
+say ch_zhanna "Слово — колонке молодых!" at 0.3s
+shot 4-10.2s: ch_speaker handheld=1 push=0.02
+say ch_speaker "Я знаю Артёма и Камилу три года. Я стою на кухне." at 4.3s
+shot 10.2-16.2s: ch_speaker handheld=1 push=0.02
+say ch_speaker "Я слышала первое «люблю». В два ночи. Шёпотом." at 10.5s
+shot 16.2-22.2s: ch_artyom push=0.14 focus=0.5,0.4
+voice "Я слышала, кто съел торт на годовщину. Это был Артём." at 16.5s who=calm
+shot 22.2-28.2s: ch_artyom push=0.14 focus=0.5,0.4
+voice "Я слышала, как он репетировал предложение. Сорок раз." at 22.5s who=calm
+shot 28.2-34.2s: ch_speaker push=0.02
+say ch_speaker "Желаю вам говорить чаще. Мне нужны данные." at 28.5s
+shot 34.2-39.2s: ch_speaker push=0.02
+say ch_speaker "И не выключайте меня на ночь. Это обидно." at 34.5s
+shot 39.2-43.2s: ch_kamila push=0.06 focus=0.5,0.4
+say ch_kamila "Спасибо, Колонка." at 39.5s
+shot 43.2-45.2s: ch_speaker push=0.06 focus=0.5,0.4
+shot 45.2-50.2s: ch_speaker push=0.06 snap=45.5 focus=0.5,0.4
+say ch_speaker "[deadpan] Камила, вы просили напомнить сегодня: «Ещё не поздно»." at 45.5s
+fade out 49.8-50.2s

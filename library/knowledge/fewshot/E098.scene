@@ -1,0 +1,23 @@
+# format: F17 Звонок в поддержку
+# logline: Умный холодильник звонит в поддержку пожаловаться на хозяина, который по ночам открывает его и ничего не берёт.
+# why it works: A fridge calls support about its user; the operator reveals the user is complaining back.
+film title="Ночной пользователь" style=puppet fps=24 size=1920x1080
+shot 0-6s: ch_fridge push=0.1 focus=0.5,0.5
+fade in 0-0.6s
+voice "[deep] Все операторы заняты. Ваша техника очень важна для нас." at 0.3s
+shot 6-10s: ch_sveta push=0.06 focus=0.5,0.4
+say ch_sveta "Поддержка умной техники, Света, слушаю!" at 6.3s
+shot 10-16s: ch_fridge push=0.02
+say ch_fridge "Здравствуйте. Это холодильник. Звоню по поводу пользователя." at 10.3s
+shot 16-23s: ch_fridge push=0.02
+say ch_fridge "Он открывает меня ночью. Стоит. Смотрит. Ничего не берёт." at 16.3s
+shot 23-29s: ch_fridge push=0.1
+say ch_fridge "Шесть раз за ночь. Я не успеваю охладиться." at 23.3s
+shot 29-35s: ch_sveta push=0.14 focus=0.5,0.4
+say ch_sveta "Вы пробовали выключить и включить пользователя?" at 29.3s
+shot 35-40s: ch_fridge push=0.06 focus=0.5,0.4
+say ch_fridge "Я выключал свет внутри. Он принёс фонарик." at 35.3s
+shot 40-46.2s: ch_sveta push=0.06 snap=40.3 focus=0.5,0.4
+say ch_sveta "[deadpan] Не кладите трубку. Он на второй линии. Жалуется, что вы пустой." at 40.3s
+music mood=calm tempo=72 0-35s
+fade out 45.8-46.2s

@@ -1,0 +1,23 @@
+# format: F14 Распаковка
+# logline: Чтобы поджарить хлеб, умный тостер требует приложение, регистрацию, согласие и обновление — после которого он уже не тостер.
+# why it works: Each unboxing layer adds one bureaucratic step; the update removes the only function, said as a feature.
+film title="Обновление тостера" style=puppet fps=24 size=1920x1080
+shot 0-5s: ch_liza handheld=1 push=0.02
+fade in 0-0.6s
+say ch_liza "Всем привет, ребят! Распаковываем умный тостер!" at 0.3s
+shot 5-11s: ch_liza push=0.1 focus=0.5,0.5
+say ch_liza "Коробка тяжёлая. Значит, технологичный." at 5.3s
+shot 11-17s: ch_liza push=0.18 focus=0.5,0.5
+say ch_liza "Вилка, шнур, код. Тостер просит скачать приложение." at 11.3s
+shot 17-23s: ch_liza push=0.18 focus=0.5,0.5
+say ch_liza "Регистрация, пароль, согласие на обработку хлеба." at 17.3s
+shot 23-28s: ch_toaster push=0.02 focus=0.5,0.5
+say ch_toaster "Доступно обновление. Не выключайте тостер." at 23.3s
+shot 28-34s: ch_liza push=0.06 snap=28.3 focus=0.5,0.4
+say ch_liza "Сорок минут, ребят. Хлеб уже чёрствый." at 28.3s
+shot 34-39s: ch_toaster push=0.1 focus=0.5,0.5
+say ch_toaster "Обновление завершено." at 34.3s
+shot 39-48s: ch_toaster push=0.06 focus=0.5,0.4 snap=39.3
+say ch_toaster "[deadpan] Теперь я умный чайник. Хлеб больше не поддерживается." at 39.3s
+music mood=bright tempo=118 0-23s
+fade out 47.6-48s

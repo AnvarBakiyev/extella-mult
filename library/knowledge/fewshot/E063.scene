@@ -1,0 +1,25 @@
+# format: F11 Игровое шоу
+# logline: В игре на скорость принятия пользовательского соглашения адвокат Игорь единственный дочитывает его до конца — и узнаёт, что за это бывает.
+# why it works: Game show about clicking 'I agree'; the one who reads it all learns the prize is the host's job.
+film title="Пункт сорок" style=puppet fps=24 size=1920x1080
+shot 0-5s: ch_inna pull=0.25 pan=right
+fade in 0-0.6s
+say ch_inna "«Я согласен»! Кто быстрее примет условия?" at 0.3s
+shot 5-10s: ch_inna push=0.1
+say ch_inna "Перед вами соглашение. Двести страниц. Поехали!" at 5.3s
+shot 10-14s: ch_yulia whip=right
+say ch_yulia "Принимаю!" at 10.3s
+shot 14-18s: ch_valera whip=left
+say ch_valera "Принимаю, не глядя!" at 14.3s
+shot 18-26s: ch_igor push=0.05 whip=right
+say ch_igor "Страница сто девяносто... минуточку..." at 18.3s
+shot 26-31s: ch_inna push=0.02
+say ch_inna "Игорь, зал ждёт. Остальные давно согласились." at 26.3s
+shot 31-37s: ch_igor push=0.06 snap=31.3 focus=0.5,0.4
+say ch_igor "Пункт сорок: дочитавший до конца ведёт шоу дальше." at 31.3s
+shot 37-43s: ch_inna push=0.02
+say ch_inna "Поздравляю, Игорь." at 37.3s
+shot 43-50s: ch_inna push=0.06 focus=0.5,0.4 snap=43.3
+say ch_inna "[deadpan] Я дочитала в прошлом сезоне. Удачи." at 43.3s
+music mood=bright tempo=118 0-26s
+fade out 49.6-50s

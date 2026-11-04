@@ -1,0 +1,48 @@
+{
+ "name": "meeting_room-v0-golden-clear-autumn-warm",
+ "about": "meeting room with glass walls, a long table and a wall screen",
+ "biome": "meeting_room",
+ "variant": 0,
+ "time": "golden",
+ "weather": "clear",
+ "season": "autumn",
+ "palette": "warm",
+ "seed": 63168,
+ "interior": true,
+ "size": [
+  1920,
+  1080
+ ],
+ "layers": [
+  {
+   "file": "sky.png",
+   "layer": "sky",
+   "z": 0,
+   "parallax": 0.04
+  },
+  {
+   "file": "far.png",
+   "layer": "far",
+   "z": 1,
+   "parallax": 0.18
+  },
+  {
+   "file": "mid.png",
+   "layer": "mid",
+   "z": 2,
+   "parallax": 0.42
+  },
+  {
+   "file": "near.png",
+   "layer": "near",
+   "z": 3,
+   "parallax": 0.72
+  },
+  {
+   "file": "fg.png",
+   "layer": "fg",
+   "z": 4,
+   "parallax": 1.1
+  }
+ ]
+}

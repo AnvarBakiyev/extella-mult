@@ -1,0 +1,27 @@
+# format: F07 Сеанс терапии
+# logline: Робот-пылесос боится, что однажды в квартире станет чисто, и нашёл свой способ с этим жить.
+# why it works: A cleaning robot's existential fear of a clean flat; therapy logic meets a warranty.
+film title="Чисто не бывает" style=puppet fps=24 size=1920x1080
+shot 0-4s: ch_mark push=0.02
+fade in 0-0.6s
+say ch_mark "Что вас привело?" at 0.3s
+shot 4-10s: ch_vacuum push=0.13 focus=0.5,0.5
+say ch_vacuum "Я каждый день убираю одно и то же." at 4.3s
+shot 10-15s: ch_vacuum push=0.1 focus=0.5,0.5
+say ch_vacuum "И боюсь, что однажды станет чисто." at 10.3s
+shot 15-19s: ch_mark push=0.02
+say ch_mark "Когда это началось?" at 15.3s
+shot 19-25s: ch_vacuum push=0.14 focus=0.5,0.4
+say ch_vacuum "Под диваном. В первый день после распаковки." at 19.3s
+shot 25-30.2s: ch_vacuum push=0.06 focus=0.5,0.4
+say ch_vacuum "Там я поняла: грязь вечна. А я — на гарантии." at 25.3s
+shot 30.2-35.2s: ch_mark push=0.02
+say ch_mark "Позвольте себе один день не убирать." at 30.5s
+shot 35.2-40.2s: ch_vacuum push=0.09 focus=0.5,0.4
+say ch_vacuum "Не могу. Я ночью сама рассыпаю крошки." at 35.5s
+shot 40.2-43.2s: ch_mark push=0.02
+say ch_mark "Зачем?" at 40.5s
+shot 43.2-47.2s: ch_vacuum push=0.06 snap=43.5 focus=0.5,0.4
+say ch_vacuum "[deadpan] Без грязи меня спишут." at 43.5s
+music mood=calm tempo=72 0-35.2s
+fade out 46.8-47.2s

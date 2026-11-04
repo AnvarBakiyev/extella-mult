@@ -1,0 +1,23 @@
+# format: F18 Питч стартапа
+# logline: Робот питчит сервис для роботов — живого человека, который ставит за них галочку «я не робот», — и инвестор готов подписать немедленно.
+# why it works: Startup jargon for a human captcha clicker; the investor proves the market by failing it.
+film title="Я не робот" style=puppet fps=24 size=1920x1080
+shot 0-7s: ch_robot push=0.1
+fade in 0-0.6s
+say ch_robot "Каждый день миллионы роботов не могут доказать, что они не роботы." at 0.3s
+shot 7-12s: ch_robot push=0.02 snap=7.3
+say ch_robot "Мы сделали человека, который ставит галочку за вас." at 7.3s
+shot 12-18s: ch_robot push=0.02
+say ch_robot "Человек сидит, выбирает светофоры, кликает. Восемь часов, с обедом." at 12.3s
+shot 18-24s: ch_robot push=0.05
+say ch_robot "Тридцать тысяч галочек в день. Ошибок почти нет." at 18.3s
+shot 24-29s: ch_robot push=0.02
+say ch_robot "Человек дешевле видеокарты. И не греется." at 24.3s
+shot 29-34s: ch_viktor push=0.02
+say ch_viktor "Убедительно. Где подписать?" at 29.3s
+shot 34-38s: ch_robot push=0.1
+say ch_robot "Сначала подтвердите, что вы человек." at 34.3s
+shot 38-42s: ch_viktor dutch=10 push=0.04 focus=0.5,0.4
+shot 42-47s: ch_viktor push=0.06 snap=42.3 focus=0.5,0.4
+say ch_viktor "[deadpan] Не проходит. Можно ваш человек за меня кликнет?" at 42.3s
+fade out 46.6-47s

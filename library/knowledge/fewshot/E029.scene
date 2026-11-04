@@ -1,0 +1,28 @@
+# format: F05 Реклама и антиреклама
+# logline: Реклама: крем «Пятница» с молоками лосося стирает с лица выражение понедельника — навсегда и при любых новостях.
+# why it works: Classic ad beats played straight; the fine print reveals the cream removes the ability to stop smiling.
+film title="Лицо пятницы" style=puppet fps=24 size=1920x1080
+shot 0-7s: ch_yulia dutch=-10
+fade in 0-0.6s
+say ch_yulia "У меня лицо понедельника. С утра до пятницы." at 0.3s
+shot 7-12s: ad_cream push=0.1 snap=7.3 focus=0.5,0.5
+voice "[ad] Крем «Пятница»!" at 7.3s
+text "ПЯТНИЦА" at 0.2,0.25 size=0.08 color=#c4426a glow=#ffffff 7-12s
+shot 12-16s: ch_boris push=0.1
+say ch_boris "Премии в этом году не будет." at 12.3s
+shot 16-20s: ch_yulia push=0.14 focus=0.5,0.4
+shot 20-25s: pl_meeting_room push=0.1
+voice "[ad] Лицо пятницы. В любой день недели." at 20.3s
+shot 25-32s: ch_asel push=0.02
+say ch_asel "Испытано на корове. Она довольна до сих пор." at 25.3s
+shot 32-38s: ad_cream pan=right push=0.08 focus=0.5,0.5
+voice "[ad] «Пятница». С молоками лосося. Как у звёзд." at 32.3s
+text "ПЯТНИЦА" at 0.2,0.25 size=0.08 color=#c4426a glow=#ffffff 32-38s
+shot 38-41s: ad_cream push=0.18 focus=0.5,0.5
+voice "[ad] Эффект необратим." at 38.3s
+shot 41-44s: ch_boris push=0.02
+say ch_boris "Юля, вы уволены." at 41.3s
+shot 44-47s: ch_yulia push=0.06 snap=44.3 focus=0.5,0.4
+say ch_yulia "[deadpan] С радостью!" at 44.3s
+music mood=bright tempo=118 7-41s
+fade out 46.6-47s

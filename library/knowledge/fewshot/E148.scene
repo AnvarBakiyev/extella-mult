@@ -1,0 +1,25 @@
+# format: F25 Свадебный тост
+# logline: Дедушка раскрывает молодым секрет пятидесяти лет брака: развестись тогда было бюрократически невозможно.
+# why it works: A sincere toast that slowly reads like a bureaucratic contract; the final news lands in silence.
+film title="Окошко на обеде" style=puppet fps=24 size=1920x1080
+shot 0-4s: ch_bakhtiyar push=0.1 snap=0.3 focus=0.5,0.5
+fade in 0-0.6s
+say ch_bakhtiyar "Дети, послушайте старика." at 0.3s
+shot 4-10s: ch_bakhtiyar handheld=1 push=0.02
+say ch_bakhtiyar "Мы с Зухрой вместе пятьдесят два года." at 4.3s
+shot 10-16s: ch_bakhtiyar handheld=1 push=0.02
+say ch_bakhtiyar "Секрет простой. Записывайте." at 10.3s
+shot 16-22s: ch_artyom push=0.14 focus=0.5,0.4
+voice "На третий год она на меня обиделась. Сильно." at 16.3s who=narrator
+shot 22-28s: ch_zuhra push=0.14 focus=0.5,0.4
+voice "Пошла разводиться. А окошко закрыто. Обед." at 22.3s who=narrator
+shot 28-33s: ch_bakhtiyar push=0.02
+say ch_bakhtiyar "Через неделю — нужна справка. Справка — через месяц." at 28.3s
+shot 33-38s: ch_bakhtiyar push=0.02
+say ch_bakhtiyar "Пока ходила, забыла, на что обиделась." at 33.3s
+shot 38-42s: ch_bakhtiyar push=0.05
+say ch_bakhtiyar "Желаю вам такой же очереди." at 38.3s
+shot 42-44s: ch_zuhra push=0.06 focus=0.5,0.4
+shot 44-50s: ch_zuhra push=0.06 snap=44.3 focus=0.5,0.4
+say ch_zuhra "[deadpan] Кстати. Моя очередь подошла. В понедельник." at 44.3s
+fade out 49.6-50s

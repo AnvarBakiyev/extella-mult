@@ -1,0 +1,317 @@
+{
+ "ad_cream": {
+  "talks": false,
+  "voice": null,
+  "about": "A glossy beauty-commercial shot: a felt cream jar with a salmon on the lid on a pink podium, pearls, petals; empty space on the left third for text. For the commercial break."
+ },
+ "airport_gate": {
+  "talks": false,
+  "voice": null,
+  "about": "airport gate (felt miniature shot; description to be written)"
+ },
+ "arctic_ice_night": {
+  "talks": false,
+  "voice": null,
+  "about": "arctic ice night (felt miniature shot; description to be written)"
+ },
+ "autumn_park_bench": {
+  "talks": false,
+  "voice": null,
+  "about": "autumn park bench (felt miniature shot; description to be written)"
+ },
+ "bank_hall": {
+  "talks": false,
+  "voice": null,
+  "about": "bank hall (felt miniature shot; description to be written)"
+ },
+ "beach_sunset": {
+  "talks": false,
+  "voice": null,
+  "about": "beach sunset (felt miniature shot; description to be written)"
+ },
+ "bear_fisherman": {
+  "talks": false,
+  "voice": null,
+  "about": "bear fisherman (felt miniature shot; description to be written)"
+ },
+ "beaver_builder": {
+  "talks": false,
+  "voice": null,
+  "about": "beaver builder (felt miniature shot; description to be written)"
+ },
+ "candidate_tired": {
+  "talks": true,
+  "voice": "narrator",
+  "about": "A tired felted office worker in a crumpled shirt and tie sitting across the desk, facing left toward the devil, for the job-interview dialogue."
+ },
+ "cave_crystals": {
+  "talks": false,
+  "voice": null,
+  "about": "cave crystals (felt miniature shot; description to be written)"
+ },
+ "city_night_skyline": {
+  "talks": false,
+  "voice": null,
+  "about": "city night skyline (felt miniature shot; description to be written)"
+ },
+ "city_street_rain": {
+  "talks": false,
+  "voice": null,
+  "about": "city street rain (felt miniature shot; description to be written)"
+ },
+ "communal_kitchen": {
+  "talks": false,
+  "voice": null,
+  "about": "A felted Soviet-style communal kitchen with several stoves, laundry lines and a queue to the bathroom, an establishing shot."
+ },
+ "corner_office_glass": {
+  "talks": false,
+  "voice": null,
+  "about": "corner office glass (felt miniature shot; description to be written)"
+ },
+ "cosy_living_room": {
+  "talks": false,
+  "voice": null,
+  "about": "cosy living room (felt miniature shot; description to be written)"
+ },
+ "cow_farmer": {
+  "talks": false,
+  "voice": null,
+  "about": "cow farmer (felt miniature shot; description to be written)"
+ },
+ "cramped_kitchen_night": {
+  "talks": false,
+  "voice": null,
+  "about": "cramped kitchen night (felt miniature shot; description to be written)"
+ },
+ "crow_economist": {
+  "talks": false,
+  "voice": null,
+  "about": "crow economist (felt miniature shot; description to be written)"
+ },
+ "deep_forest_fog": {
+  "talks": false,
+  "voice": null,
+  "about": "deep forest fog (felt miniature shot; description to be written)"
+ },
+ "desert_dunes_noon": {
+  "talks": false,
+  "voice": null,
+  "about": "desert dunes noon (felt miniature shot; description to be written)"
+ },
+ "devil_hr": {
+  "talks": true,
+  "voice": "gogi",
+  "about": "A small red felted devil HR manager with horns, round glasses and a clipboard behind a desk in a hellish office, three-quarter view, for interview scenes."
+ },
+ "farm_barn_day": {
+  "talks": false,
+  "voice": null,
+  "about": "farm barn day (felt miniature shot; description to be written)"
+ },
+ "fox_lawyer": {
+  "talks": false,
+  "voice": null,
+  "about": "fox lawyer (felt miniature shot; description to be written)"
+ },
+ "frog_meditation": {
+  "talks": false,
+  "voice": null,
+  "about": "frog meditation (felt miniature shot; description to be written)"
+ },
+ "government_counter_queue": {
+  "talks": false,
+  "voice": null,
+  "about": "government counter queue (felt miniature shot; description to be written)"
+ },
+ "guest_lady": {
+  "talks": true,
+  "voice": "lady",
+  "about": "A very well-groomed felted woman in her fifties who looks suspiciously young, pearls, cream blouse; a salmon fin holds a microphone to her from the right. The guest of the salmon host."
+ },
+ "hedgehog_courier": {
+  "talks": false,
+  "voice": null,
+  "about": "hedgehog courier (felt miniature shot; description to be written)"
+ },
+ "hell_office": {
+  "talks": false,
+  "voice": null,
+  "about": "Wide shot of the empty felt hell office with the devil's desk, flames behind and a waiting chair, an establishing shot."
+ },
+ "hospital_corridor": {
+  "talks": false,
+  "voice": null,
+  "about": "hospital corridor (felt miniature shot; description to be written)"
+ },
+ "journalist_studio": {
+  "talks": true,
+  "voice": "journalist",
+  "about": "A serious felted TV journalist in round glasses and a brown knit sweater with a microphone, same studio. The interviewer; faces right toward his guest."
+ },
+ "kids_bedroom": {
+  "talks": false,
+  "voice": null,
+  "about": "kids bedroom (felt miniature shot; description to be written)"
+ },
+ "last_human": {
+  "talks": true,
+  "voice": "odessa",
+  "about": "A scruffy bearded felted man in a cosy ruined bunker in front of a glowing captcha-like screen, facing camera, the last human talking to us."
+ },
+ "mars_base": {
+  "talks": false,
+  "voice": null,
+  "about": "mars base (felt miniature shot; description to be written)"
+ },
+ "meeting_room_whiteboard": {
+  "talks": false,
+  "voice": null,
+  "about": "meeting room whiteboard (felt miniature shot; description to be written)"
+ },
+ "moon_surface_earthrise": {
+  "talks": false,
+  "voice": null,
+  "about": "moon surface earthrise (felt miniature shot; description to be written)"
+ },
+ "mountain_lake_dawn": {
+  "talks": false,
+  "voice": null,
+  "about": "mountain lake dawn (felt miniature shot; description to be written)"
+ },
+ "mouse_startup": {
+  "talks": false,
+  "voice": null,
+  "about": "mouse startup (felt miniature shot; description to be written)"
+ },
+ "news_anchor": {
+  "talks": true,
+  "voice": "lady",
+  "about": "A felted TV news anchor woman behind a news desk with blank studio screens, facing camera, for news bulletins."
+ },
+ "oil_barrel": {
+  "talks": true,
+  "voice": "deep",
+  "about": "A sad anthropomorphic black oil barrel lying on a psychologist's couch, for a therapy-session dialogue."
+ },
+ "open_space_office": {
+  "talks": false,
+  "voice": null,
+  "about": "open space office (felt miniature shot; description to be written)"
+ },
+ "owl_professor": {
+  "talks": false,
+  "voice": null,
+  "about": "owl professor (felt miniature shot; description to be written)"
+ },
+ "pigeon_city": {
+  "talks": false,
+  "voice": null,
+  "about": "pigeon city (felt miniature shot; description to be written)"
+ },
+ "psychologist": {
+  "talks": true,
+  "voice": "calm",
+  "about": "A calm felted psychologist woman with a notebook in an armchair among plants, facing right toward her patient."
+ },
+ "river_bear": {
+  "talks": false,
+  "voice": null,
+  "about": "The salmon leaping over a felted waterfall in panic while a brown bear tries to catch it. Flashback; push and a small shake=0.002."
+ },
+ "river_eagle": {
+  "talks": false,
+  "voice": null,
+  "about": "A felted eagle diving with talons out at the salmon in the river. Flashback; push."
+ },
+ "river_upstream": {
+  "talks": false,
+  "voice": null,
+  "about": "The salmon swimming hard upstream in a felted wool river, forest behind. For flashbacks; use pan=right."
+ },
+ "robot_helper": {
+  "talks": true,
+  "voice": "fairy",
+  "about": "A cute boxy felted robot assistant with round eyes and an antenna in a cosy living room, facing right, a friendly helper."
+ },
+ "salmon_host": {
+  "talks": true,
+  "voice": "salmon",
+  "about": "The same salmon now as the HOST, holding the microphone, sly calm look, same studio. For the reversed interview."
+ },
+ "salmon_studio": {
+  "talks": true,
+  "voice": "salmon",
+  "about": "A tired felted salmon in a mustard armchair in a cosy TV studio at night; a journalist hand holds a microphone to it from the left. The guest of the interview. Droopy eyes, bags under the eyes."
+ },
+ "school_classroom_empty": {
+  "talks": false,
+  "voice": null,
+  "about": "school classroom empty (felt miniature shot; description to be written)"
+ },
+ "scientist_lab": {
+  "talks": true,
+  "voice": "journalist",
+  "about": "An elderly felted scientist with wild white hair and goggles in a cluttered lab with jars and a telescope, facing right, explaining things."
+ },
+ "seagull_tourist": {
+  "talks": false,
+  "voice": null,
+  "about": "seagull tourist (felt miniature shot; description to be written)"
+ },
+ "server_room_blue": {
+  "talks": false,
+  "voice": null,
+  "about": "server room blue (felt miniature shot; description to be written)"
+ },
+ "sheep_hr": {
+  "talks": false,
+  "voice": null,
+  "about": "sheep hr (felt miniature shot; description to be written)"
+ },
+ "small_town_morning": {
+  "talks": false,
+  "voice": null,
+  "about": "small town morning (felt miniature shot; description to be written)"
+ },
+ "space_station_window": {
+  "talks": false,
+  "voice": null,
+  "about": "space station window (felt miniature shot; description to be written)"
+ },
+ "subway_car": {
+  "talks": false,
+  "voice": null,
+  "about": "subway car (felt miniature shot; description to be written)"
+ },
+ "supermarket_aisle": {
+  "talks": false,
+  "voice": null,
+  "about": "supermarket aisle (felt miniature shot; description to be written)"
+ },
+ "turtle_bureaucrat": {
+  "talks": false,
+  "voice": null,
+  "about": "turtle bureaucrat (felt miniature shot; description to be written)"
+ },
+ "underwater_reef": {
+  "talks": false,
+  "voice": null,
+  "about": "underwater reef (felt miniature shot; description to be written)"
+ },
+ "universe_expanding": {
+  "talks": false,
+  "voice": null,
+  "about": "A felted miniature cosmos with planets and stars drifting apart and a tiny lab window in the corner, a cutaway for science stories."
+ },
+ "university_lecture_hall": {
+  "talks": false,
+  "voice": null,
+  "about": "university lecture hall (felt miniature shot; description to be written)"
+ },
+ "village_steppe_yurts": {
+  "talks": false,
+  "voice": null,
+  "about": "village steppe yurts (felt miniature shot; description to be written)"
+ }
+}

@@ -1,0 +1,25 @@
+# format: F09 Кулинарное шоу
+# logline: Шеф готовит пиццу строго по рецепту ИИ-чатбота, который уверен в каждом слове.
+# why it works: Each AI step is confident and wrong; the bot rates the chef's stunned silence as five stars.
+film title="По рецепту Помощника" style=puppet fps=24 size=1920x1080
+shot 0-4s: ch_madina push=0.1
+fade in 0-0.6s
+say ch_madina "Сегодня пицца по рецепту Помощника." at 0.3s
+shot 4-9s: ch_chatbot push=0.06 focus=0.5,0.4
+say ch_chatbot "Отличный выбор! Понадобятся тесто и уверенность." at 4.3s
+shot 9-14.2s: ch_chatbot pan=right push=0.08 focus=0.5,0.5
+say ch_chatbot "Сыр, томаты и две ложки клея. Чтобы не стекал." at 9.3s
+shot 14.2-18.2s: ch_madina push=0.02
+say ch_madina "Клея?" at 14.5s
+shot 18.2-23.2s: ch_chatbot handheld=1 push=0.06 focus=0.5,0.4
+say ch_chatbot "Отличное замечание! Клей не нужен. Добавьте клей." at 18.5s
+shot 23.2-28.2s: ch_madina handheld=1 push=0.1 focus=0.5,0.5
+say ch_madina "При какой температуре выпекать?" at 23.5s
+shot 28.2-33.2s: ch_chatbot push=0.06 focus=0.5,0.4
+say ch_chatbot "При той, при которой всё получится!" at 28.5s
+shot 33.2-38.2s: pl_cooking_set push=0.13 focus=0.5,0.5
+shot 38.2-42.2s: ch_madina push=0.06 focus=0.5,0.4
+shot 42.2-47.2s: ch_chatbot push=0.06 snap=42.5 focus=0.5,0.4
+say ch_chatbot "[deadpan] Вы молчите уже минуту. Ставлю пять звёзд." at 42.5s
+music mood=bright tempo=118 0-38.2s
+fade out 46.8-47.2s

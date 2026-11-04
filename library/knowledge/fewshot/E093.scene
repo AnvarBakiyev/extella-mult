@@ -1,0 +1,23 @@
+# format: F16 Урок-туториал
+# logline: Офисный кот проводит мастер-класс «Как стать незаменимым сотрудником», и каждый его шаг подозрительно похож на чью-то карьеру.
+# why it works: Cat behaviour as a career guide; step five is the cynical rule nobody says aloud.
+film title="Незаменимый" style=puppet fps=24 size=1920x1080
+shot 0-5s: ch_cat push=0.02
+fade in 0-0.6s
+say ch_cat "Сегодня учимся быть незаменимым сотрудником." at 0.3s
+shot 5-11.2s: ch_cat push=0.1 focus=0.5,0.5
+say ch_cat "Шаг первый. Лягте на клавиатуру. Пусть видят, что вы в процессе." at 5.3s
+shot 11.2-17.2s: ch_cat push=0.1 focus=0.5,0.5
+say ch_cat "Шаг второй. Сядьте на важный документ. Важный — тот, что ищут." at 11.5s
+shot 17.2-25.2s: ch_cat push=0.1
+say ch_cat "Шаг третий. На совещании молчите и смотрите на того, кто говорит. Долго." at 17.5s
+shot 25.2-31.2s: ch_cat push=0.14 focus=0.5,0.4
+say ch_cat "Шаг четвёртый. Опрокиньте кружку. Так вы появитесь в отчёте." at 25.5s
+shot 31.2-38.2s: ch_cat pull=0.25
+say ch_cat "Вот результат. Повышение. Отдельная коробка у окна." at 31.5s
+shot 38.2-41.4s: ch_misha push=0.06 focus=0.5,0.4
+say ch_misha "А что вы, собственно, умеете?" at 38.5s
+shot 41.4-46.4s: ch_cat push=0.06 snap=41.7 focus=0.5,0.4
+say ch_cat "[deadpan] Шаг пятый. Никогда этого не показывайте. Сразу попросят." at 41.7s
+music mood=calm tempo=72 0-38.2s
+fade out 46-46.4s

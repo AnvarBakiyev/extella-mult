@@ -1,0 +1,24 @@
+# format: F23 Экскурсия в музее
+# logline: В зале вещей, пропавших в стирке, главный экспонат — одинокий носок, и у него есть своя версия событий.
+# why it works: Museum gravity for lost laundry; the exhibit has his own version and a feud.
+film title="Зал утраченного" style=puppet fps=24 size=1920x1080
+shot 0-6s: ch_lev pull=0.15
+fade in 0-0.6s
+say ch_lev "Зал утраченного. Всё, что пропало в стирке." at 0.3s
+shot 6-12s: ch_sock push=0.18 focus=0.5,0.5
+voice "Носок. Полосатый. Найден на батарее. Без пары." at 6.3s who=narrator
+shot 12-18s: ch_sock push=0.18 focus=0.5,0.5
+voice "Второй искали сорок лет. Три экспедиции за диван." at 12.3s who=narrator
+shot 18-24s: ch_lev pan=right push=0.08 focus=0.5,0.5
+say ch_lev "Резинки для волос. Шесть тысяч. Все из одной ванной." at 18.3s
+shot 24-30s: ch_lev pan=right
+say ch_lev "Стиральная машина их не ест. Она их отпускает." at 24.3s
+shot 30-35s: ch_lev handheld=1 push=0.02
+say ch_lev "А где же второй носок?" at 30.3s
+shot 35-39s: ch_lev push=0.06 focus=0.5,0.4
+say ch_lev "Наука не знает." at 35.3s
+shot 39-41s: ch_sock push=0.1 focus=0.5,0.5
+shot 41-46s: ch_sock push=0.06 snap=41.3 focus=0.5,0.4
+say ch_sock "[deadpan] В соседнем зале. Мы не разговариваем." at 41.3s
+music mood=calm tempo=72 0-30s
+fade out 45.6-46s

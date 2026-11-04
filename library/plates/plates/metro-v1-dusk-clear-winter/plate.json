@@ -1,0 +1,48 @@
+{
+ "name": "metro-v1-dusk-clear-winter",
+ "about": "metro car with red seats",
+ "biome": "metro",
+ "variant": 1,
+ "time": "dusk",
+ "weather": "clear",
+ "season": "winter",
+ "palette": "felt",
+ "seed": 2062,
+ "interior": true,
+ "size": [
+  1920,
+  1080
+ ],
+ "layers": [
+  {
+   "file": "sky.png",
+   "layer": "sky",
+   "z": 0,
+   "parallax": 0.04
+  },
+  {
+   "file": "far.png",
+   "layer": "far",
+   "z": 1,
+   "parallax": 0.18
+  },
+  {
+   "file": "mid.png",
+   "layer": "mid",
+   "z": 2,
+   "parallax": 0.42
+  },
+  {
+   "file": "near.png",
+   "layer": "near",
+   "z": 3,
+   "parallax": 0.72
+  },
+  {
+   "file": "fg.png",
+   "layer": "fg",
+   "z": 4,
+   "parallax": 1.1
+  }
+ ]
+}

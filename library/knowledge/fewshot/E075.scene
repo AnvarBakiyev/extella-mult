@@ -1,0 +1,24 @@
+# format: F13 Фильм о природе
+# logline: Айдана из-за фикуса наблюдает стажёра, отбившегося от стаи на третий день, и сама оказывается тем, кого он ищет.
+# why it works: Nature-film whisper applied to onboarding; the observer is revealed as the thing being hidden from.
+film title="Детёныш на онбординге" style=puppet fps=24 size=1920x1080
+shot 0-7s: ch_aidana push=0.1 handheld=1
+fade in 0-0.6s
+say ch_aidana "[whispering] Опенспейс. Девять утра. Тишина перед созвоном." at 0.3s
+shot 7-14s: ch_aidana pan=right
+say ch_aidana "Перед нами стажёр. Детёныш отбился от стаи на третий день." at 7.3s
+shot 14-21s: ch_aidana pan=right
+say ch_aidana "Он ходит за взрослыми к кулеру. Надеется, что они пойдут на обед." at 14.3s
+shot 21-27s: ch_misha push=0.18 focus=0.5,0.5
+voice "Смотрит в пустой календарь. Это защитная реакция." at 21.3s who=calm
+shot 27-33.2s: ch_aidana push=0.18 focus=0.5,0.5
+say ch_aidana "Никто не сказал ему, кто его руководитель. В природе так бывает." at 27.3s
+shot 33.2-37.2s: ch_misha push=0.06 snap=33.5 focus=0.5,0.4
+shot 37.2-42.2s: ch_misha whip=right
+say ch_misha "Простите... вы тоже на онбординге?" at 37.5s
+shot 42.2-46.2s: ch_aidana push=0.06 focus=0.5,0.4
+say ch_aidana "[pause] Нет." at 42.5s
+shot 46.2-52.2s: ch_aidana push=0.06 focus=0.5,0.4 snap=46.5
+say ch_aidana "[deadpan] Я ваш руководитель. Я просто боюсь подойти." at 46.5s
+music mood=calm tempo=72 0-33.2s
+fade out 51.8-52.2s

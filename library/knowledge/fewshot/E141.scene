@@ -1,0 +1,24 @@
+# format: F24 Показ квартиры
+# logline: Риелтор продаёт семье панорамный вид на соседа в окне напротив, а сосед знает про этот вид кое-что важное.
+# why it works: A view sold as luxury; the neighbour in the window was sold the same 'view' of them.
+film title="Живой вид" style=puppet fps=24 size=1920x1080
+shot 0-5s: ch_karina handheld=1 push=0.02
+fade in 0-0.6s
+say ch_karina "Проходите! Новостройка, свежий бетон." at 0.3s
+shot 5-11s: ch_karina pan=right
+say ch_karina "Сорок метров. Окна в пол. Пол пока в планах." at 5.3s
+shot 11-15s: ch_leyla push=0.02
+say ch_leyla "А какой вид из окна?" at 11.3s
+shot 15-20s: ch_gennady push=0.1 snap=15.3 focus=0.5,0.5
+voice "Панорамный. На соседний дом. Метр двадцать." at 15.3s who=lady
+shot 20-25s: ch_gennady push=0.1 snap=20.3 focus=0.5,0.5
+voice "И сосед. Он покажет, где магазин." at 20.3s who=lady
+shot 25-30s: ch_oleg push=0.02
+say ch_oleg "Он всё время там стоит?" at 25.3s
+shot 30-36s: ch_karina push=0.14 focus=0.5,0.4
+say ch_karina "Это входит в цену. Живой вид. Без доплаты." at 30.3s
+shot 36-40s: ch_gennady push=0.1 snap=36.3 focus=0.5,0.5
+shot 40-42s: ch_gennady push=0.06 focus=0.5,0.4
+shot 42-48s: ch_gennady pull=0.25 focus=0.5,0.4
+say ch_gennady "[deadpan] Не берите. Мне она вас тоже показывала. Как вид." at 42.3s
+fade out 47.6-48s

@@ -1,0 +1,3307 @@
+{
+ "about": "Full-body felt puppets on a 2D rig (charlib.Body / anim.Puppet). See BODY.md.",
+ "views": [
+  "q34",
+  "side"
+ ],
+ "px_per_unit": 768.0,
+ "poses": [
+  "stand",
+  "sit",
+  "wave",
+  "point",
+  "shrug",
+  "facepalm",
+  "arms_crossed",
+  "hands_on_hips",
+  "typing",
+  "holding_phone",
+  "thinking",
+  "jump",
+  "fall",
+  "bow",
+  "dance"
+ ],
+ "cycles": [
+  "walk",
+  "run",
+  "nod",
+  "head_shake",
+  "laugh",
+  "idle"
+ ],
+ "hand_shapes": [
+  "relaxed",
+  "open",
+  "fist",
+  "point",
+  "flat"
+ ],
+ "visemes": [
+  "closed",
+  "A",
+  "E",
+  "O",
+  "U",
+  "MBP"
+ ],
+ "expressions": [
+  "neutral",
+  "happy",
+  "angry",
+  "shocked"
+ ],
+ "props": [
+  "phone",
+  "mic",
+  "laptop",
+  "stool"
+ ],
+ "demo_cast": [
+  "aigul",
+  "timur",
+  "oleg_petrovich",
+  "stas_intern",
+  "zarina",
+  "daniyar_dev",
+  "hr_imp",
+  "auditor_crow",
+  "doctor_maria",
+  "nurse_gulya",
+  "vet_bear",
+  "astronaut_asel",
+  "chef_gogi",
+  "baker_olga",
+  "granny_zina",
+  "kid_sonya",
+  "kid_arman",
+  "fox_lisa",
+  "cat_boss",
+  "dog_sheriff",
+  "owl_judge",
+  "frog_prince",
+  "mouse_kid",
+  "pig_singer",
+  "salmon_anchor",
+  "robot_bolt",
+  "monster_fifi",
+  "sheep_poet",
+  "wizard_merlan",
+  "hare_coward"
+ ],
+ "characters": {
+  "aigul": {
+   "kind": "person",
+   "rig": "aigul/rig.json",
+   "full_q34": "aigul/full_q34.png",
+   "full_size": [
+    482,
+    895
+   ],
+   "ground_at": [
+    238,
+    862
+   ],
+   "about": "репортёр с микрофоном, всегда в кадре",
+   "voice": "journalist",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": true
+   },
+   "height_px": 869.8
+  },
+  "timur": {
+   "kind": "person",
+   "rig": "timur/rig.json",
+   "full_q34": "timur/full_q34.png",
+   "full_size": [
+    439,
+    865
+   ],
+   "ground_at": [
+    212,
+    833
+   ],
+   "about": "ведущий вечерних новостей",
+   "voice": "narrator",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 843.8
+  },
+  "madina": {
+   "kind": "person",
+   "rig": "madina/rig.json",
+   "full_q34": "madina/full_q34.png",
+   "full_size": [
+    416,
+    877
+   ],
+   "ground_at": [
+    192,
+    845
+   ],
+   "about": "редактор, читает всё дважды",
+   "voice": "calm",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 852.7
+  },
+  "oleg_petrovich": {
+   "kind": "person",
+   "rig": "oleg_petrovich/rig.json",
+   "full_q34": "oleg_petrovich/full_q34.png",
+   "full_size": [
+    458,
+    862
+   ],
+   "ground_at": [
+    205,
+    830
+   ],
+   "about": "главный редактор, начальник",
+   "voice": "deep",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 849.6
+  },
+  "stas_intern": {
+   "kind": "person",
+   "rig": "stas_intern/rig.json",
+   "full_q34": "stas_intern/full_q34.png",
+   "full_size": [
+    414,
+    921
+   ],
+   "ground_at": [
+    191,
+    890
+   ],
+   "about": "стажёр, бегает за кофе",
+   "voice": "ad",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 860.5
+  },
+  "zarina": {
+   "kind": "person",
+   "rig": "zarina/rig.json",
+   "full_q34": "zarina/full_q34.png",
+   "full_size": [
+    482,
+    894
+   ],
+   "ground_at": [
+    238,
+    863
+   ],
+   "about": "ведущая утреннего эфира",
+   "voice": "lady",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 869.8
+  },
+  "rustam_camera": {
+   "kind": "person",
+   "rig": "rustam_camera/rig.json",
+   "full_q34": "rustam_camera/full_q34.png",
+   "full_size": [
+    482,
+    849
+   ],
+   "ground_at": [
+    238,
+    818
+   ],
+   "about": "оператор, молчаливый профи",
+   "voice": "deep",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 812.1
+  },
+  "vera_buhgalter": {
+   "kind": "person",
+   "rig": "vera_buhgalter/rig.json",
+   "full_q34": "vera_buhgalter/full_q34.png",
+   "full_size": [
+    431,
+    885
+   ],
+   "ground_at": [
+    205,
+    853
+   ],
+   "about": "бухгалтер, знает цену всему",
+   "voice": "calm",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 855.6
+  },
+  "boss_karimov": {
+   "kind": "person",
+   "rig": "boss_karimov/rig.json",
+   "full_q34": "boss_karimov/full_q34.png",
+   "full_size": [
+    465,
+    865
+   ],
+   "ground_at": [
+    212,
+    833
+   ],
+   "about": "большой босс, говорит медленно",
+   "voice": "deep",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 846.0
+  },
+  "lena_smm": {
+   "kind": "person",
+   "rig": "lena_smm/rig.json",
+   "full_q34": "lena_smm/full_q34.png",
+   "full_size": [
+    423,
+    852
+   ],
+   "ground_at": [
+    200,
+    821
+   ],
+   "about": "SMM-менеджер, всё снимает на телефон",
+   "voice": "ad",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 837.8
+  },
+  "daniyar_dev": {
+   "kind": "person",
+   "rig": "daniyar_dev/rig.json",
+   "full_q34": "daniyar_dev/full_q34.png",
+   "full_size": [
+    467,
+    879
+   ],
+   "ground_at": [
+    232,
+    844
+   ],
+   "about": "программист, в наушниках с утра",
+   "voice": "calm",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 825.9
+  },
+  "hr_imp": {
+   "kind": "imp",
+   "rig": "hr_imp/rig.json",
+   "full_q34": "hr_imp/full_q34.png",
+   "full_size": [
+    516,
+    899
+   ],
+   "ground_at": [
+    275,
+    865
+   ],
+   "about": "бес из отдела кадров, улыбается по регламенту",
+   "voice": "odessa",
+   "has": {
+    "tail": "arrow",
+    "wings": true,
+    "mic": false
+   },
+   "height_px": 833.5
+  },
+  "imp_junior": {
+   "kind": "imp",
+   "rig": "imp_junior/rig.json",
+   "full_q34": "imp_junior/full_q34.png",
+   "full_size": [
+    513,
+    881
+   ],
+   "ground_at": [
+    276,
+    848
+   ],
+   "about": "младший бес, носит папки",
+   "voice": "fairy",
+   "has": {
+    "tail": "arrow",
+    "wings": true,
+    "mic": false
+   },
+   "height_px": 818.6
+  },
+  "nina_secretary": {
+   "kind": "person",
+   "rig": "nina_secretary/rig.json",
+   "full_q34": "nina_secretary/full_q34.png",
+   "full_size": [
+    425,
+    897
+   ],
+   "ground_at": [
+    201,
+    863
+   ],
+   "about": "секретарь, помнит все дни рождения",
+   "voice": "lady",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 869.8
+  },
+  "farhod_lawyer": {
+   "kind": "person",
+   "rig": "farhod_lawyer/rig.json",
+   "full_q34": "farhod_lawyer/full_q34.png",
+   "full_size": [
+    419,
+    895
+   ],
+   "ground_at": [
+    194,
+    861
+   ],
+   "about": "юрист, говорит пунктами",
+   "voice": "narrator",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 872.3
+  },
+  "max_marketing": {
+   "kind": "person",
+   "rig": "max_marketing/rig.json",
+   "full_q34": "max_marketing/full_q34.png",
+   "full_size": [
+    432,
+    914
+   ],
+   "ground_at": [
+    208,
+    882
+   ],
+   "about": "маркетолог, у него всё «вау»",
+   "voice": "ad",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 846.8
+  },
+  "auditor_crow": {
+   "kind": "animal:owl",
+   "rig": "auditor_crow/rig.json",
+   "full_q34": "auditor_crow/full_q34.png",
+   "full_size": [
+    453,
+    888
+   ],
+   "ground_at": [
+    224,
+    843
+   ],
+   "about": "аудитор, всё замечает",
+   "voice": "calm",
+   "has": {
+    "tail": "feathers",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 787.6
+  },
+  "kirill_it": {
+   "kind": "person",
+   "rig": "kirill_it/rig.json",
+   "full_q34": "kirill_it/full_q34.png",
+   "full_size": [
+    460,
+    877
+   ],
+   "ground_at": [
+    207,
+    845
+   ],
+   "about": "админ, перезагружает всё подряд",
+   "voice": "calm",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 855.5
+  },
+  "saule_pr": {
+   "kind": "person",
+   "rig": "saule_pr/rig.json",
+   "full_q34": "saule_pr/full_q34.png",
+   "full_size": [
+    493,
+    881
+   ],
+   "ground_at": [
+    243,
+    848
+   ],
+   "about": "пиар-директор, улыбка на миллион",
+   "voice": "lady",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 855.6
+  },
+  "courier_ali": {
+   "kind": "person",
+   "rig": "courier_ali/rig.json",
+   "full_q34": "courier_ali/full_q34.png",
+   "full_size": [
+    438,
+    859
+   ],
+   "ground_at": [
+    213,
+    828
+   ],
+   "about": "курьер, всегда торопится",
+   "voice": "gogi",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 840.8
+  },
+  "doctor_aibek": {
+   "kind": "person",
+   "rig": "doctor_aibek/rig.json",
+   "full_q34": "doctor_aibek/full_q34.png",
+   "full_size": [
+    423,
+    891
+   ],
+   "ground_at": [
+    199,
+    860
+   ],
+   "about": "терапевт, спокойный как утро",
+   "voice": "calm",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 869.8
+  },
+  "doctor_maria": {
+   "kind": "person",
+   "rig": "doctor_maria/rig.json",
+   "full_q34": "doctor_maria/full_q34.png",
+   "full_size": [
+    427,
+    880
+   ],
+   "ground_at": [
+    202,
+    849
+   ],
+   "about": "хирург, шутит без улыбки",
+   "voice": "narrator",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 852.7
+  },
+  "nurse_gulya": {
+   "kind": "person",
+   "rig": "nurse_gulya/rig.json",
+   "full_q34": "nurse_gulya/full_q34.png",
+   "full_size": [
+    444,
+    864
+   ],
+   "ground_at": [
+    218,
+    833
+   ],
+   "about": "медсестра, добрее всех",
+   "voice": "lady",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 840.8
+  },
+  "dentist_mouse": {
+   "kind": "animal:mouse",
+   "rig": "dentist_mouse/rig.json",
+   "full_q34": "dentist_mouse/full_q34.png",
+   "full_size": [
+    556,
+    872
+   ],
+   "ground_at": [
+    306,
+    838
+   ],
+   "about": "мышь-стоматолог, любит сыр и пломбы",
+   "voice": "fairy",
+   "has": {
+    "tail": "thin",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 790.0
+  },
+  "vet_bear": {
+   "kind": "animal:bear",
+   "rig": "vet_bear/rig.json",
+   "full_q34": "vet_bear/full_q34.png",
+   "full_size": [
+    455,
+    853
+   ],
+   "ground_at": [
+    220,
+    819
+   ],
+   "about": "медведь-ветеринар",
+   "voice": "deep",
+   "has": {
+    "tail": "stub",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 809.7
+  },
+  "prof_einbaum": {
+   "kind": "person",
+   "rig": "prof_einbaum/rig.json",
+   "full_q34": "prof_einbaum/full_q34.png",
+   "full_size": [
+    420,
+    938
+   ],
+   "ground_at": [
+    196,
+    904
+   ],
+   "about": "профессор физики, волосы дыбом",
+   "voice": "narrator",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 872.3
+  },
+  "dr_kamila": {
+   "kind": "person",
+   "rig": "dr_kamila/rig.json",
+   "full_q34": "dr_kamila/full_q34.png",
+   "full_size": [
+    456,
+    880
+   ],
+   "ground_at": [
+    224,
+    847
+   ],
+   "about": "биолог, говорит с микроскопом",
+   "voice": "calm",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 855.6
+  },
+  "chemist_frog": {
+   "kind": "animal:frog",
+   "rig": "chemist_frog/rig.json",
+   "full_q34": "chemist_frog/full_q34.png",
+   "full_size": [
+    443,
+    884
+   ],
+   "ground_at": [
+    219,
+    834
+   ],
+   "about": "лягушка-химик, всё смешивает",
+   "voice": "ad",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 766.5
+  },
+  "lab_robot": {
+   "kind": "robot",
+   "rig": "lab_robot/rig.json",
+   "full_q34": "lab_robot/full_q34.png",
+   "full_size": [
+    436,
+    906
+   ],
+   "ground_at": [
+    212,
+    875
+   ],
+   "about": "лабораторный робот, считает вслух",
+   "voice": "calm",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 824.6
+  },
+  "astronaut_asel": {
+   "kind": "person",
+   "rig": "astronaut_asel/rig.json",
+   "full_q34": "astronaut_asel/full_q34.png",
+   "full_size": [
+    525,
+    955
+   ],
+   "ground_at": [
+    260,
+    922
+   ],
+   "about": "космонавт, первая на Луне из аула",
+   "voice": "narrator",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 869.8
+  },
+  "astronaut_ivan": {
+   "kind": "person",
+   "rig": "astronaut_ivan/rig.json",
+   "full_q34": "astronaut_ivan/full_q34.png",
+   "full_size": [
+    493,
+    917
+   ],
+   "ground_at": [
+    243,
+    882
+   ],
+   "about": "космонавт, скучает по борщу",
+   "voice": "deep",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 843.8
+  },
+  "space_dog": {
+   "kind": "animal:dog",
+   "rig": "space_dog/rig.json",
+   "full_q34": "space_dog/full_q34.png",
+   "full_size": [
+    509,
+    887
+   ],
+   "ground_at": [
+    252,
+    852
+   ],
+   "about": "собака-космонавт",
+   "voice": "fairy",
+   "has": {
+    "tail": "wag",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 809.0
+  },
+  "pharmacist_owl": {
+   "kind": "animal:owl",
+   "rig": "pharmacist_owl/rig.json",
+   "full_q34": "pharmacist_owl/full_q34.png",
+   "full_size": [
+    456,
+    886
+   ],
+   "ground_at": [
+    225,
+    844
+   ],
+   "about": "сова-фармацевт",
+   "voice": "calm",
+   "has": {
+    "tail": "feathers",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 787.6
+  },
+  "engineer_bolat": {
+   "kind": "person",
+   "rig": "engineer_bolat/rig.json",
+   "full_q34": "engineer_bolat/full_q34.png",
+   "full_size": [
+    436,
+    920
+   ],
+   "ground_at": [
+    212,
+    888
+   ],
+   "about": "инженер, всё чинит изолентой",
+   "voice": "deep",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 846.8
+  },
+  "archaeologist_hare": {
+   "kind": "animal:hare",
+   "rig": "archaeologist_hare/rig.json",
+   "full_q34": "archaeologist_hare/full_q34.png",
+   "full_size": [
+    402,
+    1014
+   ],
+   "ground_at": [
+    175,
+    980
+   ],
+   "about": "заяц-археолог",
+   "voice": "narrator",
+   "has": {
+    "tail": "puff",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 797.8
+  },
+  "chef_pig": {
+   "kind": "animal:pig",
+   "rig": "chef_pig/rig.json",
+   "full_q34": "chef_pig/full_q34.png",
+   "full_size": [
+    429,
+    1009
+   ],
+   "ground_at": [
+    194,
+    974
+   ],
+   "about": "свинья-шеф, всё пробует",
+   "voice": "gogi",
+   "has": {
+    "tail": "curl",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 794.2
+  },
+  "chef_gogi": {
+   "kind": "person",
+   "rig": "chef_gogi/rig.json",
+   "full_q34": "chef_gogi/full_q34.png",
+   "full_size": [
+    458,
+    1044
+   ],
+   "ground_at": [
+    205,
+    1013
+   ],
+   "about": "шашлычник Гоги, мастер огня",
+   "voice": "gogi",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 858.4
+  },
+  "baker_olga": {
+   "kind": "person",
+   "rig": "baker_olga/rig.json",
+   "full_q34": "baker_olga/full_q34.png",
+   "full_size": [
+    435,
+    868
+   ],
+   "ground_at": [
+    212,
+    836
+   ],
+   "about": "пекарь, пахнет корицей",
+   "voice": "lady",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 840.8
+  },
+  "plov_master": {
+   "kind": "person",
+   "rig": "plov_master/rig.json",
+   "full_q34": "plov_master/full_q34.png",
+   "full_size": [
+    486,
+    857
+   ],
+   "ground_at": [
+    233,
+    826
+   ],
+   "about": "устабаши, плов на триста человек",
+   "voice": "deep",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 814.9
+  },
+  "waiter_fox": {
+   "kind": "animal:fox",
+   "rig": "waiter_fox/rig.json",
+   "full_q34": "waiter_fox/full_q34.png",
+   "full_size": [
+    532,
+    923
+   ],
+   "ground_at": [
+    305,
+    887
+   ],
+   "about": "лис-официант, вежливый до хитрости",
+   "voice": "odessa",
+   "has": {
+    "tail": "bushy",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 806.1
+  },
+  "barista_cat": {
+   "kind": "animal:cat",
+   "rig": "barista_cat/rig.json",
+   "full_q34": "barista_cat/full_q34.png",
+   "full_size": [
+    502,
+    860
+   ],
+   "ground_at": [
+    245,
+    826
+   ],
+   "about": "кошка-бариста",
+   "voice": "fairy",
+   "has": {
+    "tail": "long",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 765.5
+  },
+  "taxi_gena": {
+   "kind": "person",
+   "rig": "taxi_gena/rig.json",
+   "full_q34": "taxi_gena/full_q34.png",
+   "full_size": [
+    467,
+    872
+   ],
+   "ground_at": [
+    214,
+    842
+   ],
+   "about": "таксист Гена, знает всё про всех",
+   "voice": "odessa",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 846.0
+  },
+  "taxi_nurlan": {
+   "kind": "person",
+   "rig": "taxi_nurlan/rig.json",
+   "full_q34": "taxi_nurlan/full_q34.png",
+   "full_size": [
+    437,
+    864
+   ],
+   "ground_at": [
+    211,
+    833
+   ],
+   "about": "таксист из Алматы, слушает радио",
+   "voice": "calm",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 843.8
+  },
+  "bus_driver_dog": {
+   "kind": "animal:dog",
+   "rig": "bus_driver_dog/rig.json",
+   "full_q34": "bus_driver_dog/full_q34.png",
+   "full_size": [
+    444,
+    835
+   ],
+   "ground_at": [
+    218,
+    800
+   ],
+   "about": "пёс-водитель автобуса",
+   "voice": "deep",
+   "has": {
+    "tail": "wag",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 809.0
+  },
+  "postman_hare": {
+   "kind": "animal:hare",
+   "rig": "postman_hare/rig.json",
+   "full_q34": "postman_hare/full_q34.png",
+   "full_size": [
+    394,
+    1016
+   ],
+   "ground_at": [
+    171,
+    981
+   ],
+   "about": "заяц-почтальон",
+   "voice": "ad",
+   "has": {
+    "tail": "puff",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 797.8
+  },
+  "policeman_bear": {
+   "kind": "animal:bear",
+   "rig": "policeman_bear/rig.json",
+   "full_q34": "policeman_bear/full_q34.png",
+   "full_size": [
+    445,
+    852
+   ],
+   "ground_at": [
+    208,
+    817
+   ],
+   "about": "медведь-постовой, без погон",
+   "voice": "deep",
+   "has": {
+    "tail": "stub",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 809.7
+  },
+  "firefighter_dina": {
+   "kind": "person",
+   "rig": "firefighter_dina/rig.json",
+   "full_q34": "firefighter_dina/full_q34.png",
+   "full_size": [
+    436,
+    918
+   ],
+   "ground_at": [
+    212,
+    886
+   ],
+   "about": "пожарная, смеётся громко",
+   "voice": "ad",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 840.8
+  },
+  "janitor_sergei": {
+   "kind": "person",
+   "rig": "janitor_sergei/rig.json",
+   "full_q34": "janitor_sergei/full_q34.png",
+   "full_size": [
+    412,
+    948
+   ],
+   "ground_at": [
+    188,
+    916
+   ],
+   "about": "дворник, философ двора",
+   "voice": "narrator",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 872.3
+  },
+  "market_apa": {
+   "kind": "person",
+   "rig": "market_apa/rig.json",
+   "full_q34": "market_apa/full_q34.png",
+   "full_size": [
+    467,
+    841
+   ],
+   "ground_at": [
+    231,
+    809
+   ],
+   "about": "апа с рынка, продаёт курут",
+   "voice": "odessa",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 812.1
+  },
+  "shopkeeper_salmon": {
+   "kind": "animal:salmon",
+   "rig": "shopkeeper_salmon/rig.json",
+   "full_q34": "shopkeeper_salmon/full_q34.png",
+   "full_size": [
+    519,
+    894
+   ],
+   "ground_at": [
+    258,
+    858
+   ],
+   "about": "лосось из рыбной лавки",
+   "voice": "salmon",
+   "has": {
+    "tail": "fin",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 809.0
+  },
+  "fishmonger_salmon": {
+   "kind": "animal:salmon",
+   "rig": "fishmonger_salmon/rig.json",
+   "full_q34": "fishmonger_salmon/full_q34.png",
+   "full_size": [
+    522,
+    893
+   ],
+   "ground_at": [
+    257,
+    858
+   ],
+   "about": "лосось-рыботорговец, иронизирует",
+   "voice": "salmon",
+   "has": {
+    "tail": "fin",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 809.0
+  },
+  "banker_salmon": {
+   "kind": "animal:salmon",
+   "rig": "banker_salmon/rig.json",
+   "full_q34": "banker_salmon/full_q34.png",
+   "full_size": [
+    523,
+    893
+   ],
+   "ground_at": [
+    261,
+    858
+   ],
+   "about": "лосось-банкир, плывёт против течения",
+   "voice": "salmon",
+   "has": {
+    "tail": "fin",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 809.0
+  },
+  "barber_rafik": {
+   "kind": "person",
+   "rig": "barber_rafik/rig.json",
+   "full_q34": "barber_rafik/full_q34.png",
+   "full_size": [
+    424,
+    922
+   ],
+   "ground_at": [
+    200,
+    890
+   ],
+   "about": "парикмахер Рафик",
+   "voice": "gogi",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 855.6
+  },
+  "granny_zina": {
+   "kind": "person",
+   "rig": "granny_zina/rig.json",
+   "full_q34": "granny_zina/full_q34.png",
+   "full_size": [
+    427,
+    888
+   ],
+   "ground_at": [
+    203,
+    855
+   ],
+   "about": "бабушка Зина, всё видела",
+   "voice": "odessa",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 855.6
+  },
+  "granny_batima": {
+   "kind": "person",
+   "rig": "granny_batima/rig.json",
+   "full_q34": "granny_batima/full_q34.png",
+   "full_size": [
+    472,
+    841
+   ],
+   "ground_at": [
+    235,
+    808
+   ],
+   "about": "әже Батима, рассказчица",
+   "voice": "narrator",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 812.1
+  },
+  "grandpa_sabit": {
+   "kind": "person",
+   "rig": "grandpa_sabit/rig.json",
+   "full_q34": "grandpa_sabit/full_q34.png",
+   "full_size": [
+    412,
+    1021
+   ],
+   "ground_at": [
+    185,
+    989
+   ],
+   "about": "ата Сабит, в калпаке",
+   "voice": "deep",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 872.3
+  },
+  "grandpa_misha": {
+   "kind": "person",
+   "rig": "grandpa_misha/rig.json",
+   "full_q34": "grandpa_misha/full_q34.png",
+   "full_size": [
+    441,
+    916
+   ],
+   "ground_at": [
+    216,
+    885
+   ],
+   "about": "дед Миша, рыбак",
+   "voice": "calm",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 840.8
+  },
+  "granny_rosa": {
+   "kind": "person",
+   "rig": "granny_rosa/rig.json",
+   "full_q34": "granny_rosa/full_q34.png",
+   "full_size": [
+    443,
+    900
+   ],
+   "ground_at": [
+    216,
+    867
+   ],
+   "about": "бабушка Роза из Одессы",
+   "voice": "odessa",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 852.7
+  },
+  "mama_aida": {
+   "kind": "person",
+   "rig": "mama_aida/rig.json",
+   "full_q34": "mama_aida/full_q34.png",
+   "full_size": [
+    419,
+    884
+   ],
+   "ground_at": [
+    195,
+    852
+   ],
+   "about": "мама, всё успевает",
+   "voice": "lady",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 869.8
+  },
+  "papa_erlan": {
+   "kind": "person",
+   "rig": "papa_erlan/rig.json",
+   "full_q34": "papa_erlan/full_q34.png",
+   "full_size": [
+    466,
+    865
+   ],
+   "ground_at": [
+    213,
+    834
+   ],
+   "about": "папа, строит скворечник",
+   "voice": "deep",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 846.6
+  },
+  "kid_arman": {
+   "kind": "person",
+   "rig": "kid_arman/rig.json",
+   "full_q34": "kid_arman/full_q34.png",
+   "full_size": [
+    417,
+    770
+   ],
+   "ground_at": [
+    206,
+    740
+   ],
+   "about": "первоклассник, задаёт вопросы",
+   "voice": "fairy",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 757.8
+  },
+  "kid_sonya": {
+   "kind": "person",
+   "rig": "kid_sonya/rig.json",
+   "full_q34": "kid_sonya/full_q34.png",
+   "full_size": [
+    455,
+    780
+   ],
+   "ground_at": [
+    221,
+    747
+   ],
+   "about": "девочка Соня, рисует везде",
+   "voice": "fairy",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 757.8
+  },
+  "kid_ali": {
+   "kind": "person",
+   "rig": "kid_ali/rig.json",
+   "full_q34": "kid_ali/full_q34.png",
+   "full_size": [
+    437,
+    809
+   ],
+   "ground_at": [
+    217,
+    777
+   ],
+   "about": "мальчик Али, футболист",
+   "voice": "fairy",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 771.9
+  },
+  "teen_dana": {
+   "kind": "person",
+   "rig": "teen_dana/rig.json",
+   "full_q34": "teen_dana/full_q34.png",
+   "full_size": [
+    426,
+    879
+   ],
+   "ground_at": [
+    202,
+    845
+   ],
+   "about": "школьница, ведёт подкаст",
+   "voice": "ad",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 837.8
+  },
+  "farmer_kanat": {
+   "kind": "person",
+   "rig": "farmer_kanat/rig.json",
+   "full_q34": "farmer_kanat/full_q34.png",
+   "full_size": [
+    433,
+    996
+   ],
+   "ground_at": [
+    208,
+    965
+   ],
+   "about": "фермер, разводит овец",
+   "voice": "calm",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 846.8
+  },
+  "farmer_bear": {
+   "kind": "animal:bear",
+   "rig": "farmer_bear/rig.json",
+   "full_q34": "farmer_bear/full_q34.png",
+   "full_size": [
+    529,
+    910
+   ],
+   "ground_at": [
+    261,
+    875
+   ],
+   "about": "медведь-пасечник",
+   "voice": "deep",
+   "has": {
+    "tail": "stub",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 809.7
+  },
+  "farmer_pig": {
+   "kind": "animal:pig",
+   "rig": "farmer_pig/rig.json",
+   "full_q34": "farmer_pig/full_q34.png",
+   "full_size": [
+    504,
+    895
+   ],
+   "ground_at": [
+    248,
+    860
+   ],
+   "about": "свинья-огородник",
+   "voice": "gogi",
+   "has": {
+    "tail": "curl",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 794.2
+  },
+  "shepherd_sheep": {
+   "kind": "sheep",
+   "rig": "shepherd_sheep/rig.json",
+   "full_q34": "shepherd_sheep/full_q34.png",
+   "full_size": [
+    490,
+    905
+   ],
+   "ground_at": [
+    243,
+    869
+   ],
+   "about": "овца-чабан, сама себя пасёт",
+   "voice": "calm",
+   "has": {
+    "tail": "puff",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 836.4
+  },
+  "lamb_kozy": {
+   "kind": "sheep",
+   "rig": "lamb_kozy/rig.json",
+   "full_q34": "lamb_kozy/full_q34.png",
+   "full_size": [
+    478,
+    820
+   ],
+   "ground_at": [
+    236,
+    785
+   ],
+   "about": "ягнёнок Козы, любопытный",
+   "voice": "fairy",
+   "has": {
+    "tail": "puff",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 752.7
+  },
+  "milkmaid_cow_girl": {
+   "kind": "person",
+   "rig": "milkmaid_cow_girl/rig.json",
+   "full_q34": "milkmaid_cow_girl/full_q34.png",
+   "full_size": [
+    471,
+    861
+   ],
+   "ground_at": [
+    230,
+    831
+   ],
+   "about": "доярка Галя",
+   "voice": "lady",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 840.8
+  },
+  "beekeeper_oma": {
+   "kind": "person",
+   "rig": "beekeeper_oma/rig.json",
+   "full_q34": "beekeeper_oma/full_q34.png",
+   "full_size": [
+    460,
+    951
+   ],
+   "ground_at": [
+    226,
+    918
+   ],
+   "about": "пасечница, в шляпе",
+   "voice": "lady",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 855.6
+  },
+  "teacher_galina": {
+   "kind": "person",
+   "rig": "teacher_galina/rig.json",
+   "full_q34": "teacher_galina/full_q34.png",
+   "full_size": [
+    421,
+    899
+   ],
+   "ground_at": [
+    195,
+    866
+   ],
+   "about": "учительница русского, строгая",
+   "voice": "narrator",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 872.3
+  },
+  "teacher_marat": {
+   "kind": "person",
+   "rig": "teacher_marat/rig.json",
+   "full_q34": "teacher_marat/full_q34.png",
+   "full_size": [
+    436,
+    868
+   ],
+   "ground_at": [
+    211,
+    833
+   ],
+   "about": "учитель истории, всё помнит",
+   "voice": "narrator",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 843.8
+  },
+  "teacher_owl": {
+   "kind": "animal:owl",
+   "rig": "teacher_owl/rig.json",
+   "full_q34": "teacher_owl/full_q34.png",
+   "full_size": [
+    454,
+    887
+   ],
+   "ground_at": [
+    225,
+    845
+   ],
+   "about": "сова-учительница математики",
+   "voice": "calm",
+   "has": {
+    "tail": "feathers",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 787.6
+  },
+  "pe_coach_dog": {
+   "kind": "animal:dog",
+   "rig": "pe_coach_dog/rig.json",
+   "full_q34": "pe_coach_dog/full_q34.png",
+   "full_size": [
+    444,
+    827
+   ],
+   "ground_at": [
+    219,
+    794
+   ],
+   "about": "пёс-физрук",
+   "voice": "ad",
+   "has": {
+    "tail": "wag",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 809.0
+  },
+  "music_teacher_cat": {
+   "kind": "animal:cat",
+   "rig": "music_teacher_cat/rig.json",
+   "full_q34": "music_teacher_cat/full_q34.png",
+   "full_size": [
+    471,
+    865
+   ],
+   "ground_at": [
+    246,
+    828
+   ],
+   "about": "кот-учитель музыки",
+   "voice": "fairy",
+   "has": {
+    "tail": "long",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 765.5
+  },
+  "librarian_mouse": {
+   "kind": "animal:mouse",
+   "rig": "librarian_mouse/rig.json",
+   "full_q34": "librarian_mouse/full_q34.png",
+   "full_size": [
+    561,
+    876
+   ],
+   "ground_at": [
+    308,
+    842
+   ],
+   "about": "мышь-библиотекарь, шепчет",
+   "voice": "calm",
+   "has": {
+    "tail": "thin",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 790.0
+  },
+  "poet_anvar": {
+   "kind": "person",
+   "rig": "poet_anvar/rig.json",
+   "full_q34": "poet_anvar/full_q34.png",
+   "full_size": [
+    466,
+    905
+   ],
+   "ground_at": [
+    230,
+    869
+   ],
+   "about": "поэт, рифмует на ходу",
+   "voice": "narrator",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 872.3
+  },
+  "akyn_kairat": {
+   "kind": "person",
+   "rig": "akyn_kairat/rig.json",
+   "full_q34": "akyn_kairat/full_q34.png",
+   "full_size": [
+    465,
+    961
+   ],
+   "ground_at": [
+    227,
+    929
+   ],
+   "about": "акын с домброй в душе",
+   "voice": "deep",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 812.1
+  },
+  "dancer_aru": {
+   "kind": "person",
+   "rig": "dancer_aru/rig.json",
+   "full_q34": "dancer_aru/full_q34.png",
+   "full_size": [
+    457,
+    896
+   ],
+   "ground_at": [
+    224,
+    864
+   ],
+   "about": "танцовщица, кружится",
+   "voice": "lady",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 852.7
+  },
+  "rock_star_zhan": {
+   "kind": "person",
+   "rig": "rock_star_zhan/rig.json",
+   "full_q34": "rock_star_zhan/full_q34.png",
+   "full_size": [
+    413,
+    956
+   ],
+   "ground_at": [
+    188,
+    923
+   ],
+   "about": "рок-музыкант",
+   "voice": "ad",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 872.3
+  },
+  "dj_fox": {
+   "kind": "animal:fox",
+   "rig": "dj_fox/rig.json",
+   "full_q34": "dj_fox/full_q34.png",
+   "full_size": [
+    525,
+    924
+   ],
+   "ground_at": [
+    300,
+    891
+   ],
+   "about": "лис-диджей",
+   "voice": "ad",
+   "has": {
+    "tail": "bushy",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 806.1
+  },
+  "opera_diva": {
+   "kind": "person",
+   "rig": "opera_diva/rig.json",
+   "full_q34": "opera_diva/full_q34.png",
+   "full_size": [
+    490,
+    882
+   ],
+   "ground_at": [
+    237,
+    848
+   ],
+   "about": "оперная прима",
+   "voice": "lady",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 855.5
+  },
+  "painter_gaukhar": {
+   "kind": "person",
+   "rig": "painter_gaukhar/rig.json",
+   "full_q34": "painter_gaukhar/full_q34.png",
+   "full_size": [
+    426,
+    910
+   ],
+   "ground_at": [
+    198,
+    877
+   ],
+   "about": "художница, в краске",
+   "voice": "fairy",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 855.6
+  },
+  "chess_grandpa": {
+   "kind": "person",
+   "rig": "chess_grandpa/rig.json",
+   "full_q34": "chess_grandpa/full_q34.png",
+   "full_size": [
+    424,
+    867
+   ],
+   "ground_at": [
+    201,
+    834
+   ],
+   "about": "шахматист, думает долго",
+   "voice": "calm",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 855.6
+  },
+  "boxer_bek": {
+   "kind": "person",
+   "rig": "boxer_bek/rig.json",
+   "full_q34": "boxer_bek/full_q34.png",
+   "full_size": [
+    456,
+    862
+   ],
+   "ground_at": [
+    205,
+    830
+   ],
+   "about": "боксёр, добряк",
+   "voice": "deep",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 849.6
+  },
+  "wrestler_bear": {
+   "kind": "animal:bear",
+   "rig": "wrestler_bear/rig.json",
+   "full_q34": "wrestler_bear/full_q34.png",
+   "full_size": [
+    474,
+    857
+   ],
+   "ground_at": [
+    208,
+    822
+   ],
+   "about": "медведь-борец",
+   "voice": "deep",
+   "has": {
+    "tail": "stub",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 812.5
+  },
+  "runner_hare": {
+   "kind": "animal:hare",
+   "rig": "runner_hare/rig.json",
+   "full_q34": "runner_hare/full_q34.png",
+   "full_size": [
+    402,
+    1016
+   ],
+   "ground_at": [
+    173,
+    981
+   ],
+   "about": "заяц-бегун",
+   "voice": "ad",
+   "has": {
+    "tail": "puff",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 797.8
+  },
+  "footballer_dog": {
+   "kind": "animal:dog",
+   "rig": "footballer_dog/rig.json",
+   "full_q34": "footballer_dog/full_q34.png",
+   "full_size": [
+    449,
+    832
+   ],
+   "ground_at": [
+    224,
+    796
+   ],
+   "about": "пёс-футболист",
+   "voice": "ad",
+   "has": {
+    "tail": "wag",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 809.0
+  },
+  "skater_frog": {
+   "kind": "animal:frog",
+   "rig": "skater_frog/rig.json",
+   "full_q34": "skater_frog/full_q34.png",
+   "full_size": [
+    433,
+    883
+   ],
+   "ground_at": [
+    206,
+    835
+   ],
+   "about": "лягушка-скейтер",
+   "voice": "fairy",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 766.5
+  },
+  "yoga_cat": {
+   "kind": "animal:cat",
+   "rig": "yoga_cat/rig.json",
+   "full_q34": "yoga_cat/full_q34.png",
+   "full_size": [
+    471,
+    860
+   ],
+   "ground_at": [
+    246,
+    824
+   ],
+   "about": "кошка-инструктор йоги",
+   "voice": "calm",
+   "has": {
+    "tail": "long",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 765.5
+  },
+  "fox_detective": {
+   "kind": "animal:fox",
+   "rig": "fox_detective/rig.json",
+   "full_q34": "fox_detective/full_q34.png",
+   "full_size": [
+    526,
+    924
+   ],
+   "ground_at": [
+    301,
+    890
+   ],
+   "about": "лис-сыщик",
+   "voice": "narrator",
+   "has": {
+    "tail": "bushy",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 806.1
+  },
+  "fox_lisa": {
+   "kind": "animal:fox",
+   "rig": "fox_lisa/rig.json",
+   "full_q34": "fox_lisa/full_q34.png",
+   "full_size": [
+    524,
+    923
+   ],
+   "ground_at": [
+    300,
+    887
+   ],
+   "about": "лиса-кумушка, сплетница",
+   "voice": "odessa",
+   "has": {
+    "tail": "bushy",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 806.1
+  },
+  "arctic_fox": {
+   "kind": "animal:fox",
+   "rig": "arctic_fox/rig.json",
+   "full_q34": "arctic_fox/full_q34.png",
+   "full_size": [
+    529,
+    924
+   ],
+   "ground_at": [
+    303,
+    889
+   ],
+   "about": "песец-синоптик",
+   "voice": "calm",
+   "has": {
+    "tail": "bushy",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 806.1
+  },
+  "bear_mayor": {
+   "kind": "animal:bear",
+   "rig": "bear_mayor/rig.json",
+   "full_q34": "bear_mayor/full_q34.png",
+   "full_size": [
+    478,
+    899
+   ],
+   "ground_at": [
+    213,
+    865
+   ],
+   "about": "медведь-мэр",
+   "voice": "deep",
+   "has": {
+    "tail": "stub",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 812.5
+  },
+  "panda_bear": {
+   "kind": "animal:bear",
+   "rig": "panda_bear/rig.json",
+   "full_q34": "panda_bear/full_q34.png",
+   "full_size": [
+    447,
+    853
+   ],
+   "ground_at": [
+    211,
+    819
+   ],
+   "about": "медведь в чёрно-белом",
+   "voice": "calm",
+   "has": {
+    "tail": "stub",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 809.7
+  },
+  "cat_boss": {
+   "kind": "animal:cat",
+   "rig": "cat_boss/rig.json",
+   "full_q34": "cat_boss/full_q34.png",
+   "full_size": [
+    518,
+    862
+   ],
+   "ground_at": [
+    265,
+    829
+   ],
+   "about": "кот-начальник, дремлет на совещаниях",
+   "voice": "deep",
+   "has": {
+    "tail": "long",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 768.2
+  },
+  "cat_journalist": {
+   "kind": "animal:cat",
+   "rig": "cat_journalist/rig.json",
+   "full_q34": "cat_journalist/full_q34.png",
+   "full_size": [
+    473,
+    864
+   ],
+   "ground_at": [
+    247,
+    827
+   ],
+   "about": "кошка-журналистка",
+   "voice": "journalist",
+   "has": {
+    "tail": "long",
+    "wings": false,
+    "mic": true
+   },
+   "height_px": 765.5
+  },
+  "dog_sheriff": {
+   "kind": "animal:dog",
+   "rig": "dog_sheriff/rig.json",
+   "full_q34": "dog_sheriff/full_q34.png",
+   "full_size": [
+    446,
+    928
+   ],
+   "ground_at": [
+    220,
+    893
+   ],
+   "about": "пёс-шериф без звезды",
+   "voice": "gogi",
+   "has": {
+    "tail": "wag",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 809.0
+  },
+  "dog_reporter": {
+   "kind": "animal:dog",
+   "rig": "dog_reporter/rig.json",
+   "full_q34": "dog_reporter/full_q34.png",
+   "full_size": [
+    438,
+    835
+   ],
+   "ground_at": [
+    214,
+    799
+   ],
+   "about": "пёс-репортёр",
+   "voice": "journalist",
+   "has": {
+    "tail": "wag",
+    "wings": false,
+    "mic": true
+   },
+   "height_px": 809.0
+  },
+  "owl_judge": {
+   "kind": "animal:owl",
+   "rig": "owl_judge/rig.json",
+   "full_q34": "owl_judge/full_q34.png",
+   "full_size": [
+    458,
+    887
+   ],
+   "ground_at": [
+    226,
+    844
+   ],
+   "about": "сова-судья",
+   "voice": "narrator",
+   "has": {
+    "tail": "feathers",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 787.6
+  },
+  "owl_night_dj": {
+   "kind": "animal:owl",
+   "rig": "owl_night_dj/rig.json",
+   "full_q34": "owl_night_dj/full_q34.png",
+   "full_size": [
+    508,
+    887
+   ],
+   "ground_at": [
+    252,
+    843
+   ],
+   "about": "сова, ведёт ночной эфир",
+   "voice": "calm",
+   "has": {
+    "tail": "feathers",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 787.6
+  },
+  "frog_prince": {
+   "kind": "animal:frog",
+   "rig": "frog_prince/rig.json",
+   "full_q34": "frog_prince/full_q34.png",
+   "full_size": [
+    431,
+    886
+   ],
+   "ground_at": [
+    204,
+    837
+   ],
+   "about": "лягушка, мечтает о короне",
+   "voice": "fairy",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 766.5
+  },
+  "frog_weather": {
+   "kind": "animal:frog",
+   "rig": "frog_weather/rig.json",
+   "full_q34": "frog_weather/full_q34.png",
+   "full_size": [
+    432,
+    884
+   ],
+   "ground_at": [
+    207,
+    835
+   ],
+   "about": "лягушка-синоптик",
+   "voice": "ad",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": true
+   },
+   "height_px": 766.5
+  },
+  "mouse_clerk": {
+   "kind": "animal:mouse",
+   "rig": "mouse_clerk/rig.json",
+   "full_q34": "mouse_clerk/full_q34.png",
+   "full_size": [
+    559,
+    878
+   ],
+   "ground_at": [
+    307,
+    842
+   ],
+   "about": "мышь-клерк",
+   "voice": "calm",
+   "has": {
+    "tail": "thin",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 790.0
+  },
+  "mouse_kid": {
+   "kind": "animal:mouse",
+   "rig": "mouse_kid/rig.json",
+   "full_q34": "mouse_kid/full_q34.png",
+   "full_size": [
+    549,
+    811
+   ],
+   "ground_at": [
+    296,
+    777
+   ],
+   "about": "мышонок",
+   "voice": "fairy",
+   "has": {
+    "tail": "thin",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 728.0
+  },
+  "hare_coward": {
+   "kind": "animal:hare",
+   "rig": "hare_coward/rig.json",
+   "full_q34": "hare_coward/full_q34.png",
+   "full_size": [
+    395,
+    1017
+   ],
+   "ground_at": [
+    172,
+    979
+   ],
+   "about": "заяц-трусишка",
+   "voice": "fairy",
+   "has": {
+    "tail": "puff",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 797.8
+  },
+  "pig_banker": {
+   "kind": "animal:pig",
+   "rig": "pig_banker/rig.json",
+   "full_q34": "pig_banker/full_q34.png",
+   "full_size": [
+    477,
+    869
+   ],
+   "ground_at": [
+    208,
+    832
+   ],
+   "about": "свинья-копилка, финансист",
+   "voice": "odessa",
+   "has": {
+    "tail": "curl",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 796.9
+  },
+  "pig_singer": {
+   "kind": "animal:pig",
+   "rig": "pig_singer/rig.json",
+   "full_q34": "pig_singer/full_q34.png",
+   "full_size": [
+    456,
+    859
+   ],
+   "ground_at": [
+    219,
+    825
+   ],
+   "about": "свинка-певица",
+   "voice": "lady",
+   "has": {
+    "tail": "curl",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 794.2
+  },
+  "salmon_anchor": {
+   "kind": "animal:salmon",
+   "rig": "salmon_anchor/rig.json",
+   "full_q34": "salmon_anchor/full_q34.png",
+   "full_size": [
+    520,
+    892
+   ],
+   "ground_at": [
+    255,
+    857
+   ],
+   "about": "лосось, ведущий прогноза нереста",
+   "voice": "salmon",
+   "has": {
+    "tail": "fin",
+    "wings": false,
+    "mic": true
+   },
+   "height_px": 809.0
+  },
+  "salmon_grandpa": {
+   "kind": "animal:salmon",
+   "rig": "salmon_grandpa/rig.json",
+   "full_q34": "salmon_grandpa/full_q34.png",
+   "full_size": [
+    527,
+    890
+   ],
+   "ground_at": [
+    263,
+    855
+   ],
+   "about": "старый лосось, видел все пороги",
+   "voice": "salmon",
+   "has": {
+    "tail": "fin",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 809.0
+  },
+  "salmon_kid": {
+   "kind": "animal:salmon",
+   "rig": "salmon_kid/rig.json",
+   "full_q34": "salmon_kid/full_q34.png",
+   "full_size": [
+    508,
+    815
+   ],
+   "ground_at": [
+    250,
+    781
+   ],
+   "about": "малёк",
+   "voice": "fairy",
+   "has": {
+    "tail": "fin",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 730.8
+  },
+  "robot_r2": {
+   "kind": "robot",
+   "rig": "robot_r2/rig.json",
+   "full_q34": "robot_r2/full_q34.png",
+   "full_size": [
+    440,
+    912
+   ],
+   "ground_at": [
+    216,
+    877
+   ],
+   "about": "робот-помощник, вежливый",
+   "voice": "calm",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 824.6
+  },
+  "robot_bolt": {
+   "kind": "robot",
+   "rig": "robot_bolt/rig.json",
+   "full_q34": "robot_bolt/full_q34.png",
+   "full_size": [
+    441,
+    909
+   ],
+   "ground_at": [
+    215,
+    877
+   ],
+   "about": "робот-курьер",
+   "voice": "ad",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 824.6
+  },
+  "robot_nanny": {
+   "kind": "robot",
+   "rig": "robot_nanny/rig.json",
+   "full_q34": "robot_nanny/full_q34.png",
+   "full_size": [
+    439,
+    903
+   ],
+   "ground_at": [
+    215,
+    872
+   ],
+   "about": "робот-няня",
+   "voice": "fairy",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 821.6
+  },
+  "robot_boss": {
+   "kind": "robot",
+   "rig": "robot_boss/rig.json",
+   "full_q34": "robot_boss/full_q34.png",
+   "full_size": [
+    441,
+    907
+   ],
+   "ground_at": [
+    215,
+    875
+   ],
+   "about": "робот-директор, оптимизирует всех",
+   "voice": "deep",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 824.6
+  },
+  "monster_gurgle": {
+   "kind": "monster",
+   "rig": "monster_gurgle/rig.json",
+   "full_q34": "monster_gurgle/full_q34.png",
+   "full_size": [
+    460,
+    849
+   ],
+   "ground_at": [
+    224,
+    815
+   ],
+   "about": "добрый монстр Гургл",
+   "voice": "deep",
+   "has": {
+    "tail": "spikes",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 824.1
+  },
+  "monster_fifi": {
+   "kind": "monster",
+   "rig": "monster_fifi/rig.json",
+   "full_q34": "monster_fifi/full_q34.png",
+   "full_size": [
+    460,
+    881
+   ],
+   "ground_at": [
+    222,
+    845
+   ],
+   "about": "монстрик Фифи",
+   "voice": "fairy",
+   "has": {
+    "tail": "spikes",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 824.1
+  },
+  "monster_grumbo": {
+   "kind": "monster",
+   "rig": "monster_grumbo/rig.json",
+   "full_q34": "monster_grumbo/full_q34.png",
+   "full_size": [
+    459,
+    847
+   ],
+   "ground_at": [
+    223,
+    813
+   ],
+   "about": "ворчливый монстр",
+   "voice": "deep",
+   "has": {
+    "tail": "spikes",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 824.1
+  },
+  "imp_accountant": {
+   "kind": "imp",
+   "rig": "imp_accountant/rig.json",
+   "full_q34": "imp_accountant/full_q34.png",
+   "full_size": [
+    515,
+    896
+   ],
+   "ground_at": [
+    274,
+    862
+   ],
+   "about": "бес-бухгалтер, считает грехи в Excel",
+   "voice": "odessa",
+   "has": {
+    "tail": "arrow",
+    "wings": true,
+    "mic": false
+   },
+   "height_px": 833.5
+  },
+  "sheep_poet": {
+   "kind": "sheep",
+   "rig": "sheep_poet/rig.json",
+   "full_q34": "sheep_poet/full_q34.png",
+   "full_size": [
+    489,
+    899
+   ],
+   "ground_at": [
+    243,
+    865
+   ],
+   "about": "овечка-поэтесса",
+   "voice": "lady",
+   "has": {
+    "tail": "puff",
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 836.4
+  },
+  "fairy_godmother": {
+   "kind": "person",
+   "rig": "fairy_godmother/rig.json",
+   "full_q34": "fairy_godmother/full_q34.png",
+   "full_size": [
+    461,
+    889
+   ],
+   "ground_at": [
+    232,
+    856
+   ],
+   "about": "фея-крёстная, без палочки",
+   "voice": "fairy",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 840.8
+  },
+  "wizard_merlan": {
+   "kind": "person",
+   "rig": "wizard_merlan/rig.json",
+   "full_q34": "wizard_merlan/full_q34.png",
+   "full_size": [
+    465,
+    900
+   ],
+   "ground_at": [
+    229,
+    869
+   ],
+   "about": "звездочёт, без символов",
+   "voice": "narrator",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 872.3
+  },
+  "pirate_jack": {
+   "kind": "person",
+   "rig": "pirate_jack/rig.json",
+   "full_q34": "pirate_jack/full_q34.png",
+   "full_size": [
+    502,
+    872
+   ],
+   "ground_at": [
+    249,
+    840
+   ],
+   "about": "пират в отставке",
+   "voice": "odessa",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 846.8
+  },
+  "batyr_er": {
+   "kind": "person",
+   "rig": "batyr_er/rig.json",
+   "full_q34": "batyr_er/full_q34.png",
+   "full_size": [
+    467,
+    928
+   ],
+   "ground_at": [
+    214,
+    893
+   ],
+   "about": "батыр, добрый великан",
+   "voice": "deep",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 846.6
+  },
+  "aldar_kose": {
+   "kind": "person",
+   "rig": "aldar_kose/rig.json",
+   "full_q34": "aldar_kose/full_q34.png",
+   "full_size": [
+    421,
+    900
+   ],
+   "ground_at": [
+    195,
+    869
+   ],
+   "about": "хитрец-шутник из степи",
+   "voice": "gogi",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 855.6
+  },
+  "kenji_photographer": {
+   "kind": "person",
+   "rig": "kenji_photographer/rig.json",
+   "full_q34": "kenji_photographer/full_q34.png",
+   "full_size": [
+    421,
+    892
+   ],
+   "ground_at": [
+    195,
+    859
+   ],
+   "about": "фотограф, ловит свет",
+   "voice": "calm",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 869.8
+  },
+  "amara_anchor": {
+   "kind": "person",
+   "rig": "amara_anchor/rig.json",
+   "full_q34": "amara_anchor/full_q34.png",
+   "full_size": [
+    442,
+    912
+   ],
+   "ground_at": [
+    216,
+    879
+   ],
+   "about": "ведущая новостей",
+   "voice": "journalist",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": true
+   },
+   "height_px": 869.8
+  },
+  "omar_tailor": {
+   "kind": "person",
+   "rig": "omar_tailor/rig.json",
+   "full_q34": "omar_tailor/full_q34.png",
+   "full_size": [
+    414,
+    888
+   ],
+   "ground_at": [
+    189,
+    855
+   ],
+   "about": "портной, шьёт войлок",
+   "voice": "gogi",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 872.3
+  },
+  "priya_scientist": {
+   "kind": "person",
+   "rig": "priya_scientist/rig.json",
+   "full_q34": "priya_scientist/full_q34.png",
+   "full_size": [
+    495,
+    879
+   ],
+   "ground_at": [
+    244,
+    846
+   ],
+   "about": "астрофизик",
+   "voice": "narrator",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 852.7
+  },
+  "lucas_surfer": {
+   "kind": "person",
+   "rig": "lucas_surfer/rig.json",
+   "full_q34": "lucas_surfer/full_q34.png",
+   "full_size": [
+    499,
+    871
+   ],
+   "ground_at": [
+    245,
+    840
+   ],
+   "about": "серфер, всё «нормально»",
+   "voice": "ad",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 846.8
+  },
+  "ngozi_doctor": {
+   "kind": "person",
+   "rig": "ngozi_doctor/rig.json",
+   "full_q34": "ngozi_doctor/full_q34.png",
+   "full_size": [
+    437,
+    866
+   ],
+   "ground_at": [
+    212,
+    833
+   ],
+   "about": "педиатр",
+   "voice": "lady",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 840.8
+  },
+  "chen_grandma": {
+   "kind": "person",
+   "rig": "chen_grandma/rig.json",
+   "full_q34": "chen_grandma/full_q34.png",
+   "full_size": [
+    439,
+    869
+   ],
+   "ground_at": [
+    214,
+    836
+   ],
+   "about": "бабушка, гимнастика в парке",
+   "voice": "calm",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 840.8
+  },
+  "fatima_teacher": {
+   "kind": "person",
+   "rig": "fatima_teacher/rig.json",
+   "full_q34": "fatima_teacher/full_q34.png",
+   "full_size": [
+    420,
+    900
+   ],
+   "ground_at": [
+    195,
+    868
+   ],
+   "about": "учительница английского",
+   "voice": "lady",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 869.8
+  },
+  "igor_trucker": {
+   "kind": "person",
+   "rig": "igor_trucker/rig.json",
+   "full_q34": "igor_trucker/full_q34.png",
+   "full_size": [
+    466,
+    874
+   ],
+   "ground_at": [
+    213,
+    839
+   ],
+   "about": "дальнобойщик",
+   "voice": "deep",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 846.0
+  },
+  "asylbek_student": {
+   "kind": "person",
+   "rig": "asylbek_student/rig.json",
+   "full_q34": "asylbek_student/full_q34.png",
+   "full_size": [
+    412,
+    930
+   ],
+   "ground_at": [
+    186,
+    898
+   ],
+   "about": "студент, вечно голодный",
+   "voice": "ad",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 860.5
+  },
+  "dilnoza_designer": {
+   "kind": "person",
+   "rig": "dilnoza_designer/rig.json",
+   "full_q34": "dilnoza_designer/full_q34.png",
+   "full_size": [
+    421,
+    918
+   ],
+   "ground_at": [
+    200,
+    883
+   ],
+   "about": "дизайнер, видит шрифты во сне",
+   "voice": "calm",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 837.8
+  },
+  "petya_blogger": {
+   "kind": "person",
+   "rig": "petya_blogger/rig.json",
+   "full_q34": "petya_blogger/full_q34.png",
+   "full_size": [
+    432,
+    893
+   ],
+   "ground_at": [
+    209,
+    862
+   ],
+   "about": "блогер, «ставьте лайки»",
+   "voice": "ad",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": true
+   },
+   "height_px": 837.8
+  },
+  "auntie_raya": {
+   "kind": "person",
+   "rig": "auntie_raya/rig.json",
+   "full_q34": "auntie_raya/full_q34.png",
+   "full_size": [
+    491,
+    887
+   ],
+   "ground_at": [
+    237,
+    854
+   ],
+   "about": "тётя Рая, соседка сверху",
+   "voice": "odessa",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 843.6
+  },
+  "uncle_vano": {
+   "kind": "person",
+   "rig": "uncle_vano/rig.json",
+   "full_q34": "uncle_vano/full_q34.png",
+   "full_size": [
+    464,
+    874
+   ],
+   "ground_at": [
+    210,
+    841
+   ],
+   "about": "дядя Вано, тамада",
+   "voice": "gogi",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 858.4
+  },
+  "sasha_courier": {
+   "kind": "person",
+   "rig": "sasha_courier/rig.json",
+   "full_q34": "sasha_courier/full_q34.png",
+   "full_size": [
+    415,
+    933
+   ],
+   "ground_at": [
+    192,
+    899
+   ],
+   "about": "велокурьер",
+   "voice": "ad",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 854.7
+  },
+  "yerlan_pilot": {
+   "kind": "person",
+   "rig": "yerlan_pilot/rig.json",
+   "full_q34": "yerlan_pilot/full_q34.png",
+   "full_size": [
+    442,
+    865
+   ],
+   "ground_at": [
+    214,
+    833
+   ],
+   "about": "пилот, говорит «пристегнитесь»",
+   "voice": "narrator",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 843.8
+  },
+  "svetlana_mayor": {
+   "kind": "person",
+   "rig": "svetlana_mayor/rig.json",
+   "full_q34": "svetlana_mayor/full_q34.png",
+   "full_size": [
+    418,
+    883
+   ],
+   "ground_at": [
+    193,
+    851
+   ],
+   "about": "мэр города, режет ленточки",
+   "voice": "narrator",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 855.6
+  },
+  "gulnara_judge": {
+   "kind": "person",
+   "rig": "gulnara_judge/rig.json",
+   "full_q34": "gulnara_judge/full_q34.png",
+   "full_size": [
+    421,
+    896
+   ],
+   "ground_at": [
+    196,
+    863
+   ],
+   "about": "судья, справедливая",
+   "voice": "calm",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 869.8
+  },
+  "ruslan_guard": {
+   "kind": "person",
+   "rig": "ruslan_guard/rig.json",
+   "full_q34": "ruslan_guard/full_q34.png",
+   "full_size": [
+    458,
+    861
+   ],
+   "ground_at": [
+    205,
+    829
+   ],
+   "about": "охранник, «вы к кому?»",
+   "voice": "deep",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 849.6
+  },
+  "lyuda_cashier": {
+   "kind": "person",
+   "rig": "lyuda_cashier/rig.json",
+   "full_q34": "lyuda_cashier/full_q34.png",
+   "full_size": [
+    447,
+    902
+   ],
+   "ground_at": [
+    223,
+    869
+   ],
+   "about": "кассир, «пакет нужен?»",
+   "voice": "odessa",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 855.6
+  },
+  "nursultan_runner": {
+   "kind": "person",
+   "rig": "nursultan_runner/rig.json",
+   "full_q34": "nursultan_runner/full_q34.png",
+   "full_size": [
+    412,
+    894
+   ],
+   "ground_at": [
+    188,
+    863
+   ],
+   "about": "марафонец",
+   "voice": "ad",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 872.3
+  },
+  "aisha_vlogger": {
+   "kind": "person",
+   "rig": "aisha_vlogger/rig.json",
+   "full_q34": "aisha_vlogger/full_q34.png",
+   "full_size": [
+    428,
+    808
+   ],
+   "ground_at": [
+    209,
+    775
+   ],
+   "about": "девочка-влогер",
+   "voice": "fairy",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 757.8
+  },
+  "boris_neighbor": {
+   "kind": "person",
+   "rig": "boris_neighbor/rig.json",
+   "full_q34": "boris_neighbor/full_q34.png",
+   "full_size": [
+    467,
+    859
+   ],
+   "ground_at": [
+    214,
+    827
+   ],
+   "about": "сосед с дрелью",
+   "voice": "deep",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 846.6
+  },
+  "kamal_chef": {
+   "kind": "person",
+   "rig": "kamal_chef/rig.json",
+   "full_q34": "kamal_chef/full_q34.png",
+   "full_size": [
+    420,
+    1043
+   ],
+   "ground_at": [
+    196,
+    1010
+   ],
+   "about": "шеф-повар фьюжн",
+   "voice": "gogi",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 869.8
+  },
+  "eva_scientist": {
+   "kind": "person",
+   "rig": "eva_scientist/rig.json",
+   "full_q34": "eva_scientist/full_q34.png",
+   "full_size": [
+    417,
+    885
+   ],
+   "ground_at": [
+    194,
+    853
+   ],
+   "about": "генетик",
+   "voice": "calm",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 869.8
+  },
+  "akmal_farmer": {
+   "kind": "person",
+   "rig": "akmal_farmer/rig.json",
+   "full_q34": "akmal_farmer/full_q34.png",
+   "full_size": [
+    473,
+    859
+   ],
+   "ground_at": [
+    236,
+    826
+   ],
+   "about": "дехканин, растит дыни",
+   "voice": "gogi",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 812.1
+  },
+  "baby_ayan": {
+   "kind": "person",
+   "rig": "baby_ayan/rig.json",
+   "full_q34": "baby_ayan/full_q34.png",
+   "full_size": [
+    431,
+    825
+   ],
+   "ground_at": [
+    213,
+    795
+   ],
+   "about": "малыш Аян, первое слово",
+   "voice": "fairy",
+   "has": {
+    "tail": null,
+    "wings": false,
+    "mic": false
+   },
+   "height_px": 773.3
+  }
+ }
+}

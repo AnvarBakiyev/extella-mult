@@ -1,0 +1,23 @@
+# format: F20 Школьный урок
+# logline: Учительница ведёт урок финансовой грамотности на примере собственной ипотеки, и отличница за минуту находит в нём девять лишних лет.
+# why it works: A lesson where the child out-calculates the teacher; she asks for more help instead of praising.
+film title="Финансовая грамотность" style=puppet fps=24 size=1920x1080
+shot 0-6s: ch_natalya push=0.02
+fade in 0-0.6s
+say ch_natalya "Тема урока: «Финансовая грамотность». Записываем." at 0.3s
+shot 6-12s: ch_natalya pan=right
+say ch_natalya "Деньги нужно копить. Десять процентов с каждой зарплаты." at 6.3s
+shot 12-18s: ch_natalya pan=right
+say ch_natalya "А на большие покупки берут ипотеку. Это нормально." at 12.3s
+shot 18-23s: ch_aigerim push=0.1
+say ch_aigerim "Наталья Сергеевна, а у вас какая ставка?" at 18.3s
+shot 23-28s: ch_natalya push=0.06 focus=0.5,0.4
+say ch_natalya "Это личное. Ну, восемнадцать." at 23.3s
+shot 28-35s: ch_natalya push=0.06 focus=0.5,0.4
+say ch_natalya "Платить до семидесяти шести лет. Это и есть грамотность." at 28.3s
+shot 35-38s: ch_aigerim push=0.02 focus=0.5,0.4
+shot 38-43s: ch_aigerim push=0.14 focus=0.5,0.4
+say ch_aigerim "Вам выгоднее рефинансировать. Я посчитала. Минус девять лет." at 38.3s
+shot 43-47s: ch_natalya push=0.06 snap=43.3 focus=0.5,0.4
+say ch_natalya "[deadpan] Айгерим... а кредитку посчитаешь? После уроков." at 43.3s
+fade out 46.6-47s

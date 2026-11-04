@@ -1,0 +1,25 @@
+# format: F10 Прогноз погоды
+# logline: Синоптик объявляет магнитную бурю, которая официально снимает с граждан ответственность за всё.
+# why it works: A weather report as a legal excuse for everything; the forecaster quietly orders his own sick note.
+film title="Магнитная буря" style=puppet fps=24 size=1920x1080
+shot 0-4s: ch_kirill push=0.02
+fade in 0-0.6s
+say ch_kirill "Добрый вечер! Начнём с магнитных бурь." at 0.3s
+shot 4-9s: ch_kirill pan=right
+say ch_kirill "Буря уровня четыре. Над всей картой." at 4.3s
+shot 9-15s: ch_kirill pan=right
+say ch_kirill "Рекомендуем не принимать решений и не отвечать начальству." at 9.3s
+shot 15-21s: ch_kirill push=0.1
+say ch_kirill "Не звонить бывшим. Не брать ипотеку. Не взрослеть." at 15.3s
+shot 21-27s: ch_kirill push=0.1
+say ch_kirill "Если вы всё же что-то сделали — это буря." at 21.3s
+shot 27-31.7s: ch_olga whip=left
+say ch_olga "Справку о буре выдаём с восьми до двух." at 27.3s
+shot 31.7-36.7s: ch_olga push=0.02
+say ch_olga "Задним числом — тоже выдаём." at 32s
+shot 36.7-40.7s: ch_kirill push=0.06 focus=0.5,0.4
+say ch_kirill "На завтра бурь не ожидается." at 37s
+shot 40.7-46.7s: ch_kirill push=0.06 snap=41 focus=0.5,0.4
+say ch_kirill "[deadpan] Ольга Петровна, мне одну. На завтра." at 41s
+music mood=bright tempo=118 0-36.7s
+fade out 46.3-46.7s

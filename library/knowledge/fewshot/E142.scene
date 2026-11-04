@@ -1,0 +1,25 @@
+# format: F24 Показ квартиры
+# logline: Квартира продаётся вместе с двухсотлетней черепахой в углу, и адвокат уточняет, надолго ли.
+# why it works: A flaw sold as a feature; the 200-year-old 'encumbrance' has the last word and the longest view.
+film title="Обременение" style=puppet fps=24 size=1920x1080
+shot 0-5s: ch_karina handheld=1 push=0.02
+fade in 0-0.6s
+say ch_karina "Проходите! Старый фонд, потолки, история." at 0.3s
+shot 5-11s: ch_karina pan=right
+say ch_karina "Шестьдесят метров. Тихо. Очень тихо." at 5.3s
+shot 11-16s: ch_igor push=0.1 snap=11.3 focus=0.5,0.5
+say ch_igor "А это что?" at 11.3s
+shot 16-22s: ch_karina push=0.06 focus=0.5,0.4
+say ch_karina "Это обременение. Нина Аркадьевна. Идёт с квартирой." at 16.3s
+shot 22-27s: ch_turtle push=0.1 snap=22.3 focus=0.5,0.5
+voice "Тихая. Не курит. За свет платит сама." at 22.3s who=lady
+shot 27-32s: ch_igor push=0.02
+say ch_igor "Юридически это допустимо?" at 27.3s
+shot 32-37s: ch_karina push=0.14 focus=0.5,0.4
+say ch_karina "Абсолютно. Скидка десять процентов. Навсегда." at 32.3s
+shot 37-40.2s: ch_igor push=0.02
+say ch_igor "И долго она тут будет?" at 37.3s
+shot 40.2-42.2s: ch_turtle push=0.1 focus=0.5,0.5
+shot 42.2-48.2s: ch_turtle push=0.06 snap=42.5 focus=0.5,0.4
+say ch_turtle "[deadpan] Мне эту квартиру тоже так показывали. Сто лет назад." at 42.5s
+fade out 47.8-48.2s

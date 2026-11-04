@@ -1,0 +1,29 @@
+# format: F05 Реклама и антиреклама
+# logline: Антиреклама: умная колонка честно показывает, как она слышит, заказывает и пересказывает всё, что происходит в семье.
+# why it works: Anti-ad: every benefit is an honest harm, the jingle stays cheerful, the slogan asks you to buy two.
+film title="Она слышит" style=puppet fps=24 size=1920x1080
+shot 0-6s: pl_livingroom pull=0.15
+fade in 0-0.6s
+voice "[deep] Семья. Тишина. Никто вас не слушает." at 0.3s
+shot 6-12s: ch_speaker push=0.1 snap=6.3 focus=0.5,0.5
+voice "[deep] А теперь — умная колонка." at 6.3s
+shot 12-15s: ch_oleg push=0.02
+say ch_oleg "Хорошо бы в отпуск..." at 12.3s
+shot 15-20s: ch_speaker handheld=1 push=0.02
+say ch_speaker "Нашла три тура. Тёща уже едет." at 15.3s
+shot 20-24s: ch_speaker handheld=1 dutch=-10
+say ch_speaker "Заказала по вашей интонации." at 20.3s
+shot 24-28s: ch_leyla handheld=1 push=0.02
+say ch_leyla "Теперь я разговариваю только здесь." at 24.3s
+shot 28-31.2s: ch_leyla dutch=-10 push=0.04 focus=0.5,0.4
+voice "В ванной я тоже есть." at 28.3s who=calm
+shot 31.2-37.2s: ch_kostya push=0.02
+say ch_kostya "Подтверждаю. Она слышит всё. И пересказывает." at 31.5s
+shot 37.2-41.2s: ch_speaker push=0.18 focus=0.5,0.5
+voice "[ad] Умная колонка!" at 37.5s
+shot 41.2-46.2s: ch_speaker push=0.18 focus=0.5,0.5 snap=41.5
+voice "[ad] [deadpan] Купите вторую. Ей не с кем поговорить." at 41.5s
+music mood=cozy tempo=84 0-15s
+music mood=tense tempo=92 15-37.2s
+music mood=bright tempo=118 37.2-46.2s
+fade out 45.8-46.2s

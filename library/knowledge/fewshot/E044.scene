@@ -1,0 +1,25 @@
+# format: F08 Судебное заседание
+# logline: Дачника судят за то, что он по ночам оставляет соседям кабачки, и у суда есть к нему личный интерес.
+# why it works: Strict court procedure for zucchini gifting; the verdict serves the judge's own harvest.
+film title="Урожайный год" style=puppet fps=24 size=1920x1080
+shot 0-4s: ch_svetlana shake=0.003
+fade in 0-0.6s
+say ch_svetlana "Дело о принудительной передаче кабачков." at 0.3s
+shot 4-9s: ch_raisa push=0.1
+say ch_raisa "Он оставляет их на крыльце. Ночью. Анонимно." at 4.3s
+shot 9-14s: ch_raisa push=0.02
+say ch_raisa "За август — тридцать восемь штук. Я считала." at 9.3s
+shot 14-19s: ch_petr handheld=1 push=0.02
+say ch_petr "Я их не дарю. Я их отпускаю." at 14.3s
+shot 19-24s: ch_igor handheld=1 push=0.02
+say ch_igor "Мой клиент не может остановить природу." at 19.3s
+shot 24-28s: ch_igor whip=left
+say ch_igor "Вызываю вещественное доказательство." at 24.3s
+shot 28-33s: pl_court pan=right
+shot 33-37.2s: ch_raisa push=0.14 focus=0.5,0.4
+say ch_raisa "Ваша честь, у меня их уже шкаф." at 33.3s
+shot 37.2-41.2s: ch_svetlana push=0.06 focus=0.5,0.4
+say ch_svetlana "Суд выслушал стороны." at 37.5s
+shot 41.2-47.2s: ch_svetlana push=0.06 snap=41.5 focus=0.5,0.4
+say ch_svetlana "[deadpan] Обязать всех принять от суда по шесть кабачков." at 41.5s
+fade out 46.8-47.2s

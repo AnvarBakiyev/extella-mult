@@ -1,0 +1,25 @@
+# format: F14 Распаковка
+# logline: Лиза распаковывает подарочный набор от нового работодателя: кружка, худи, бейдж и конверт «вскрыть, когда придёт время».
+# why it works: Gifts escalate to a pre-signed resignation; the date is the punchline, not explained.
+film title="Велком-пак" style=puppet fps=24 size=1920x1080
+shot 0-5s: ch_liza handheld=1 push=0.02
+fade in 0-0.6s
+say ch_liza "Всем привет, ребят! Я вышла на новую работу!" at 0.3s
+shot 5-11s: ch_liza push=0.1 focus=0.5,0.5
+say ch_liza "Это велком-пак от компании. Смотрите, какая коробка!" at 5.3s
+shot 11-16s: ch_liza push=0.18 focus=0.5,0.5
+say ch_liza "Кружка с ценностями: «Мы — семья»." at 11.3s
+shot 16-21s: ch_liza push=0.18 focus=0.5,0.5
+say ch_liza "Худи. Носки. Пропуск. Шнурок для пропуска." at 16.3s
+shot 21-27s: ch_liza push=0.02 focus=0.5,0.5
+say ch_liza "Бейдж «Амбассадор культуры». Я пока не знаю, что это." at 21.3s
+shot 27-32s: ch_liza push=0.18 focus=0.5,0.5
+say ch_liza "Тут ещё конверт. «Вскрыть, когда придёт время»." at 27.3s
+shot 32-37s: ch_liza push=0.06 snap=32.3 focus=0.5,0.4
+say ch_liza "Ой." at 32.3s
+shot 37-42s: ch_liza push=0.1 focus=0.5,0.5
+say ch_liza "Заявление по собственному желанию." at 37.3s
+shot 42-48s: ch_liza push=0.06 focus=0.5,0.4 snap=42.3
+say ch_liza "[deadpan] Уже с моей подписью. И датой. Через три месяца." at 42.3s
+music mood=bright tempo=118 0-27s
+fade out 47.6-48s

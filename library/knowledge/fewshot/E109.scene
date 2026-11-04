@@ -1,0 +1,25 @@
+# format: F19 Семейный ужин
+# logline: Подросток признаётся за ужином, что неделю назад вышел из семейного чата, — и бабушка тихо сообщает, как давно это сделала она.
+# why it works: Quiet family dinner, small confession, then the eldest tops it with a bigger one in a flat voice.
+film title="Вышел из чата" style=puppet fps=24 size=1920x1080
+shot 0-5s: ch_leyla pan=down
+fade in 0-0.6s
+say ch_leyla "Садимся. Олег, выключи новости." at 0.3s
+shot 5-9s: ch_oleg whip=left
+say ch_oleg "Сейчас. Тут про погоду." at 5.3s
+shot 9-13s: ch_raisa whip=right
+say ch_raisa "Салат опять без майонеза?" at 9.3s
+shot 13-18.7s: ch_leyla whip=left
+say ch_leyla "Мама, я в чат писала: без майонеза. Вы поставили сердечко." at 13.3s
+shot 18.7-23.7s: ch_damir push=0.14 focus=0.5,0.4
+voice "Дамир, а ты почему в чате молчишь?" at 19s who=calm
+shot 23.7-29.7s: ch_damir push=0.06 focus=0.5,0.4
+say ch_damir "Я вышел из семейного чата. Неделю назад." at 24s
+shot 29.7-34.7s: ch_oleg push=0.02
+say ch_oleg "Неделю? Я тебе вчера скидывал про давление." at 30s
+shot 34.7-38.9s: ch_leyla push=0.06 focus=0.5,0.4
+say ch_leyla "А я тебе каждый вечер «спокойной ночи»." at 35s
+shot 38.9-42.9s: ch_raisa push=0.06 focus=0.5,0.4
+shot 42.9-48.6s: ch_raisa push=0.06 snap=43.2 focus=0.5,0.4
+say ch_raisa "[deadpan] Я вышла в марте. Вы мне до сих пор отвечаете." at 43.2s
+fade out 48.2-48.6s

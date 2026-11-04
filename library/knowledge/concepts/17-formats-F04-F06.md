@@ -1,0 +1,5 @@
+# PUPPET format F04-F06: documentary, ad, job interview
+tags: format, F04, F05, F06, документальный, реклама антиреклама, собеседование
+F04 Documentary 48s: narrator voice "[deep] ...". Prologue 0-8 place, pan | hero 8-20 chore as heroism, push | interview 20-30 hero close-up | climax 30-40 "И тогда он сделал то, что делал каждый день", music wonder rises | turn 40-48 dry fact, pull, music stops. Turn: narrator.
+F05 Ad 45s: problem 0-7 grey, dutch | product 7-12 snap | miracle 12-25 push | expert in white coat 25-32 still | pack shot 32-38 ad_cream, voice [ad], music bright | turn 38-45 fine print or side effect. Anti-ad: idyll 0-6 pull | temptation 6-12 snap | honest harms 12-28 handheld, dutch | expert confirms 28-35 | turn 35-45 cheerful slogan contradicts everything. Turn: [ad] voice.
+F06 Job interview 45s: ch_alina + candidate, pl_hr_room. Enter 0-5 | "расскажите о себе" 5-15 still | weaknesses 15-25 slow push | candidate asks about the company 25-35 still, pause | turn 35-45 decision or exposure, snap. Turn: candidate or HR.

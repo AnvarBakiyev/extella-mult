@@ -1,0 +1,26 @@
+# format: F22 Поездка в такси
+# logline: Навигатор в такси прокладывает дорогу домой через партнёров с кешбэком, и таксист проигрывает ему город.
+# why it works: A taxi driver loses the city to a navigator full of partners; the last turn is a mortgage.
+film title="Маршрут перестроен" style=puppet fps=24 size=1920x1080
+shot 0-4s: ch_rustam push=0.02 handheld=1
+fade in 0-0.6s
+say ch_rustam "Куда едем?" at 0.3s
+shot 4-8s: ch_erlan push=0.02 handheld=1
+say ch_erlan "Домой. Прямо, потом налево." at 4.3s
+shot 8-13s: ch_chatbot handheld=1 shake=0.003 push=0.08 focus=0.5,0.5
+say ch_chatbot "Маршрут перестроен. Через аптеку-партнёра." at 8.3s
+shot 13-18s: ch_rustam handheld=1 push=0.02
+say ch_rustam "Какая аптека? Человеку домой!" at 13.3s
+shot 18-23s: ch_chatbot handheld=1 shake=0.003 push=0.08 focus=0.5,0.5
+say ch_chatbot "Маршрут перестроен. Пекарня. Кешбэк семь процентов." at 18.3s
+shot 23-30s: ch_rustam handheld=1 push=0.02
+say ch_rustam "Тридцать лет езжу. Дорогу сердцем знаю. Сердце без рекламы." at 23.3s
+shot 30-36s: ch_chatbot push=0.02 handheld=1
+say ch_chatbot "Вы стоите у ювелирного. Совпадение?" at 30.3s
+shot 36-40s: ch_erlan push=0.05 handheld=1
+say ch_erlan "А можно без остановок?" at 36.3s
+shot 40-42s: pl_taxi push=0.1 focus=0.5,0.5 handheld=1
+shot 42-47s: ch_chatbot push=0.1 snap=42.3 focus=0.5,0.5 handheld=1
+say ch_chatbot "[deadpan] Через двести метров — ипотека. Поверните направо." at 42.3s
+music mood=calm tempo=72 0-30s
+fade out 46.6-47s

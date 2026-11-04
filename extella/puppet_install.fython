@@ -1,16 +1,19 @@
 $extens("include.py")
 include("import os", [])
 
-def puppet_install(packs: str = "all", version: str = "v4", bundle_dir: str = "") -> dict:
+def puppet_install(packs: str = "all", version: str = "v4", bundle_dir: str = "", branch: str = "main") -> dict:
     """Installs Extella Puppet on this device: the PUPPET language handler and the felt library.
     packs: "all" (default) or a comma list of: handler (the language, 1 MB, always installed), core (characters, places,
-    effects, props made by our code, 2.5 GB), community (CC0 sounds, music, OFL fonts, 0.5 GB), premium (67 generated
-    picture sets, the best-looking ones, 0.2 GB). version: the GitHub release tag. bundle_dir: a local folder with the
-    archives instead of downloading."""
+    effects, props rendered by our code, 2.5 GB, from the GitHub release), community (CC0 sounds, music, OFL fonts) and
+    premium (67 generated picture sets, the best-looking ones): these two come straight from the library/ folder of the
+    repository, so merged contributions arrive with the next install. version: the release tag for handler and core.
+    branch: the repository branch for premium and community. bundle_dir: a local folder with the archives instead of downloading."""
     import os, sys, json, subprocess, tarfile, tempfile, hashlib, shutil, platform, urllib.request
     REL = "https://github.com/AnvarBakiyev/extella-mult/releases/download/" + version + "/"
+    REPO_TAR = "https://github.com/AnvarBakiyev/extella-mult/archive/refs/heads/" + branch + ".tar.gz"
     ARCH = {"handler": ["puppet-handler"], "core": ["puppet-core-characters", "puppet-core-world"],
-            "community": ["puppet-community"], "premium": ["puppet-premium"]}
+            "community": [], "premium": []}
+    FROM_REPO = {"premium": [("library/sets", "assets/puppet")], "community": [("library/media", "assets/lib/mult/puppet-oss/media")]}
     want = ["handler", "core", "community", "premium"] if str(packs).strip() in ("", "all") else \
         ["handler"] + [p.strip() for p in str(packs).split(",") if p.strip() and p.strip() != "handler"]
     bad = [p for p in want if p not in ARCH]
@@ -81,6 +84,30 @@ def puppet_install(packs: str = "all", version: str = "v4", bundle_dir: str = ""
             mb = round(os.path.getsize(tar) / 1e6)
             os.remove(tar)
             steps.append(pack + ": " + fn + " unpacked (" + str(mb) + " MB)")
+    # premium and community: the library/ folder of the repository (one tarball of the branch, the two folders are taken out of it)
+    repo_packs = [p for p in want if p in FROM_REPO]
+    if repo_packs:
+        tar = os.path.join(tmp, "repo.tar.gz")
+        if bundle_dir and os.path.isfile(os.path.join(bundle_dir, "repo.tar.gz")):
+            shutil.copy(os.path.join(bundle_dir, "repo.tar.gz"), tar)
+        else:
+            urllib.request.urlretrieve(REPO_TAR, tar)
+        with tarfile.open(tar) as t:
+            members = t.getmembers()
+            top = members[0].name.split("/")[0] if members else ""
+            for pack in repo_packs:
+                for src, dst in FROM_REPO[pack]:
+                    prefix = top + "/" + src + "/"
+                    picked = [m for m in members if m.name.startswith(prefix) and (m.isfile() or m.isdir())]
+                    if not picked:
+                        return {"status": "error", "step": pack, "error": src + " is not in the repository tarball"}
+                    for m in picked:
+                        if ".." in m.name.split("/"):
+                            return {"status": "error", "step": pack, "error": "unsafe path in archive: " + m.name}
+                        m.name = dst + "/" + m.name[len(prefix):]
+                    t.extractall(home, members=picked)
+                    steps.append(pack + ": " + src + " from the repository (" + branch + ") -> ~/extella-mult/" + dst + " (" + str(len([m for m in picked if m.isfile()])) + " files)")
+        os.remove(tar)
     shutil.rmtree(tmp, ignore_errors=True)
     if not os.path.isdir(os.path.join(home, "handler")):
         return {"status": "error", "step": "handler", "error": "no language files in ~/extella-mult/handler after unpacking"}

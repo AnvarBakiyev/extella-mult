@@ -1,0 +1,26 @@
+# format: F04 Документальный фильм с диктором
+# logline: Документалка об охраннике, который три года охраняет офис, где все ушли на удалёнку, — до того дня, когда удалёнку дали и ему.
+# why it works: Documentary dignity for a guard of an empty office; remote work arrives and changes nothing.
+film title="Пост" style=puppet fps=24 size=1920x1080
+shot 0-8s: pl_open_space pan=right
+fade in 0-0.6s
+voice "[deep] Сорок столов. Ни одного человека. Почти." at 0.3s
+shot 8-14s: ch_serik push=0.1
+voice "[deep] Серик-ага. Три года охраняет офис, где все на удалёнке." at 8.3s
+shot 14-20s: pl_open_space push=0.18 focus=0.5,0.5
+voice "[deep] Каждое утро он пишет: «Происшествий нет. Людей нет»." at 14.3s
+shot 20-26s: ch_serik push=0.06 focus=0.5,0.4
+say ch_serik "Кто-то должен быть на месте. Иначе это не офис." at 20.3s
+shot 26-31s: ch_serik push=0.06 focus=0.5,0.4
+say ch_serik "Я иногда включаю принтер. Чтобы был звук." at 26.3s
+shot 31-38s: ch_serik push=0.05
+voice "[deep] И тогда он сделал то, что делал каждый день. Проверил свой пропуск." at 31.3s
+shot 38-42s: pl_open_space push=0.1
+voice "[deep] Вчера ему тоже разрешили удалёнку." at 38.3s
+shot 42-45s: ch_serik push=0.02
+shot 45-50s: ch_serik pull=0.25 focus=0.5,0.4
+say ch_serik "[deadpan] Дома тоже пусто. Но там не платят." at 45.3s
+music mood=bright tempo=118 0-8s
+music mood=wonder tempo=70 8-20s
+music mood=calm tempo=72 20-42s
+fade out 49.6-50s

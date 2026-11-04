@@ -1,0 +1,22 @@
+# format: F16 Урок-туториал
+# logline: Двухсотлетняя черепаха проводит урок тайм-менеджмента, и её главный метод — переживать дедлайны, начальников и срочные письма.
+# why it works: Time management from a 200-year-old turtle; she has not had time for the last step.
+film title="Как всё успеть" style=puppet fps=24 size=1920x1080
+shot 0-6s: ch_turtle push=0.02
+fade in 0-0.6s
+say ch_turtle "Сегодня научимся. Всё успевать." at 0.3s
+shot 6-12s: ch_turtle push=0.1 focus=0.5,0.5
+say ch_turtle "Шаг первый. Никуда. Не торопитесь." at 6.3s
+shot 12-18s: ch_turtle push=0.1 focus=0.5,0.5
+say ch_turtle "Шаг второй. Дедлайн пишите карандашом. Он сотрётся." at 12.3s
+shot 18-26s: ch_turtle push=0.1
+say ch_turtle "Шаг третий. На срочное письмо ответьте через неделю. Оно перестанет быть срочным." at 18.3s
+shot 26-33s: ch_turtle push=0.14 focus=0.5,0.4
+say ch_turtle "Шаг четвёртый. Начальника просто переживите. Я пережила одиннадцать." at 26.3s
+shot 33-40s: ch_turtle pull=0.25
+say ch_turtle "Вот что получилось. Двести лет. Ни одного выгорания." at 33.3s
+shot 40-43s: ch_turtle push=0.06 focus=0.5,0.4
+shot 43-48s: ch_turtle push=0.06 snap=43.3 focus=0.5,0.4
+say ch_turtle "[deadpan] Шаг пятый. Его я пока не успела." at 43.3s
+music mood=calm tempo=72 0-40s
+fade out 47.6-48s

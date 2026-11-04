@@ -1,0 +1,28 @@
+# format: F10 Прогноз погоды
+# logline: Главный эксперт по весне три года не выходит из норы и определяет погоду по курьерам.
+# why it works: Folk weather sign replaced by deliveries; the expert answers with a courier ETA.
+film title="Сурок на удалёнке" style=puppet fps=24 size=1920x1080
+shot 0-4s: ch_kirill push=0.02
+fade in 0-0.6s
+say ch_kirill "Добрый вечер! Главный вопрос — весна." at 0.3s
+shot 4-10s: ch_kirill pan=right
+say ch_kirill "Над картой тепло. Но решает не карта." at 4.3s
+shot 10-15s: ch_kirill pan=right
+say ch_kirill "Решает сурок. Семён, вы с нами?" at 10.3s
+shot 15-20s: ch_marmot whip=left
+say ch_marmot "Я с вами. Но из норы не выйду." at 15.3s
+shot 20-26s: ch_marmot push=0.1
+say ch_marmot "Три года на удалёнке. Погоду узнаю по курьеру." at 20.3s
+shot 26-31s: ch_marmot push=0.02
+say ch_marmot "Мокрый — дождь. В шапке — зима." at 26.3s
+shot 31-35s: ch_kirill push=0.02
+say ch_kirill "А сегодняшний курьер какой?" at 31.3s
+shot 35-40s: ch_marmot push=0.05
+say ch_marmot "Сухой, в футболке и без сдачи." at 35.3s
+shot 40-42.2s: ch_kirill push=0.06 focus=0.5,0.4
+say ch_kirill "Так весна будет?" at 40.3s
+shot 42.2-46.4s: ch_marmot push=0.06 snap=42.5 focus=0.5,0.4
+say ch_marmot "[deadpan] Будет. Обещали к шести. Оставят у двери." at 42.5s
+music mood=bright tempo=118 0-4s
+music mood=calm tempo=72 4-35s
+fade out 46-46.4s

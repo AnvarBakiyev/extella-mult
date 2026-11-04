@@ -1,0 +1,22 @@
+# format: F20 Школьный урок
+# logline: Класс просится на экскурсию в лес, который теперь живёт только в названии жилого комплекса, и учительница уже обо всём договорилась — с застройщиком.
+# why it works: Nature lesson about a forest that is now a housing complex; the trip needs a passport and a deposit.
+film title="Природа родного края" style=puppet fps=24 size=1920x1080
+shot 0-6s: ch_natalya push=0.02
+fade in 0-0.6s
+say ch_natalya "Тема урока: «Природа родного края»." at 0.3s
+shot 6-12s: ch_natalya pan=right
+say ch_natalya "У нас был прекрасный лес. Ели, белки, грибы." at 6.3s
+shot 12-18s: ch_natalya pan=right
+say ch_natalya "Теперь это жилой комплекс «Лесной». Ели остались в названии." at 12.3s
+shot 18-24s: ch_aigerim push=0.1
+say ch_aigerim "А можно на экскурсию? Посмотреть живой лес?" at 18.3s
+shot 24-29s: ch_natalya push=0.06 focus=0.5,0.4
+say ch_natalya "Конечно. В четверг. Автобус от застройщика." at 24.3s
+shot 29-36s: ch_natalya push=0.06 focus=0.5,0.4
+say ch_natalya "Там макет леса под стеклом. Ели по пояс. Белка — ростовая кукла." at 29.3s
+shot 36-40s: ch_aigerim push=0.02 focus=0.5,0.4
+say ch_aigerim "А родителей можно взять?" at 36.3s
+shot 40-46s: ch_natalya push=0.06 snap=40.3 focus=0.5,0.4
+say ch_natalya "[deadpan] Обязательно. С паспортом. И первым взносом." at 40.3s
+fade out 45.6-46s

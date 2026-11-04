@@ -1,0 +1,25 @@
+# format: F21 Приём у врача
+# logline: Бабушка, двадцать лет ходящая в поликлинику, за минуту ставит диагноз своему терапевту и занимает её кресло.
+# why it works: Patient and doctor swap roles with bureaucratic precision; she even has her own tickets.
+film title="Талончики свои" style=puppet fps=24 size=1920x1080
+shot 0-4s: ch_olga push=0.02
+fade in 0-0.6s
+say ch_olga "На что жалуемся, Зухра-апа?" at 0.3s
+shot 4-9s: ch_zuhra push=0.02
+say ch_zuhra "Я — ни на что. А вот вы, доченька..." at 4.3s
+shot 9-15s: ch_zuhra push=0.14 focus=0.5,0.4
+say ch_zuhra "Не спали. Обедали печеньем. Давление сто сорок." at 9.3s
+shot 15-20s: ch_olga push=0.02
+say ch_olga "Откуда вы знаете?" at 15.3s
+shot 20-26s: ch_zuhra push=0.18 focus=0.5,0.5
+say ch_zuhra "Дышите.... Хрипов нет. Обиды есть." at 20.3s
+shot 26-32s: ch_zuhra push=0.09 focus=0.5,0.4
+say ch_zuhra "Диагноз: поликлиника. Хроническая, двадцать лет." at 26.3s
+shot 32-37s: ch_olga dutch=-10
+say ch_olga "И что мне делать?" at 32.3s
+shot 37-42s: ch_zuhra push=0.06 focus=0.5,0.4
+say ch_zuhra "Отпуск. Две недели. Справку я вам дам." at 37.3s
+shot 42-44s: pl_clinic push=0.02
+shot 44-48s: ch_zuhra push=0.02 snap=44.3
+say ch_zuhra "[deadpan] Следующий! Талончики у меня свои." at 44.3s
+fade out 47.6-48s

@@ -1,0 +1,240 @@
+# ATTRIBUTION
+
+Everything here is CC0 / public domain unless listed otherwise below. CC0 needs no credit, but we credit the creators anyway (grouped by source).
+
+## textures/
+
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Fabric011 — **CC0 1.0** — `burlap_acg_Fabric011_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Fabric013 — **CC0 1.0** — `burlap_acg_Fabric013_2K.jpg`
+- Poly Haven — https://polyhaven.com/a/hessian_230 — **CC0 1.0** — `burlap_ph_hessian_230_2k.jpg`
+- Poly Haven — https://polyhaven.com/a/hessian_380 — **CC0 1.0** — `burlap_ph_hessian_380_2k.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Cardboard001 — **CC0 1.0** — `cardboard_acg_Cardboard001_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Cardboard002 — **CC0 1.0** — `cardboard_acg_Cardboard002_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Cardboard003 — **CC0 1.0** — `cardboard_acg_Cardboard003_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Cardboard004 — **CC0 1.0** — `cardboard_acg_Cardboard004_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Carpet001 — **CC0 1.0** — `carpet_acg_Carpet001_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Carpet012 — **CC0 1.0** — `carpet_acg_Carpet012_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Carpet014 — **CC0 1.0** — `carpet_acg_Carpet014_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Carpet015 — **CC0 1.0** — `carpet_acg_Carpet015_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Carpet016 — **CC0 1.0** — `carpet_acg_Carpet016_2K.jpg`
+- Poly Haven — https://polyhaven.com/a/dirty_carpet — **CC0 1.0** — `carpet_ph_dirty_carpet_2k.jpg`
+- Poly Haven — https://polyhaven.com/a/ribbed_corduroy — **CC0 1.0** — `corduroy_ph_ribbed_corduroy_2k.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Cork001 — **CC0 1.0** — `cork_acg_Cork001_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Cork002 — **CC0 1.0** — `cork_acg_Cork002_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Cork003 — **CC0 1.0** — `cork_acg_Cork003_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Cork004 — **CC0 1.0** — `cork_acg_Cork004_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Fabric003 — **CC0 1.0** — `denim_acg_Fabric003_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Fabric077 — **CC0 1.0** — `denim_acg_Fabric077_2K.jpg`
+- Poly Haven — https://polyhaven.com/a/denim_fabric_03 — **CC0 1.0** — `denim_ph_denim_fabric_03_2k.jpg`
+- Poly Haven — https://polyhaven.com/a/denim_fabric_05 — **CC0 1.0** — `denim_ph_denim_fabric_05_2k.jpg`
+- Poly Haven — https://polyhaven.com/a/denim_fabric — **CC0 1.0** — `denim_ph_denim_fabric_2k.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Fabric030 — **CC0 1.0** — `fabric_acg_Fabric030_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Fabric045 — **CC0 1.0** — `fabric_acg_Fabric045_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Fabric054 — **CC0 1.0** — `fabric_acg_Fabric054_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Fabric061 — **CC0 1.0** — `fabric_acg_Fabric061_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Fabric080 — **CC0 1.0** — `fabric_acg_Fabric080_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Wicker004 — **CC0 1.0** — `fabric_acg_Wicker004_2K.jpg`
+- Poly Haven — https://polyhaven.com/a/gingham_check — **CC0 1.0** — `fabric_ph_gingham_check_2k.jpg`
+- Poly Haven — https://polyhaven.com/a/waffle_pique_cotton — **CC0 1.0** — `fabric_ph_waffle_pique_cotton_2k.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Fabric034 — **CC0 1.0** — `felt_acg_Fabric034_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Fabric084 — **CC0 1.0** — `fleece_acg_Fabric084_2K.jpg`
+- Poly Haven — https://polyhaven.com/a/curly_teddy_natural — **CC0 1.0** — `fleece_ph_curly_teddy_natural_2k.jpg`
+- Poly Haven — https://polyhaven.com/a/jogging_melange — **CC0 1.0** — `fleece_ph_jogging_melange_2k.jpg`
+- Poly Haven — https://polyhaven.com/a/polar_fleece — **CC0 1.0** — `fleece_ph_polar_fleece_2k.jpg`
+- Poly Haven — https://polyhaven.com/a/cotton_jersey — **CC0 1.0** — `knit_ph_cotton_jersey_2k.jpg`
+- Poly Haven — https://polyhaven.com/a/jersey_melange — **CC0 1.0** — `knit_ph_jersey_melange_2k.jpg`
+- Poly Haven — https://polyhaven.com/a/knitted_fleece — **CC0 1.0** — `knit_ph_knitted_fleece_2k.jpg`
+- Poly Haven — https://polyhaven.com/a/terry_cloth — **CC0 1.0** — `knit_ph_terry_cloth_2k.jpg`
+- Poly Haven — https://polyhaven.com/a/wool_boucle — **CC0 1.0** — `knit_ph_wool_boucle_2k.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Fabric001 — **CC0 1.0** — `linen_acg_Fabric001_2K.jpg`
+- Poly Haven — https://polyhaven.com/a/rough_linen — **CC0 1.0** — `linen_ph_rough_linen_2k.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Paper001 — **CC0 1.0** — `paper_acg_Paper001_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Paper002 — **CC0 1.0** — `paper_acg_Paper002_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Paper003 — **CC0 1.0** — `paper_acg_Paper003_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Paper004 — **CC0 1.0** — `paper_acg_Paper004_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Paper005 — **CC0 1.0** — `paper_acg_Paper005_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Paper006 — **CC0 1.0** — `paper_acg_Paper006_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=PaintedPlaster017 — **CC0 1.0** — `plaster_acg_PaintedPlaster017_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Plaster001 — **CC0 1.0** — `plaster_acg_Plaster001_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Plaster002 — **CC0 1.0** — `plaster_acg_Plaster002_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Plaster003 — **CC0 1.0** — `plaster_acg_Plaster003_2K.jpg`
+- Poly Haven — https://polyhaven.com/a/beige_wall_001 — **CC0 1.0** — `plaster_ph_beige_wall_001_2k.jpg`
+- Poly Haven — https://polyhaven.com/a/clay_plaster — **CC0 1.0** — `plaster_ph_clay_plaster_2k.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Chipboard001 — **CC0 1.0** — `plywood_acg_Chipboard001_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Wood087 — **CC0 1.0** — `plywood_acg_Wood087_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Wood088 — **CC0 1.0** — `plywood_acg_Wood088_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Wood089 — **CC0 1.0** — `plywood_acg_Wood089_2K.jpg`
+- Poly Haven — https://polyhaven.com/a/plywood — **CC0 1.0** — `plywood_ph_plywood_2k.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Rock030 — **CC0 1.0** — `stone_acg_Rock030_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Rock035 — **CC0 1.0** — `stone_acg_Rock035_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Rock051 — **CC0 1.0** — `stone_acg_Rock051_2K.jpg`
+- Poly Haven — https://polyhaven.com/a/scuba_suede — **CC0 1.0** — `velvet_ph_scuba_suede_2k.jpg`
+- Poly Haven — https://polyhaven.com/a/velour_velvet — **CC0 1.0** — `velvet_ph_velour_velvet_2k.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Wood049 — **CC0 1.0** — `wood_acg_Wood049_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Wood051 — **CC0 1.0** — `wood_acg_Wood051_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Wood066 — **CC0 1.0** — `wood_acg_Wood066_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Wood092 — **CC0 1.0** — `wood_acg_Wood092_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Fabric016 — **CC0 1.0** — `wool_acg_Fabric016_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Fabric017 — **CC0 1.0** — `wool_acg_Fabric017_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Fabric018 — **CC0 1.0** — `wool_acg_Fabric018_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Fabric019 — **CC0 1.0** — `wool_acg_Fabric019_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Fabric031 — **CC0 1.0** — `wool_acg_Fabric031_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Fabric032 — **CC0 1.0** — `wool_acg_Fabric032_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Fabric068 — **CC0 1.0** — `wool_acg_Fabric068_2K.jpg`
+- ambientCG (Lennart Demes) — https://ambientcg.com/view?id=Fabric085 — **CC0 1.0** — `wool_acg_Fabric085_2K.jpg`
+- Poly Haven — https://polyhaven.com/a/caban — **CC0 1.0** — `wool_ph_caban_2k.jpg`
+- Poly Haven — https://polyhaven.com/a/poly_wool_herringbone — **CC0 1.0** — `wool_ph_poly_wool_herringbone_2k.jpg`
+
+## sfx/
+
+- artisticdude — https://opengameart.org/content/swishes-sound-pack — **CC0 1.0** — `whoosh_01.ogg`, `whoosh_02.ogg`, `whoosh_03.ogg`, `whoosh_04.ogg`, `whoosh_05.ogg`, `whoosh_06.ogg`
+- bart — https://opengameart.org/content/18-random-video-game-sound-effects — **CC0 1.0** — `whoosh_07.ogg`, `whoosh_08.ogg`, `boing_02.ogg`
+- SketchMan3 — https://opengameart.org/content/wind-whoosh-loop — **CC0 1.0** — `whoosh_09.ogg`
+- cogitollc — https://opengameart.org/content/pop-sounds — **CC0 1.0** — `pop_01.ogg`, `pop_02.ogg`, `pop_03.ogg`, `pop_04.ogg`
+- AntumDeluge — https://opengameart.org/content/balloon-sounds — **CC0 1.0** — `pop_05.ogg`
+- rubberduck — https://opengameart.org/content/100-cc0-sfx — **CC0 1.0** — `pop_06.ogg`, `pop_07.ogg`, `boing_03.ogg`, `boing_04.ogg`, `boing_05.ogg`, `boing_06.ogg` … (+12)
+- farfadet46 — https://opengameart.org/content/bubbles-pop — **CC0 1.0** — `pop_08.ogg`
+- Aeva — https://opengameart.org/content/boing — **CC0 1.0** — `boing_01.ogg`
+- EZduzziteh — https://opengameart.org/content/boings — **CC0 1.0** — `boing_07.ogg`, `boing_08.ogg`, `boing_09.ogg`
+- Spring Spring — https://opengameart.org/content/various-sound-effects-0 — **CC0 1.0** — `boing_10.ogg`, `slip_01.ogg`, `slip_02.ogg`, `slip_03.ogg`, `forest_02.ogg`, `explosion_03.ogg`
+- Roars Games — https://opengameart.org/content/nhfea-sound — **CC0 1.0** — `slip_04.ogg`, `slip_05.ogg`
+- EZduzziteh — https://opengameart.org/content/silly-sound-effects — **CC0 1.0** — `cartoon_01.ogg`, `cartoon_02.ogg`, `cartoon_03.ogg`, `cartoon_04.ogg`
+- blacklodgegames — https://opengameart.org/content/27-metal-audio-samples-sfx — **CC0 1.0** — `cartoon_05.ogg`, `cartoon_06.ogg`, `cartoon_07.ogg`
+- Mish7913 — https://opengameart.org/content/propeller-cartoon-loop — **CC0 1.0** — `cartoon_08.ogg`
+- TokyoGeisha — https://opengameart.org/content/58-random-sound-effects — **CC0 1.0** — `cartoon_09.ogg`, `cartoon_10.ogg`, `cartoon_11.ogg`, `applause_03.ogg`, `cash_04.ogg`, `cash_05.ogg` … (+5)
+- Nocturnal_Vanguard — https://opengameart.org/content/group-giggling — **CC0 1.0** — `laugh_01.ogg`
+- Supergeek — https://opengameart.org/content/do-you-remember-laughter — **CC0 1.0** — `laugh_02.ogg`
+- AntumDeluge — https://opengameart.org/content/evil-laugh — **CC0 1.0** — `laugh_03.ogg`
+- AntumDeluge — https://opengameart.org/content/witch-cackle — **CC0 1.0** — `laugh_04.ogg`
+- eXpl0it3r — https://opengameart.org/content/applause-in-a-large-hall-or-church — **CC0 1.0** — `applause_01.ogg`
+- Almitory — https://opengameart.org/content/fireworks-with-applause-happy-people — **CC0 1.0** — `applause_02.ogg`
+- Wolfgang_ — https://opengameart.org/content/crickets-ambient-noise-loopable — **CC0 1.0** — `crickets_01.ogg`
+- HaelDB — https://opengameart.org/content/random-sounds-samples — **CC0 1.0** — `crickets_02.ogg`, `footsteps_06.ogg`, `forest_01.ogg`, `forest_03.ogg`
+- OwlishMedia — https://opengameart.org/content/202-more-sound-effects — **CC0 1.0** — `cash_01.ogg`, `cash_02.ogg`, `cash_03.ogg`, `phone_03.ogg`, `phone_04.ogg`, `phone_05.ogg` … (+7)
+- Kenney — https://opengameart.org/content/54-casino-sound-effects-cards-dice-chips — **CC0 1.0** — `cash_07.ogg`, `cash_08.ogg`, `cash_09.ogg`
+- Cassie-OrbitGames — https://opengameart.org/content/typewriter-sounds — **CC0 1.0** — `typewriter_01.ogg`, `typewriter_02.ogg`, `typewriter_03.ogg`, `typewriter_04.ogg`, `typewriter_05.ogg`, `typewriter_06.ogg` … (+2)
+- unicaegames — https://opengameart.org/content/keyboard-soundpack-1-typing-and-single-keystrokes — **CC0 1.0** — `keyboard_01.ogg`, `keyboard_02.ogg`, `keyboard_03.ogg`, `keyboard_04.ogg`, `keyboard_05.ogg`, `keyboard_06.ogg`
+- LFA — https://opengameart.org/content/mouse-click — **CC0 1.0** — `click_01.ogg`
+- 1j01 — https://opengameart.org/content/middle-mouse-click — **CC0 1.0** — `click_02.ogg`
+- Kenney — https://opengameart.org/content/interface-sounds — **CC0 1.0** — `click_03.ogg`, `click_04.ogg`, `click_05.ogg`, `click_06.ogg`, `click_07.ogg`, `notification_06.ogg` … (+9)
+- Kenney — https://opengameart.org/content/51-ui-sound-effects-buttons-switches-and-clicks — **CC0 1.0** — `click_08.ogg`, `click_09.ogg`, `click_10.ogg`, `click_11.ogg`
+- cyberdyne — https://opengameart.org/content/crank-movie-telephone-ringtone — **CC0 1.0** — `phone_01.ogg`
+- Zane Little Music — https://opengameart.org/content/modern-ringtone-chirptone — **CC0 1.0** — `phone_02.ogg`
+- qubodup — https://opengameart.org/content/doorbell-ring — **CC0 1.0** — `phone_06.ogg`
+- Robin Lamb — https://opengameart.org/content/ui-sound-effects-button-clicks-user-feedback-notifications — **CC0 1.0** — `notification_01.ogg`, `notification_02.ogg`, `notification_03.ogg`, `notification_04.ogg`, `notification_05.ogg`
+- messersm — https://opengameart.org/content/space-sound-effects — **CC0 1.0** — `notification_12.ogg`, `rocket_03.ogg`
+- laleksic — https://opengameart.org/content/various-sound-effects — **CC0 1.0** — `door_01.ogg`, `door_02.ogg`, `door_03.ogg`, `door_04.ogg`, `door_05.ogg`, `footsteps_09.ogg` … (+5)
+- rubberduck — https://opengameart.org/content/100-cc0-sfx-2 — **CC0 1.0** — `footsteps_01.ogg`, `footsteps_02.ogg`, `footsteps_03.ogg`, `footsteps_04.ogg`, `footsteps_05.ogg`, `thunder_02.ogg` … (+5)
+- HaelDB — https://opengameart.org/content/footsteps-leather-cloth-armor — **CC0 1.0** — `footsteps_07.ogg`, `footsteps_08.ogg`
+- rubberduck — https://opengameart.org/content/40-cc0-water-splash-slime-sfx — **CC0 1.0** — `splash_01.ogg`, `splash_02.ogg`, `splash_03.ogg`, `splash_04.ogg`, `water_01.ogg`, `water_02.ogg` … (+1)
+- qubodup — https://opengameart.org/content/water-waves — **CC0 1.0** — `water_05.ogg`, `water_06.ogg`
+- qubodup — https://opengameart.org/content/beach-ocean-waves — **CC0 1.0** — `water_07.ogg`
+- qubodup — https://opengameart.org/content/dripping-water-loop — **CC0 1.0** — `water_08.ogg`
+- IgnasD — https://opengameart.org/content/wind — **CC0 1.0** — `wind_01.ogg`, `wind_02.ogg`
+- Luke.RUSTLTD — https://opengameart.org/content/wind1 — **CC0 1.0** — `wind_03.ogg`, `wind_04.ogg`
+- Écrivain — https://opengameart.org/content/random-sfx — **CC0 1.0** — `wind_05.ogg`
+- Ylmir — https://opengameart.org/content/rain-loopable — **CC0 1.0** — `rain_01.ogg`, `rain_02.ogg`
+- Ogrebane — https://opengameart.org/content/rain-gutter-loop — **CC0 1.0** — `rain_03.ogg`
+- WuxiaScrub — https://opengameart.org/content/rain-long-thunder — **CC0 1.0** — `thunder_01.ogg`
+- isaiah658 — https://opengameart.org/content/ambient-bird-sounds — **CC0 1.0** — `birds_01.ogg`
+- syncopika — https://opengameart.org/content/bird-chirping-sounds — **CC0 1.0** — `birds_02.ogg`
+- Spring Spring — https://opengameart.org/content/sound-effects-for-oh-gully — **CC0 1.0** — `birds_03.ogg`
+- IgnasD — https://opengameart.org/content/high-traffic-road-sounds — **CC0 1.0** — `city_01.ogg`
+- GGBotNet — https://opengameart.org/content/car-sound-effects-pack-low-quality — **CC0 1.0** — `city_04.ogg`, `city_05.ogg`
+- looneybits — https://opengameart.org/content/car-engine-start-01 — **CC0 1.0** — `city_06.ogg`
+- LEGIT Audio — https://opengameart.org/content/the-shop — **CC0 1.0** — `office_01.ogg`
+- rubberduck — https://opengameart.org/content/30-cc0-sfx-loops — **CC0 1.0** — `office_02.ogg`, `office_03.ogg`, `office_04.ogg`, `siren_03.ogg`, `siren_04.ogg`
+- bretbernhoft — https://opengameart.org/content/frequency-static-sound-effects — **CC0 1.0** — `static_01.ogg`
+- xhunterko — https://opengameart.org/content/static — **CC0 1.0** — `static_02.ogg`
+- HaelDB — https://opengameart.org/content/miscmenu-sci-fi-sounds — **CC0 1.0** — `static_03.ogg`
+- rubberduck — https://opengameart.org/content/50-cc0-sci-fi-sfx — **CC0 1.0** — `glitch_05.ogg`, `glitch_06.ogg`, `glitch_07.ogg`, `glitch_08.ogg`, `rocket_01.ogg`, `rocket_02.ogg`
+- Spring Spring — https://opengameart.org/content/pleasing-bell-sound-effect — **CC0 1.0** — `bell_04.ogg`
+- AntumDeluge — https://opengameart.org/content/bicycle-sounds — **CC0 1.0** — `bell_05.ogg`
+- HaelDB — https://opengameart.org/content/point-bell — **CC0 1.0** — `bell_06.ogg`
+- cynicmusic — https://opengameart.org/content/bell-arpeggio-24 — **CC0 1.0** — `bell_07.ogg`
+- AntumDeluge — https://opengameart.org/content/bicycle-horn — **CC0 1.0** — `horn_01.ogg`
+- StumpyStrust — https://opengameart.org/content/their-coming-generic-horn-sound — **CC0 1.0** — `horn_02.ogg`
+- aquinn — https://opengameart.org/content/sirens-and-alarm-noise — **CC0 1.0** — `siren_01.ogg`
+- Frenchyboy — https://opengameart.org/content/alarm-2 — **CC0 1.0** — `siren_02.ogg`
+- qubodup — https://opengameart.org/content/synthesized-explosion — **CC0 1.0** — `explosion_01.ogg`
+- rubberduck — https://opengameart.org/content/50-cc0-retro-synth-sfx — **CC0 1.0** — `explosion_04.ogg`, `explosion_05.ogg`
+- Thimras — https://opengameart.org/content/battle-at-sea — **CC0 1.0** — `explosion_06.ogg`
+- AntumDeluge — https://opengameart.org/content/fire-crackling — **CC0 1.0** — `fire_01.ogg`
+- PagDev — https://opengameart.org/content/fireplace-sound-loop — **CC0 1.0** — `fire_02.ogg`
+- JaggedStone — https://opengameart.org/content/magic-spell-sfx — **CC0 1.0** — `magic_01.ogg`, `magic_02.ogg`, `magic_03.ogg`, `magic_04.ogg`, `magic_05.ogg`
+- artisticdude — https://opengameart.org/content/freeze-spell-0 — **CC0 1.0** — `magic_06.ogg`
+- rubberduck — https://opengameart.org/content/80-cc0-rpg-sfx — **CC0 1.0** — `magic_07.ogg`, `magic_08.ogg`
+- FacadeGaikan — https://opengameart.org/content/camerashudder — **CC0 1.0** — `camera_04.ogg`
+- themightyglider — https://opengameart.org/content/camera — **CC0 1.0** — `camera_05.ogg`
+
+## music/
+
+- Kenney — https://opengameart.org/content/85-short-music-jingles — **CC0 1.0** — `stinger_epic_hit_01.ogg`, `stinger_epic_hit_02.ogg`, `stinger_epic_hit_03.ogg`, `jingle_lounge_sax_01.ogg`, `jingle_lounge_sax_02.ogg`, `jingle_lounge_sax_03.ogg` … (+7)
+- nene — https://opengameart.org/content/opening-theme-actionsuspense — **CC0 1.0** — `news_intro_dramatic_01.ogg`
+- CleytonKauffman — https://opengameart.org/content/prologue-theme — **CC0 1.0** — `news_intro_dramatic_02.ogg`
+- CleytonKauffman — https://opengameart.org/content/ice-cream-truck-theme — **CC0 1.0** — `commercial_jingle_icecream.ogg`
+- CleytonKauffman — https://opengameart.org/content/shop-theme — **CC0 1.0** — `commercial_jingle_shop.ogg`
+- MintoDog — https://opengameart.org/content/sci-fi-puzzle-jingle-result — **CC0 1.0** — `commercial_jingle_clear.ogg`, `gameshow_fail.ogg`
+- Spring Spring — https://opengameart.org/content/the-war-over-a-melon-field-themes-and-jingles — **CC0 1.0** — `gameshow_win.ogg`, `gameshow_lose.ogg`, `gameshow_select.ogg`
+- pmiller — https://opengameart.org/content/free-nes-music-pack — **CC0 1.0** — `gameshow_upbeat.ogg`, `gameshow_cheery.ogg`
+- nene — https://opengameart.org/content/night-of-the-streets-horrorsuspense — **CC0 1.0** — `suspense_streets.ogg`
+- Kresiek The Furry — https://opengameart.org/content/dark-stinger-1 — **CC0 1.0** — `suspense_dark_stinger.ogg`
+- jobromedia — https://opengameart.org/content/bumblebee-loop — **CC0 1.0** — `suspense_pressure.ogg`
+- cynicmusic — https://opengameart.org/content/sirens-in-darkness — **CC0 1.0** — `suspense_sirens.ogg`
+- vitalezzz — https://opengameart.org/content/downfall — **CC0 1.0** — `doc_drone_downfall.ogg`
+- yd — https://opengameart.org/content/background-space-track — **CC0 1.0** — `doc_drone_space.ogg`
+- yd — https://opengameart.org/content/searching — **CC0 1.0** — `doc_drone_searching.ogg`
+- SubspaceAudio — https://opengameart.org/content/horror-atmosphere — **CC0 1.0** — `doc_drone_postapoc.ogg`
+- Tozan — https://opengameart.org/content/midi-pack-2-27-new-tunes — **CC0 1.0** — `comedy_tuba.ogg`
+- HydroGene — https://opengameart.org/content/8-bit-i-am-not-clumsy — **CC0 1.0** — `comedy_clumsy.ogg`
+- congusbongus — https://opengameart.org/content/which-brand-of-mustard-shall-i-buy — **CC0 1.0** — `comedy_mustard.ogg`
+- congusbongus — https://opengameart.org/content/two-left-socks — **CC0 1.0** — `comedy_two_left_socks.ogg`
+- StarNinjas — https://opengameart.org/content/ukulele-forest-beginning-loop-and-end — **CC0 1.0** — `ukulele_begin.ogg`, `ukulele_loop.ogg`, `ukulele_end.ogg`
+- Loyalty Freak Music — https://opengameart.org/content/bleu — **CC0 1.0** — `ukulele_bleu.ogg`
+- tomcat — https://opengameart.org/content/bright-eyes — **CC0 1.0** — `whistling_bright_eyes.ogg`
+- Spring Spring — https://opengameart.org/content/blues-0 — **CC0 1.0** — `whistling_blues.ogg`
+- Joth — https://opengameart.org/content/bossa-nova — **CC0 1.0** — `lounge_bossa.ogg`
+- Pro Sensory — https://opengameart.org/content/elevator-music — **CC0 1.0** — `lounge_elevator_01.ogg`
+- You're Perfect Studio — https://opengameart.org/content/somewhere-in-the-elevator — **CC0 1.0** — `lounge_elevator_02.ogg`
+- Joth — https://opengameart.org/content/mirror-lake — **CC0 1.0** — `lounge_mirror_lake.ogg`
+- omfgdude — https://opengameart.org/content/lofi-hip-hop — **CC0 1.0** — `lofi_hiphop.ogg`
+- omfgdude — https://opengameart.org/content/chill-lofi-inspired — **CC0 1.0** — `lofi_chill.ogg`
+- TAD — https://opengameart.org/content/lofi-compilation — **CC0 1.0** — `lofi_cup_of_tea.ogg`, `lofi_cat_caffe.ogg`
+- cynicmusic — https://opengameart.org/content/victory-fanfare-short — **CC0 1.0** — `epic_fanfare.ogg`
+- tricksntraps — https://opengameart.org/content/free-music-pack — **CC0 1.0** — `epic_great_mission.ogg`
+- cynicmusic — https://opengameart.org/content/battle-theme-a — **CC0 1.0** — `epic_battle.ogg`
+- extenz — https://opengameart.org/content/emotional-piano-loop — **CC0 1.0** — `sad_piano_loop.ogg`
+- Kistol — https://opengameart.org/content/sadness — **CC0 1.0** — `sad_piano_sadness.ogg`
+- Kistol — https://opengameart.org/content/snowfall — **CC0 1.0** — `sad_piano_snowfall.ogg`
+- TAD — https://opengameart.org/content/vampires-piano — **CC0 1.0** — `sad_piano_vampires.ogg`
+- cynicmusic — https://opengameart.org/content/town-theme-rpg — **CC0 1.0** — `happy_ending_town.ogg`
+- SterlingRay — https://opengameart.org/content/success-stinger — **CC0 1.0** — `happy_ending_success.ogg`
+- SterlingRay — https://opengameart.org/content/finish-line-stinger — **CC0 1.0** — `happy_ending_finish.ogg`
+- SterlingRay — https://opengameart.org/content/daylight-stinger — **CC0 1.0** — `happy_ending_daylight.ogg`
+- SterlingRay — https://opengameart.org/content/new-town-stinger — **CC0 1.0** — `happy_ending_newtown.ogg`
+- celestialghost8 — https://opengameart.org/content/victory — **CC0 1.0** — `happy_ending_victory.ogg`
+- Umplix — https://opengameart.org/content/level-complete — **CC0 1.0** — `happy_ending_level.ogg`
+- CleytonKauffman — https://opengameart.org/content/anime-esque-intro-outro-theme — **CC0 1.0** — `happy_ending_outro.ogg`, `intro_upbeat.ogg`
+- Kresiek The Furry — https://opengameart.org/content/wild-west-stinger-1 — **CC0 1.0** — `stinger_wild_west.ogg`
+- bertsz — https://opengameart.org/content/bit-forest-stinger — **CC0 1.0** — `stinger_forest.ogg`
+
+## fonts/
+
+- Copyright 2015 The Amatic SC Project Authors (https://github.com/googlefonts/AmaticSC) — https://github.com/google/fonts/tree/main/ofl/amaticsc — **SIL OFL 1.1 (see amaticsc/OFL.txt)** — `amaticsc/AmaticSC-Bold.ttf`, `amaticsc/AmaticSC-Regular.ttf`
+- Copyright 2014 The Caveat Project Authors (https://github.com/googlefonts/caveat) — https://github.com/google/fonts/tree/main/ofl/caveat — **SIL OFL 1.1 (see caveat/OFL.txt)** — `caveat/Caveat[wght].ttf`
+- Copyright 2011 The Comfortaa Project Authors (https://github.com/alexeiva/comfortaa), with Reserved Font Name "Comfortaa". — https://github.com/google/fonts/tree/main/ofl/comfortaa — **SIL OFL 1.1 (see comfortaa/OFL.txt)** — `comfortaa/Comfortaa[wght].ttf`
+- Copyright (c) 2011, Denis Masharov <denis.masharov@gmail.com> & Marck Fogel, — https://github.com/google/fonts/tree/main/ofl/marckscript — **SIL OFL 1.1 (see marckscript/OFL.txt)** — `marckscript/MarckScript-Regular.ttf`
+- Copyright 2024 The Montserrat.Git Project Authors (https://github.com/JulietaUla/Montserrat.git) — https://github.com/google/fonts/tree/main/ofl/montserrat — **SIL OFL 1.1 (see montserrat/OFL.txt)** — `montserrat/Montserrat-Italic[wght].ttf`, `montserrat/Montserrat[wght].ttf`
+- Copyright (c) 2008-2010 by Jovanny Lemonad (http://www.jovanny.ru) — https://github.com/google/fonts/tree/main/ofl/neucha — **SIL OFL 1.1 (see neucha/OFL.txt)** — `neucha/Neucha.ttf`
+- Copyright 2016 The Oswald Project Authors (https://github.com/googlefonts/OswaldFont) — https://github.com/google/fonts/tree/main/ofl/oswald — **SIL OFL 1.1 (see oswald/OFL.txt)** — `oswald/Oswald[wght].ttf`
+- Copyright 2018 The Pacifico Project Authors (https://github.com/googlefonts/Pacifico) — https://github.com/google/fonts/tree/main/ofl/pacifico — **SIL OFL 1.1 (see pacifico/OFL.txt)** — `pacifico/Pacifico-Regular.ttf`
+- ﻿Copyright (c) 2010, ParaType Ltd. (http://www.paratype.com/public), — https://github.com/google/fonts/tree/main/ofl/ptsans — **SIL OFL 1.1 (see ptsans/OFL.txt)** — `ptsans/PT_Sans-Web-Bold.ttf`, `ptsans/PT_Sans-Web-BoldItalic.ttf`, `ptsans/PT_Sans-Web-Italic.ttf`, `ptsans/PT_Sans-Web-Regular.ttf`
+- Copyright (c) 2010, ParaType Ltd. (http://www.paratype.com/public), — https://github.com/google/fonts/tree/main/ofl/ptserif — **SIL OFL 1.1 (see ptserif/OFL.txt)** — `ptserif/PT_Serif-Web-Bold.ttf`, `ptserif/PT_Serif-Web-BoldItalic.ttf`, `ptserif/PT_Serif-Web-Italic.ttf`, `ptserif/PT_Serif-Web-Regular.ttf`
+- Copyright 2015 The Rubik Project Authors (https://github.com/googlefonts/rubik) — https://github.com/google/fonts/tree/main/ofl/rubik — **SIL OFL 1.1 (see rubik/OFL.txt)** — `rubik/Rubik-Italic[wght].ttf`, `rubik/Rubik[wght].ttf`
+- Copyright (c) 2011-2012, Jovanny Lemonad (jovanny.ru), with Reserved Font Name "Russo" — https://github.com/google/fonts/tree/main/ofl/russoone — **SIL OFL 1.1 (see russoone/OFL.txt)** — `russoone/RussoOne-Regular.ttf`
+- Copyright 2022 The Unbounded Project Authors (https://github.com/googlefonts/unbounded) — https://github.com/google/fonts/tree/main/ofl/unbounded — **SIL OFL 1.1 (see unbounded/OFL.txt)** — `unbounded/Unbounded[wght].ttf`
+
+## overlays/
+
+- generated — generated procedurally (numpy/Pillow) by scripts in this branch — no external source — **CC0 1.0 (own work, dedicated to public domain)** — `grain_fine_loop_f00.png`, `grain_fine_loop_f01.png`, `grain_fine_loop_f02.png`, `grain_fine_loop_f03.png`, `grain_fine_loop_f04.png`, `grain_fine_loop_f05.png` … (+22)
+- generated — generated procedurally (numpy/Pillow) — no external source — **CC0 1.0 (own work, dedicated to public domain)** — `dust_scratches_f00.png`, `dust_scratches_f01.png`, `dust_scratches_f02.png`, `dust_scratches_f03.png`, `dust_scratches_f04.png`, `dust_scratches_f05.png` … (+7)

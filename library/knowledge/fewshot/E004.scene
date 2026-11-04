@@ -1,0 +1,30 @@
+# format: F01 Интервью
+# logline: Пустая копилка-свинья даёт интервью как финансовый эксперт и с достоинством учит бережливости, пока ведущая не спрашивает, на что копит она сама.
+# why it works: The guest keeps total dignity while being empty; a 3 s silent close-up, then a two-word answer that names its own destruction.
+film title="Цель накоплений" style=puppet fps=24 size=1920x1080
+shot 0-4s: ch_dina push=0.05
+fade in 0-0.6s
+say ch_dina "У нас Копилка. Финансовый эксперт." at 0.3s
+shot 4-8s: ch_dina push=0.02
+say ch_dina "Сколько у вас сейчас?" at 4.3s
+shot 8-13s: ch_piggybank push=0.02
+say ch_piggybank "Ничего. Это осознанный минимализм." at 8.3s
+shot 13-17s: ch_dina push=0.08 focus=0.5,0.4
+say ch_dina "А подушка безопасности?" at 13.3s
+shot 17-23s: ch_piggybank push=0.06 focus=0.5,0.4
+say ch_piggybank "Подушка — это я. Внутри просто воздух." at 17.3s
+shot 23-27s: ch_dina push=0.06 focus=0.5,0.4
+say ch_dina "Чему вы учите людей?" at 23.3s
+shot 27-33s: ch_piggybank push=0.12 focus=0.5,0.4
+say ch_piggybank "Не трогать. Кто трогает — тот разбивает." at 27.3s
+shot 33-37s: ch_dina pull=0.25
+say ch_dina "Спасибо, что пришли." at 33.3s
+shot 37-41s: ch_dina push=0.02
+say ch_dina "А вы сами на что копите?" at 37.3s
+shot 41-44s: ch_piggybank push=0.07 focus=0.5,0.4
+shot 44-47s: ch_piggybank push=0.06 snap=44.3 focus=0.5,0.4
+say ch_piggybank "[deadpan] На молоток." at 44.3s
+music mood=bright tempo=118 0-4s
+music mood=calm tempo=72 4-27s
+music mood=calm tempo=72 33-37s
+fade out 46.6-47s

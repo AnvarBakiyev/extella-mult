@@ -1,0 +1,75 @@
+{
+ "name": "petya_blogger",
+ "kind": "person",
+ "about": "блогер, «ставьте лайки»",
+ "default_voice": "ad",
+ "palette": {
+  "skin": "#e4bd9c",
+  "outfit": "#9a8bb0",
+  "outfit2": "#e2cd88",
+  "accent": "#c49638",
+  "iris": "#5a3a26",
+  "lip": "#936d60",
+  "hair": "#b66f79"
+ },
+ "parts": {
+  "head": "pear",
+  "hair": "spiky",
+  "eyes": "wide",
+  "brow": "neutral",
+  "nose": "button",
+  "outfit": "tshirt",
+  "age": "young",
+  "build": "normal",
+  "accessories": [
+   [
+    "mic",
+    "lilac"
+   ]
+  ]
+ },
+ "size": [
+  1024,
+  1024
+ ],
+ "frames": {
+  "base": "base.png",
+  "visemes": {
+   "closed": "mouth_closed.png",
+   "A": "mouth_A.png",
+   "E": "mouth_E.png",
+   "O": "mouth_O.png",
+   "U": "mouth_U.png",
+   "MBP": "mouth_MBP.png"
+  },
+  "blink": "blink.png",
+  "expressions": {
+   "neutral": "expr_neutral.png",
+   "happy": "expr_happy.png",
+   "angry": "expr_angry.png",
+   "shocked": "expr_shocked.png"
+  }
+ },
+ "layering": "base.png is the full neutral frame. Every other png is a full-size, pixel-aligned overlay of only the changed face region (mouth region for visemes, eye region for blink, both for expressions): frame = base, then expr_<e>, then mouth_<v>, then blink, each alpha-composited.",
+ "anchors": {
+  "mouth": [
+   0.5,
+   0.5562
+  ],
+  "eyes": [
+   [
+    0.4301,
+    0.4191
+   ],
+   [
+    0.5699,
+    0.4191
+   ]
+  ],
+  "head_center": [
+   0.5,
+   0.4523
+  ],
+  "split_y": 0.5015
+ }
+}

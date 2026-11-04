@@ -1,0 +1,25 @@
+# format: F04 Документальный фильм с диктором
+# logline: Торжественная документалка о рабочем муравье, который без отпуска таскает крошки ради обещанного повышения.
+# why it works: Epic narrator for an ant's work week; the closing fact is dry and devastating, no comment added.
+film title="Шестой" style=puppet fps=24 size=1920x1080
+shot 0-8s: pl_anthill pan=right
+fade in 0-0.6s
+voice "[deep] Рассвет. Миллион жизней просыпается одновременно." at 0.3s
+shot 8-14s: ch_ant push=0.1
+voice "[deep] Муравей Шестой. Он несёт крошку в сорок раз больше себя." at 8.3s
+shot 14-20s: pl_anthill push=0.18 focus=0.5,0.5
+voice "[deep] Без жалоб. Без отпуска. Без обеда." at 14.3s
+shot 20-26s: ch_ant push=0.06 focus=0.5,0.4
+say ch_ant "Королеву я не видел. Говорят, довольна." at 20.3s
+shot 26-31s: ch_ant push=0.06 focus=0.5,0.4
+say ch_ant "Мне обещали повышение. Через год." at 26.3s
+shot 31-38s: ch_ant push=0.05
+voice "[deep] И тогда он сделал то, что делал каждый день." at 31.3s
+shot 38-42s: pl_anthill push=0.05
+shot 42-45s: pl_anthill pull=0.25
+shot 45-50s: pl_anthill pull=0.25
+voice "[deep] [deadpan] Рабочие муравьи живут два месяца." at 45.3s
+music mood=bright tempo=118 0-8s
+music mood=wonder tempo=70 8-20s
+music mood=calm tempo=72 20-42s
+fade out 49.6-50s
