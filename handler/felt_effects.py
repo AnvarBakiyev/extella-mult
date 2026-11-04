@@ -249,7 +249,7 @@ def felt_letters(ctx, t, tl, st, f):
     total = sum(adv) - track
     cx0 = x * ctx.W - total / 2
     n = max(1, sum(1 for ch in text if ch != ' '))
-    shown = min(1.0, f * 1.08) * n
+    shown = min(n, max(f * 1.08 * n, (t - st.t0) * 8))  # at least 8 letters a second, so a long title is read before it fades
     i = 0
     pen = cx0
     for ch, w in zip(text, adv):
