@@ -65,7 +65,7 @@ def _pose(action, t, tl, dur):
         k = abs(math.sin(math.pi * ((tl * 1.4) % 1.0)))
         P.update(lift=0.22 * k, arm_b=-2.3 * k + 0.2, arm_f=2.3 * k - 0.2, leg_b=0.3 * k, leg_f=-0.3 * k)
     elif action == 'sit':
-        P.update(sit=1.0, leg_b=-1.45, leg_f=-1.45, arm_b=-0.5, arm_f=-0.5)
+        P.update(sit=1.0, leg_b=1.45, leg_f=1.45, arm_b=0.35, arm_f=0.55)
     elif action == 'dance':
         sw = math.sin(ph * 1.8)
         P.update(arm_b=-2.4 + 0.5 * sw, arm_f=2.4 + 0.5 * sw, leg_b=0.25 * sw, leg_f=-0.25 * sw, lean=0.12 * sw, bob=0.02 * abs(sw))
@@ -146,7 +146,7 @@ def _doll(ctx, t, tl, st, f, look):
     x, y, facing = _place(st, f)
     s = st.params.get('size', 0.36)
     P = _pose(st.words[1], t + (x * 3.1), tl, st.t1 - st.t0)
-    yb = y - (P['bob'] + P['lift'] + 0.28 * P['sit']) * s
+    yb = y - (P['bob'] + P['lift'] - 0.22 * P['sit']) * s  # sitting: the seat, not the feet, rests on the y line
     piece = lambda: Local(ctx.piece(), x, yb, s, facing)
     hip, shoulder = (0.01, -0.3), (0.02, -0.56)
     legs_col = {'coat': _dark(bottom, 0.92), 'suit': bottom}.get(outfit, skin)
@@ -156,8 +156,11 @@ def _doll(ctx, t, tl, st, f, look):
         h = (hip[0] + dx, hip[1])
         kx, ky = h[0] + 0.27 * math.sin(a), h[1] + 0.27 * math.cos(a)
         L.line([h, (kx, ky)], _dark(legs_col, shade), 0.09)
-        L.ellipse(kx + 0.025, ky - 0.005, 0.065, 0.045, _dark(shoes, shade))
-        L.line([(kx - 0.035, ky - 0.05), (kx + 0.04, ky - 0.05)], _dark(shoes, shade), 0.035)
+        if P['sit']:  # legs stretched out in front: the sole faces forward, toes up
+            L.ellipse(kx + 0.01, ky - 0.04, 0.045, 0.065, _dark(shoes, shade))
+        else:
+            L.ellipse(kx + 0.025, ky - 0.005, 0.065, 0.045, _dark(shoes, shade))
+            L.line([(kx - 0.035, ky - 0.05), (kx + 0.04, ky - 0.05)], _dark(shoes, shade), 0.035)
 
     def arm(a, shade):
         L = piece()
