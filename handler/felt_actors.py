@@ -29,6 +29,8 @@ PERSON_ACTIONS = ['stand', 'walk', 'run', 'wave', 'jump', 'sit', 'dance', 'look_
 ANIMAL_ACTIONS = ['stand', 'walk', 'run', 'jump', 'sit', 'look_up', 'sleep'] + PAIR_ACTIONS
 HELD = ['lantern', 'balloon', 'flower', 'book', 'gift', 'umbrella', 'ball']
 FACE_MOODS = ['happy', 'sad', 'surprised', 'sleepy']
+SKINS = {'light': '#f7dcc4', 'tan': '#e3b48c', 'brown': '#b67f55', 'dark': '#7d5236'}
+HAIRSTYLES = ['bob', 'bun', 'short', 'bald', 'braids', 'ponytail', 'curly', 'afro']
 
 
 def actor(name, actions):
@@ -293,28 +295,67 @@ def _mouth(F, mood, cx, y, w, d, lw, col='#3a2828', smile=True):
         F.curve([(cx - w, y), (cx, y + d), (cx + w, y)], col, lw)
 
 
+def _soft(points, r=0.045):
+    """A polygon with its corners rounded off, for bodies that look stuffed rather than cut with a ruler."""
+    out = []
+    for i, (x, y) in enumerate(points):
+        ends = []
+        for ox, oy in (points[i - 1], points[(i + 1) % len(points)]):
+            n = math.hypot(ox - x, oy - y)
+            k = min(r, n / 2) / n
+            ends.append((x + (ox - x) * k, y + (oy - y) * k))
+        out += bezier([ends[0], (x, y), ends[1]], 6)
+    return out
+
+
+def _hand(L, ax, ay, dx, dy, col):
+    """A mitten along the arm's direction, with a thumb on the side that faces forward."""
+    n = math.hypot(dx, dy) or 1.0
+    dx, dy = dx / n, dy / n
+    tx, ty = (-dy, dx) if dx * 0 - dy >= 0 else (dy, -dx)
+    L.ellipse(ax + dx * 0.018, ay + dy * 0.018, 0.058, 0.043, col, angle=math.atan2(dy, dx))
+    L.ellipse(ax + tx * 0.04 + dx * 0.005, ay + ty * 0.04 + dy * 0.005, 0.032, 0.019, col, angle=math.atan2(dy + ty * 0.8, dx + tx * 0.8))
+
+
 def _doll_body(piece, outfit, top, bottom, sx):
-    """The clothes, in simple coloured layers: coat over a dress, shirt and trousers, or a dress with a belt."""
+    """The clothes, in simple coloured layers with soft corners: coat over a dress, shirt and trousers, or a dress with a belt."""
     if outfit == 'coat':
-        piece().poly([(-0.09 + sx, -0.58), (0.12 + sx, -0.58), (0.23, -0.25), (-0.2, -0.25)], bottom)
-        piece().poly([(-0.1 + sx, -0.59), (-0.005 + sx, -0.59), (-0.03, -0.27), (-0.2, -0.27)], top)
-        piece().poly([(0.05 + sx, -0.59), (0.13 + sx, -0.59), (0.22, -0.27), (0.075, -0.27)], top)
+        piece().poly(_soft([(-0.09 + sx, -0.58), (0.12 + sx, -0.58), (0.23, -0.25), (-0.2, -0.25)]), bottom)
+        piece().poly(_soft([(-0.1 + sx, -0.59), (-0.005 + sx, -0.59), (-0.03, -0.27), (-0.2, -0.27)], 0.03), top)
+        piece().poly(_soft([(0.05 + sx, -0.59), (0.13 + sx, -0.59), (0.22, -0.27), (0.075, -0.27)], 0.03), top)
         Bt = piece()
         for by in (-0.5, -0.42, -0.34):
             Bt.circle(0.025 + sx * (1 + by), by, 0.017, '#3a2a2a')
     elif outfit == 'suit':
-        piece().poly([(-0.11 + sx, -0.59), (0.14 + sx, -0.59), (0.15, -0.26), (-0.12, -0.26)], top)
-        piece().poly([(-0.125, -0.31), (0.155, -0.31), (0.155, -0.25), (-0.125, -0.25)], bottom)
+        piece().poly(_soft([(-0.11 + sx, -0.59), (0.14 + sx, -0.59), (0.15, -0.26), (-0.12, -0.26)]), top)
+        piece().poly(_soft([(-0.125, -0.31), (0.155, -0.31), (0.155, -0.25), (-0.125, -0.25)], 0.025), bottom)
         Bt = piece()
         for by in (-0.5, -0.42):
             Bt.circle(0.015 + sx * (1 + by), by, 0.015, _dark(top, 0.6))
     else:
-        piece().poly([(-0.1 + sx, -0.59), (0.13 + sx, -0.59), (0.24, -0.2), (-0.21, -0.2)], top)
+        piece().poly(_soft([(-0.1 + sx, -0.59), (0.13 + sx, -0.59), (0.24, -0.2), (-0.21, -0.2)]), top)
         piece().poly([(-0.135 + sx * 0.5, -0.45), (0.165 + sx * 0.5, -0.45), (0.175, -0.4), (-0.145, -0.4)], _mix(top, '#ffffff', 0.55))
 
 
 def _doll_head(piece, hx, hy, skin, hair, style, extra, ey, blink, mood, t):
     """Every person has the same head: an oval face, hair in one layer, button eyes, round cheeks. Only the hair and extras differ."""
+    if style == 'braids':
+        piece().ellipse(hx + 0.005, hy - 0.02, 0.16, 0.165, hair)
+        for sgn in (-1, 1):
+            B = piece()
+            for k in range(4):
+                B.circle(hx + 0.012 + sgn * (0.155 + 0.012 * k), hy + 0.06 + 0.058 * k, 0.04 - 0.004 * k, hair)
+            piece().circle(hx + 0.012 + sgn * 0.205, hy + 0.27, 0.026, '#e0526f')
+    elif style == 'ponytail':
+        piece().ellipse(hx - 0.2, hy + 0.03, 0.065, 0.17, hair, angle=0.3)
+        piece().ellipse(hx + 0.005, hy - 0.02, 0.165, 0.17, hair)
+    elif style == 'curly':
+        Hb = piece()
+        for k in range(14):
+            a_ = math.pi * (0.85 + 1.3 * k / 13)
+            Hb.circle(hx + 0.01 + 0.15 * math.cos(a_), hy + 0.0 + 0.16 * math.sin(a_), 0.062, hair)
+    elif style == 'afro':
+        piece().ellipse(hx + 0.01, hy - 0.05, 0.25, 0.23, hair)
     if style in ('bob', 'bun'):
         Hb = piece()
         Hb.ellipse(hx - 0.005, hy - 0.005, 0.19, 0.18, hair)
@@ -332,8 +373,14 @@ def _doll_head(piece, hx, hy, skin, hair, style, extra, ey, blink, mood, t):
     piece().ellipse(hx + 0.01, hy + 0.025, 0.135, 0.15, skin)
     if style in ('bob', 'bun'):
         piece().ellipse(hx + 0.005, hy - 0.1, 0.165, 0.072, hair)
-    elif style == 'short':
+    elif style in ('short', 'braids', 'ponytail'):
         piece().ellipse(hx + 0.015, hy - 0.105, 0.135, 0.052, hair)
+    elif style == 'afro':
+        piece().ellipse(hx + 0.012, hy - 0.11, 0.14, 0.05, hair)
+    elif style == 'curly':
+        Hf = piece()
+        for ex in (-0.09, -0.03, 0.04, 0.1):
+            Hf.circle(hx + ex + 0.01, hy - 0.11, 0.045, hair)
     F = piece()
     if mood == 'sad':  # the eyes sit a little lower, so the brows fit under the fringe
         ey += 0.012
@@ -346,14 +393,15 @@ def _doll_head(piece, hx, hy, skin, hair, style, extra, ey, blink, mood, t):
         else:
             F.ellipse(hx + ex, ey, 0.019, 0.024, '#2a2020')
             F.circle(hx + ex + 0.006, ey - 0.008, 0.006, '#ffffff')
+    deep = int(skin[1:3], 16) < 200  # on darker skin the cheeks are warmer and the mouth darker, so both still show
     for ex in (-0.075, 0.105):
-        F.circle(hx + ex, hy + 0.075, 0.027, '#f4a0aa')
+        F.circle(hx + ex, hy + 0.075, 0.027, _mix(skin, '#e8607a', 0.5) if deep else '#f4a0aa')
     if extra == 'moustache':
         F.ellipse(hx - 0.01, hy + 0.08, 0.04, 0.016, hair)
         F.ellipse(hx + 0.05, hy + 0.08, 0.04, 0.016, hair)
-        _mouth(F, mood, hx + 0.02, hy + 0.112, 0.0175, 0.02, 0.01, '#8a3a3a', smile=False)
+        _mouth(F, mood, hx + 0.02, hy + 0.112, 0.0175, 0.02, 0.01, '#4a1c1c' if deep else '#8a3a3a', smile=False)
     else:
-        _mouth(F, mood, hx + 0.0175, hy + 0.085, 0.0175, 0.02, 0.01, '#8a3a3a')
+        _mouth(F, mood, hx + 0.0175, hy + 0.085, 0.0175, 0.02, 0.01, '#4a1c1c' if deep else '#8a3a3a')
     if extra == 'glasses':
         for ex in (-0.035, 0.065):
             for k in range(14):
@@ -366,7 +414,8 @@ def _doll_head(piece, hx, hy, skin, hair, style, extra, ey, blink, mood, t):
 
 def _doll(ctx, t, tl, st, f, look):
     """The base of every person, a felt doll: oval face, one layer of hair, clothes in coloured layers, soft limbs, mittens.
-    People differ only by colours, hair, outfit and one extra (glasses, moustache).
+    People differ only by colours, hair, outfit and one extra (glasses, moustache). Anyone can look different: skin=light|tan|brown|dark
+    or #rrggbb, hair=#rrggbb, hairstyle=bob|bun|short|bald|braids|ponytail|curly|afro, color=#rrggbb for the clothes.
     wave: one hand up beside the head; dance: both hands up, one higher in turn; jump: both hands up, legs tucked in the air.
     mood=happy|sad|surprised|sleepy sets the face: happy is the usual smile; sad has roof-like brows, a mouth turned down and
     a tear; surprised has round eyes and an 'o' mouth; sleepy has closed eyes, arcs. A new mood is a new line with its own seconds.
@@ -377,6 +426,8 @@ def _doll(ctx, t, tl, st, f, look):
     skin, hair, top, bottom, shoes, style, outfit, extra = look
     top = st.params.get('color', top)
     hair = st.params.get('hair', hair)
+    skin = SKINS.get(st.params.get('skin'), st.params.get('skin', skin))
+    style = st.params.get('hairstyle', style)
     if st.words[1] == 'sleep':
         _sleeper(ctx, t, st, f, 1.0, lambda piece: _doll_head(piece, 0.0, 0.0, skin, hair, style, extra, 0.02, False, st.params.get('mood', 'sleepy'), t))
         return
@@ -412,7 +463,7 @@ def _doll(ctx, t, tl, st, f, look):
             start = shoulder[0] + 0.07 * (1 if aim[0] >= 0 else -1), shoulder[1]
             ax, ay = _reach(start, aim)
             L.curve([start, ((start[0] + ax) / 2, (start[1] + ay) / 2 + 0.04), (ax, ay)], _dark(top, shade), 0.085)
-            L.ellipse(ax, ay, 0.045, 0.05, _dark(skin, shade))
+            _hand(L, ax, ay, ax - start[0], ay - start[1], _dark(skin, shade))
             return ax, ay
         up = min(1.0, max(0.0, (abs(a) - 1.2) / 0.7))  # a raised arm starts at the edge of the body and reaches past the head
         out = math.copysign(up, a)
@@ -420,7 +471,7 @@ def _doll(ctx, t, tl, st, f, look):
         n = 0.24 + 0.17 * up
         ax, ay = sx0 + n * math.sin(a), sy0 + n * math.cos(a)
         L.curve([(sx0, sy0), ((sx0 + ax) / 2 + 0.07 * out, (sy0 + ay) / 2 + 0.03 * up), (ax, ay)], _dark(top, shade), 0.085)
-        L.ellipse(ax, ay + 0.01, 0.045, 0.05, _dark(skin, shade))
+        _hand(L, ax, ay, ax - sx0, ay - sy0, _dark(skin, shade))
         return ax, ay
     legs_b, legs_f = (P['leg_b'], P['leg_f']) if act not in ('stand', 'wave', 'look_up') else (0.0, 0.0)
     leg(legs_b, 0.85, -0.055)

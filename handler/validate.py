@@ -1,4 +1,5 @@
 import os
+import re
 """Validates a parsed program against the vocabulary; raises SceneError with messages in words."""
 from .parser import SceneError
 from .elements import ELEMENTS
@@ -7,6 +8,9 @@ from .effects import EFFECTS
 from .lettering import GLYPHS
 from .audio import MOODS, SFX, KEYS
 from .lib3d import ELEMENTS3D, ACTORS3D
+from .felt_actors import PEOPLE, SKINS, HAIRSTYLES
+
+PEOPLE_LOOKS = (PEOPLE, list(SKINS), HAIRSTYLES)
 
 
 def _vocab(style):
@@ -110,7 +114,7 @@ def _link_pair(prog, st, acts):
             raise SceneError(f"line {st.line}: {mate} is busy at that time ({a.words[1]}, line {a.line}), so {name} cannot {act} with it")
     others = sorted((a for a in acts if a.words[0] == name and a.scene is st.scene and a is not st), key=lambda a: a.t0)
     st.home = _home(st, others, act)
-    for k in ('y', 'size', 'color', 'hair'):
+    for k in ('y', 'size', 'color', 'hair', 'skin', 'hairstyle'):
         for a in others:
             if k in a.params:
                 st.params.setdefault(k, a.params[k])
@@ -142,7 +146,7 @@ def _link_sleep(prog, st, acts):
     """A sleeper with no place of its own lies in the bed of its scene; a bed holds one sleeper at a time."""
     name = st.words[0]
     others = sorted((a for a in acts if a.words[0] == name and a.scene is st.scene and a is not st), key=lambda a: a.t0)
-    for k in ('y', 'size', 'color', 'hair'):
+    for k in ('y', 'size', 'color', 'hair', 'skin', 'hairstyle'):
         for a in others:
             if k in a.params and not (k == 'y' and st.pos is None):
                 st.params.setdefault(k, a.params[k])
@@ -227,6 +231,13 @@ def validate(stmts):
                 raise SceneError(f"line {st.line}: {name} needs an action: {', '.join(actions)}")
             if st.words[1] not in actions:
                 raise SceneError(f"line {st.line}: {name} cannot '{st.words[1]}'; it can: {', '.join(actions)}")
+            if prog.style == 'felt' and name in PEOPLE_LOOKS[0]:
+                skins, styles = PEOPLE_LOOKS[1:]
+                skin = st.params.get('skin')
+                if skin is not None and skin not in skins and not re.fullmatch(r'#[0-9a-fA-F]{6}', str(skin)):
+                    raise SceneError(f"line {st.line}: skin '{skin}' unknown; use one of {', '.join(skins)} or #rrggbb")
+                if st.params.get('hairstyle', styles[0]) not in styles:
+                    raise SceneError(f"line {st.line}: hairstyle '{st.params['hairstyle']}' unknown; hairstyles: {', '.join(styles)}")
             if 'holds' in st.params and prog.style == 'felt':
                 from .felt_actors import HELD
                 if st.params['holds'] not in HELD:
