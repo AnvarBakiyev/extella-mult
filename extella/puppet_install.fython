@@ -196,4 +196,5 @@ def scene(code = "", filtered_source_code = "", func_name = "", **extra):
     else:
         steps.append("self-test skipped: no picture packs chosen")
     return {"status": "success" if ok else "error", "steps": steps, "packs": want, "device": platform.system() + " " + platform.machine(),
-            "home": home}
+            "home": home,
+            "next": "If this agent was created from the listing, say: write an episode. If you installed into your own agent, its system prompt and tools are not set: paste github.com/AnvarBakiyev/extella-mult/blob/main/agent/instructions.md as the prompt and switch on the Extella tools list_rules, search_concepts, list_concepts, search_experts, get_expert, run_expert, check_task, save_expert (README, 'Installed into your own agent?')."}

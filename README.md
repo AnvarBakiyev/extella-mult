@@ -52,6 +52,16 @@ python -m handler.main film.scene --check
 python -m handler.main film.scene --out film.mp4
 ```
 
+## Installed into your own agent?
+
+The store offers two ways to install: **as a new agent** (recommended) and **into an agent you already have**. The second way copies only the rules, the concepts and the experts; the system prompt, the model and the tools stay those of your agent, so Puppet does not work until you set them by hand:
+
+1. Agent settings, system prompt: paste [agent/instructions.md](agent/instructions.md).
+2. Tools: switch on the Extella tools `list_rules`, `search_concepts`, `list_concepts`, `search_experts`, `get_expert`, `run_expert`, `check_task`, `save_expert`.
+3. Model: any model with tool calls; we use DeepSeek-V4-Flash.
+
+Or reinstall the listing choosing "new agent": everything comes set up.
+
 ## Files
 
 - `LANGUAGE.md`: the SCENE language in felt style, generated from the handler's own descriptions
