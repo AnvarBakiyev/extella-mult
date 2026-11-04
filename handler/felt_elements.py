@@ -28,6 +28,21 @@ def _ell(ctx, cx, cy, rx, ry, col):
     ctx.d.ellipse([cx * W - rx * H, cy * H - ry * H, cx * W + rx * H, cy * H + ry * H], fill=col)
 
 
+def _pc(ctx):
+    """A separate felt piece (its own rounded edge and shadow) when the felt pass offers one; else the same canvas."""
+    return ctx.piece() if hasattr(ctx, 'piece') else ctx
+
+
+def _shade_hex(c, k):
+    return '#%02x%02x%02x' % tuple(min(255, int(int(c[i:i + 2], 16) * k)) for i in (1, 3, 5))
+
+
+def _heart(ctx, cx, cy, r, col):
+    _ell(ctx, cx - r * 0.5 * ctx.ar, cy - r * 0.2, r * 0.55, r * 0.55, col)
+    _ell(ctx, cx + r * 0.5 * ctx.ar, cy - r * 0.2, r * 0.55, r * 0.55, col)
+    _poly(ctx, [(cx - r * 1.02 * ctx.ar, cy - r * 0.05), (cx + r * 1.02 * ctx.ar, cy - r * 0.05), (cx, cy + r * 0.95)], col)
+
+
 @element('felt_sky')
 def felt_sky(ctx, t, tl, p):
     """Vertical gradient sky: time=day|night."""
@@ -487,10 +502,32 @@ def room(ctx, t, tl, p):
         ctx.line([(0, fl + k * (1 - fl) / 6), (1, fl + k * (1 - fl) / 6)], '#b5875a', 0.002)
     wx, wy = p.get('window', 0.7), 0.18
     sky_c = {'night': '#2a3a78', 'sunset': '#f2a07a'}.get(p.get('time', 'day'), '#a9d8f2')
+    if p.get('cozy', 0):
+        # warm wallpaper stripes, a panelled lower wall, a rug: several layers of background, like a felt dollhouse
+        for k in range(0, 34, 2):
+            _poly(ctx, [(k / 34, 0), ((k + 1) / 34, 0), ((k + 1) / 34, fl), (k / 34, fl)], _shade_hex(wall, 1.035))
+        pn = _pc(ctx)
+        _poly(pn, [(0, fl - 0.15), (1, fl - 0.15), (1, fl), (0, fl)], p.get('panel', '#f2c4b6'))
+        _poly(pn, [(0, fl - 0.165), (1, fl - 0.165), (1, fl - 0.145), (0, fl - 0.145)], '#e3a48f')
+        rg = _pc(ctx)
+        _ell(rg, 0.5, fl + 0.13, 0.34, 0.07, '#ef9fb0')
+        _ell(_pc(ctx), 0.5, fl + 0.13, 0.27, 0.048, '#f8d3da')
+        px_, py_ = p.get('picture', 0.2), 0.2
+        fr = _pc(ctx)
+        _poly(fr, [(px_ - 0.045, py_), (px_ + 0.045, py_), (px_ + 0.045, py_ + 0.15), (px_ - 0.045, py_ + 0.15)], '#c98a5a')
+        _poly(_pc(ctx), [(px_ - 0.035, py_ + 0.02), (px_ + 0.035, py_ + 0.02), (px_ + 0.035, py_ + 0.13), (px_ - 0.035, py_ + 0.13)], '#bfe0f0')
+        _heart(_pc(ctx), px_, py_ + 0.08, 0.03, '#ef6f8e')
     _poly(ctx, [(wx - 0.11, wy), (wx + 0.11, wy), (wx + 0.11, wy + 0.3), (wx - 0.11, wy + 0.3)], '#ffffff')
     _poly(ctx, [(wx - 0.1, wy + 0.02), (wx + 0.1, wy + 0.02), (wx + 0.1, wy + 0.28), (wx - 0.1, wy + 0.28)], sky_c)
     ctx.line([(wx, wy + 0.02), (wx, wy + 0.28)], '#ffffff', 0.006)
     ctx.line([(wx - 0.1, wy + 0.15), (wx + 0.1, wy + 0.15)], '#ffffff', 0.006)
+    if p.get('cozy', 0):
+        for side in (-1, 1):
+            c = _pc(ctx)
+            x0 = wx + side * 0.1
+            _poly(c, [(x0 - 0.035, wy - 0.02), (x0 + 0.035, wy - 0.02), (x0 + 0.03 + 0.015 * side, wy + 0.34), (x0 - 0.03 + 0.015 * side, wy + 0.34)], p.get('curtain', '#e8708e'))
+            _ell(_pc(ctx), x0 + 0.012 * side, wy + 0.2, 0.012, 0.022, '#f6c453')
+        _poly(_pc(ctx), [(wx - 0.15, wy - 0.035), (wx + 0.15, wy - 0.035), (wx + 0.15, wy - 0.015), (wx - 0.15, wy - 0.015)], '#a86f45')
 
 
 @element('table')
@@ -504,16 +541,113 @@ def table(ctx, t, tl, p):
 
 @element('cake')
 def cake(ctx, t, tl, p):
-    """A birthday cake with flickering candles: x, y (bottom), s, candles."""
+    """A two-tier birthday cake with soft rounded tiers, cream, strawberries and flickering striped candles: x, y (bottom), s, candles."""
     x, y, s = p.get('x', 0.5), p.get('y', 0.68), p.get('s', 1.0)
-    _poly(ctx, [(x - 0.06 * s, y), (x + 0.06 * s, y), (x + 0.06 * s, y - 0.06 * s), (x - 0.06 * s, y - 0.06 * s)], '#f6c6d8')
-    _poly(ctx, [(x - 0.045 * s, y - 0.06 * s), (x + 0.045 * s, y - 0.06 * s), (x + 0.045 * s, y - 0.1 * s), (x - 0.045 * s, y - 0.1 * s)], '#fbe3ec')
-    n = int(p.get('candles', 3))
+    ar = ctx.ar
+    P_ = lambda u, v: (x + u * s * ar, y + v * s)
+    cream, pink, blue = '#fbf1dc', '#f6c3d4', '#a9c8ec'
+
+    def rrect(c, u0, v0, u1, v1, r, col):
+        (a0, b0), (a1, b1) = P_(u0, v0), P_(u1, v1)
+        c.d.rounded_rectangle([a0 * c.W, b0 * c.H, a1 * c.W, b1 * c.H], radius=r * s * c.H, fill=col)
+
+    def dot(c, u, v, r, col):
+        cx, cy = P_(u, v)
+        _ell(c, cx, cy, r * s, r * s, col)
+    _ell(_pc(ctx), x, y - 0.004 * s, 0.16 * s, 0.014 * s, '#e9e2f2')
+    rrect(_pc(ctx), -0.13, -0.095, 0.13, 0.0, 0.03, cream)
+    wave = _pc(ctx)
+    for k in range(14):
+        dot(wave, -0.12 + k * 0.0185, -0.012, 0.013, pink)
+    dots = _pc(ctx)
+    for u in (-0.08, -0.027, 0.027, 0.08):
+        dot(dots, u, -0.048, 0.013, '#fbe7a1')
+    rrect(_pc(ctx), -0.095, -0.165, 0.095, -0.088, 0.028, cream)
+    band = _pc(ctx)
+    for k in range(13):
+        dot(band, -0.125 + k * 0.0208, -0.092, 0.015, blue)
+    for u in (-0.075, 0.0, 0.075):
+        st_ = _pc(ctx)
+        cx, cy = P_(u, -0.096)
+        st_.d.polygon([(a * st_.W, b * st_.H) for a, b in (P_(u - 0.022, -0.106), P_(u + 0.022, -0.106), P_(u, -0.07))], fill='#e0526f')
+        dot(st_, u, -0.104, 0.021, '#e0526f')
+        lf = _pc(ctx)
+        for du in (-0.012, 0.0, 0.012):
+            dot(lf, u + du, -0.122, 0.008, '#5aa04a')
+    drip = _pc(ctx)
+    rrect(drip, -0.095, -0.165, 0.095, -0.145, 0.02, pink)
+    for k, u in enumerate((-0.072, -0.04, -0.005, 0.03, 0.065)):
+        L = 0.018 + 0.012 * (k % 2)
+        rrect(drip, u - 0.01, -0.15, u + 0.01, -0.15 + L, 0.01, pink)
+    for u in (-0.08, 0.08):
+        dot(_pc(ctx), u, -0.172, 0.014, '#d9415c')
+    n = max(1, int(p.get('candles', 3)))
+    gap = min(0.034, 0.15 / max(1, n - 1)) if n > 1 else 0
     for k in range(n):
-        cx = x + (k - (n - 1) / 2) * 0.022 * s
-        ctx.line([(cx, y - 0.1 * s), (cx, y - 0.135 * s)], '#7fb6e8', 0.005 * s)
-        fl = 1 + 0.25 * math.sin(t * 13 + k)
-        _ell(ctx, cx, y - 0.145 * s, 0.006 * s, 0.011 * s * fl, '#f6c453')
+        u = (k - (n - 1) / 2) * gap
+        cd = _pc(ctx)
+        rrect(cd, u - 0.0075, -0.215, u + 0.0075, -0.163, 0.004, '#bcd8f2')
+        for j in range(3):
+            rrect(cd, u - 0.0075, -0.205 + j * 0.016, u + 0.0075, -0.198 + j * 0.016, 0.002, '#f28bb0')
+        fl = 1 + 0.18 * math.sin(t * 13 + k * 1.7)
+        fx, fy = P_(u, -0.232)
+        fm = _pc(ctx)
+        _ell(fm, fx, fy, 0.011 * s, 0.017 * s * fl, '#f6c453')
+        _ell(fm, fx, fy + 0.004 * s, 0.005 * s, 0.008 * s * fl, '#f28b3a')
+
+
+@element('garland')
+def garland(ctx, t, tl, p):
+    """A string of felt light bulbs sagging across the wall: y (top), x0, x1, sag; bulbs glow gently."""
+    y, x0, x1, sag = p.get('y', 0.08), p.get('x0', 0.05), p.get('x1', 0.95), p.get('sag', 0.07)
+    n = int(p.get('bulbs', 14))
+    cols = ('#5a7fc4', '#9bd27a', '#f6c453', '#f28b3a', '#e0526f')
+    pts = [(x0 + (x1 - x0) * k / 40, y + sag * 4 * (k / 40) * (1 - k / 40)) for k in range(41)]
+    ctx.line(pts, '#3f7a4a', 0.003)
+    for k in range(n):
+        f = (k + 0.5) / n
+        bx = x0 + (x1 - x0) * f
+        by = y + sag * 4 * f * (1 - f)
+        b = _pc(ctx)
+        _poly(b, [(bx - 0.006, by), (bx + 0.006, by), (bx + 0.006, by + 0.018), (bx - 0.006, by + 0.018)], '#2f6a3a')
+        glow = 1 + 0.06 * math.sin(t * 3 + k)
+        _ell(b, bx, by + 0.045, 0.019 * glow, 0.032 * glow, cols[k % len(cols)])
+
+
+@element('balloon_bunch')
+def balloon_bunch(ctx, t, tl, p):
+    """Three felt balloons tied together, swaying: x, y (where the strings are tied), s."""
+    x, y, s = p.get('x', 0.1), p.get('y', 0.7), p.get('s', 1.0)
+    cols = p.get('colors', ('#e0526f', '#f6c453', '#5fb0d8'))
+    for k, (dx, h) in enumerate(((-0.03, 0.36), (0.0, 0.43), (0.032, 0.34))):
+        sw = 0.006 * math.sin(t * 1.3 + k * 1.9)
+        bx, by = x + (dx * s + sw) * ctx.ar * 2.2, y - h * s
+        ctx.line([(x, y), (bx, by + 0.06 * s)], '#8a8a8a', 0.0025)
+        b = _pc(ctx)
+        _ell(b, bx, by, 0.045 * s, 0.058 * s, cols[k % len(cols)])
+        _poly(b, [(bx - 0.006 * s, by + 0.066 * s), (bx + 0.006 * s, by + 0.066 * s), (bx, by + 0.054 * s)], cols[k % len(cols)])
+
+
+@element('toys')
+def toys(ctx, t, tl, p):
+    """Small things on the floor so a room is not empty: wooden blocks, a ball, a party hat, confetti; x0, x1, y (floor)."""
+    x0, x1, y = p.get('x0', 0.05), p.get('x1', 0.95), p.get('y', 0.97)
+    span = x1 - x0
+    for k, (f, col) in enumerate(((0.06, '#f28b3a'), (0.1, '#5fb0d8'))):
+        b = _pc(ctx)
+        bx = x0 + span * f
+        b.d.rounded_rectangle([(bx - 0.014) * b.W, (y - 0.05 - 0.004 * k) * b.H, (bx + 0.014) * b.W, (y - 0.002) * b.H], radius=0.006 * b.H, fill=col)
+    bl = _pc(ctx)
+    _ell(bl, x0 + span * 0.92, y - 0.03, 0.03, 0.03, '#e0526f')
+    _ell(_pc(ctx), x0 + span * 0.92, y - 0.03, 0.03, 0.008, '#fbf1dc')
+    hx = x0 + span * 0.56
+    _poly(_pc(ctx), [(hx - 0.018, y - 0.003), (hx + 0.018, y - 0.003), (hx + 0.003, y - 0.075)], '#9b7bc4')
+    _ell(_pc(ctx), hx + 0.003, y - 0.078, 0.009, 0.009, '#f6c453')
+    conf = _pc(ctx)
+    r = np.random.default_rng(int(p.get('seed', 5)))
+    cols = ('#e0526f', '#f6c453', '#5fb0d8', '#9bd27a', '#b99be0')
+    for k in range(int(p.get('confetti', 14))):
+        _ell(conf, x0 + span * r.random(), y - 0.012 - 0.03 * r.random(), 0.006, 0.006, cols[k % 5])
 
 
 @element('gift')

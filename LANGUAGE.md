@@ -51,6 +51,9 @@ Animals: `cat`, `fox`, `dog`, `bunny`, `bear`, `hedgehog`, `mouse`, `frog`, `hen
 | `lamp` | A floor lamp: x, y (floor), s, on=1 glows. |
 | `bed` | A bed with a blanket: x, y (floor), s, color. |
 | `ground` | Flat ground from top down: kind=meadow\|sand\|road\|path. |
+| `garland` | A string of felt light bulbs across the wall: y (top), x0, x1, sag, bulbs. |
+| `balloon_bunch` | Three felt balloons tied together, swaying: x, y (where the strings are tied), s. |
+| `toys` | Small things on the floor so a room is not empty: blocks, a ball, a party hat, confetti: x0, x1, y. |
 
 Elements have no seconds and no actions. To move one, use its parameters: `rocket(flying=1,rise=0.3,tilt=20,spin=40)`; a falling rocket is `rise=-0.1` with `spin`, a crashed one `tilt=84`.
 
@@ -68,6 +71,8 @@ Elements have no seconds and no actions. To move one, use its parameters: `rocke
 | `notes` | Music notes float up from at=x,y. |
 | `smoke` | Puffy felt smoke clouds that billow out sideways and up from at=x,y (a rocket launch, a crash, a cough); r = how far they spread; color=#efebe4. |
 
+`room(cozy=1)` adds striped wallpaper, a panelled lower wall, a rug, curtains and a picture (params `panel`, `curtain`, `picture`).
+
 ## Speech bubbles
 `girl say "Привет, котик!" 3-5s` puts a felt speech bubble over the speaker, with a tail pointing at its head. The bubble fades in and out, follows the speaker while it walks and stays above everything else in the frame. Any letters work, Cyrillic too. Long lines wrap by themselves; `\n` inside the quotes always starts a new line: `bunny say "Первая строка\nвторая" 1-3s`.
 
@@ -80,7 +85,7 @@ Params: `size` (letter height, 0.05), `width` (widest line as a fraction of the 
 `voice "Две тысячи двадцать шестой год. [pause] Человечество готово." at 0.3s who=deep` speaks the words from that second; the music gets quieter under speech. Voices (ElevenLabs): `narrator`, `deep`, `odessa`, `gogi`, `fairy`, `calm`. Tags in square brackets set the delivery: `[excited]`, `[whispering]`, `[sighs]`, `[pause]`, `[deadpan]`. Each line is generated once and cached. It needs your own ElevenLabs key as `"elevenlabs_key"` in `~/extella-mult/config.json`; without a key use a ready recording: `voice file=~/line.mp3 at 2s`.
 
 ## Films as Extella experts
-In Extella a film is an expert with `cspl=scene`; `{{name}}` places are filled from the run parameters, and the handler runs `check`, `render` or `status`. `extella/templates/` holds eight felt stories.
+In Extella a film is an expert with `cspl=scene`; `{{name}}` places are filled from the run parameters, `{{a|b|5}}` takes the first of a and b that was given, else the last word (`{{candles|age|5}}`), and the handler runs `check`, `render` or `status`. `extella/templates/` holds eight felt stories.
 
 ## Other styles
 The handler also has a drawn `style=2d` and an experimental Blender-based `style=3d`; the agent uses felt only.

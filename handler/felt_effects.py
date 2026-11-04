@@ -25,6 +25,31 @@ _GLYPHS = {}
 LETTER_COLORS = ('#f28b6b', '#f6c453', '#4f9fd0', '#f2a0b8', '#8cc26a', '#a98bd8', '#f4a05a', '#e0526f')
 
 
+def _puffy_glyph(ch, px):
+    """One letter as a puffy felt cut-out: the open Caveat font (OFL), thickened and rounded so it reads like a stuffed letter."""
+    key = (ch, px)
+    if key not in _GLYPHS:
+        import os
+        from PIL import Image, ImageDraw, ImageFont
+        from scipy.ndimage import gaussian_filter
+        path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'assets', 'fonts', 'Caveat.ttf')
+        fnt = ImageFont.truetype(path, px)
+        try:
+            fnt.set_variation_by_axes([700])
+        except Exception:
+            pass
+        l, tp, r, b = fnt.getbbox(ch)
+        pad = int(px * 0.18)
+        im = Image.new('L', (r - l + 2 * pad, b - tp + 2 * pad), 0)
+        ImageDraw.Draw(im).text((pad - l, pad - tp), ch, font=fnt, fill=255)
+        a = np.asarray(im, np.float32) / 255.0
+        a = gaussian_filter(a, px * 0.02)
+        a = np.clip((a - 0.3) * 6, 0, 1)
+        a = gaussian_filter(a, 1.2)
+        _GLYPHS[key] = (a, pad - l, pad - tp, fnt.getlength(ch))
+    return _GLYPHS[key]
+
+
 def _say_font(px):
     if ('say', px) not in _GLYPHS:
         import os
@@ -207,6 +232,40 @@ def say_words(ctx, lay):
     y0 = (lay['top'] + lay['bottom']) / 2 - lay['lh'] * len(lay['lines']) / 2
     for i, s in enumerate(lay['lines']):
         ctx.d.text((cx, y0 + lay['lh'] * (i + 0.5)), s, font=lay['fnt'], fill='#4a3228', anchor='mm')
+
+
+def felt_letters(ctx, t, tl, st, f):
+    """'text ... font' in felt: every letter is its own stuffed felt piece in its own colour, popping in one by one;
+    centred at x,y; size = letter height as a fraction of the frame; color=#rrggbb makes them all one colour."""
+    from PIL import Image
+    x, y = st.pos if isinstance(st.pos, tuple) else (0.5, 0.5)
+    px = max(8, int(st.params.get('size', 0.12) * ctx.H * 1.25))
+    one = st.params.get('one_color')
+    text = st.text
+    track = px * 0.06
+    adv = [_puffy_glyph(ch, px)[3] + track for ch in text]
+    total = sum(adv) - track
+    cx0 = x * ctx.W - total / 2
+    n = max(1, sum(1 for ch in text if ch != ' '))
+    shown = min(1.0, f * 1.08) * n
+    i = 0
+    pen = cx0
+    for ch, w in zip(text, adv):
+        if ch != ' ':
+            k = min(1.0, max(0.0, (shown - i) * 2.5))
+            if k > 0:
+                a, ox, oy, _ = _puffy_glyph(ch, px)
+                col = one or LETTER_COLORS[i % len(LETTER_COLORS)]
+                rgb_ = tuple(int(col[j:j + 2], 16) for j in (1, 3, 5))
+                g = np.zeros(a.shape + (4,), np.uint8)
+                g[..., :3] = rgb_
+                g[..., 3] = (a * 255).astype(np.uint8)
+                im = Image.fromarray(g, 'RGBA').rotate(((i * 37) % 5 - 2) * 1.0, resample=Image.BICUBIC, expand=False)
+                bounce = (1 - k) * px * 0.25
+                pc = ctx.piece() if hasattr(ctx, 'piece') else ctx
+                pc.img.alpha_composite(im, (int(pen - ox), int(y * ctx.H - px * 0.62 - oy - bounce)))
+            i += 1
+        pen += w
 
 
 @effect('snow')

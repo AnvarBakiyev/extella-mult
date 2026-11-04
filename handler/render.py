@@ -168,6 +168,9 @@ def render_frame(prog, t, out_size):
                 layer(lambda c, st=st, f=f: effs[st.words[0]](c, t, tl, st, f), 0.6)
             else:
                 EFFECTS[st.words[0]](ctx, t, tl, st, f)
+        elif felt and prog.style == 'felt' and 'font' in st.words:
+            from .felt_effects import felt_letters
+            layer(lambda c, st=st, f=f: felt_letters(c, t, tl, st, f), 1.0, keep=True)
         else:
             EFFECTS['font_text' if 'font' in st.words else 'handwrite'](ctx, t, tl, st, f)
     # speech bubbles go last, over everything, so the words are never covered

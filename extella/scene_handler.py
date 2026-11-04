@@ -31,10 +31,14 @@ def scene(code = "", filtered_source_code = "", func_name = "", **extra):
         return {"status": "running", "job": job, "last": text.strip().splitlines()[-1:] }
     source = code or filtered_source_code or ""
     # {{placeholders}} from kwargs, as godot_script does; an unfilled one is an error, not an empty string
+    # {{a|b|5}}: the first of a, b that was given, else the last word as it stands
     def fill(m):
-        k = m.group(1)
-        return str(params[k]) if k in params else m.group(0)
-    program = re.sub(r"\{\{(\w+)\}\}", fill, source)
+        alts = m.group(1).split("|")
+        for k in alts:
+            if params.get(k) not in (None, ""):
+                return str(params[k])
+        return alts[-1] if len(alts) > 1 else m.group(0)
+    program = re.sub(r"\{\{([^{}]+)\}\}", fill, source)
     left = sorted(set(re.findall(r"\{\{(\w+)\}\}", program)))
     lines = len([l for l in program.splitlines() if l.strip() and not l.strip().startswith("#")])
     if left:
@@ -49,7 +53,7 @@ def scene(code = "", filtered_source_code = "", func_name = "", **extra):
     if chk.returncode != 0:
         return {"status": "rejected", "errors": msg.replace("ERROR: ", ""), "lines": lines, "film": func_name}
     if mode == "check":
-        return {"status": "ok", "summary": msg.replace("ok: ", ""), "lines": lines, "film": func_name, "handler_version": 1}
+        return {"status": "ok", "summary": msg.replace("ok: ", ""), "lines": lines, "film": func_name, "handler_version": 2}
     if mode != "render":
         return {"status": "error", "error": "mode must be check, render or status"}
     log = open(os.path.join(out, jid + ".log"), "w")

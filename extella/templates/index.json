@@ -1,7 +1,7 @@
 [
  {
   "name": "film_felt_birthday",
-  "description": "Felt, 16 s: a birthday at home. The hero comes into the room, mom waits by the table with a cake, the hero jumps for joy, hearts and balloons, a greeting. Fill: hero: girl boy mom dad granny grandpa, pet: cat fox dog bunny bear, title.",
+  "description": "Felt, 10 s: a birthday in a cosy room. A cake with candles, a garland and balloons; the pet, a hedgehog and a mouse come in, the hero and the pet say a line, everyone jumps for joy, a greeting in felt letters. Fill: hero: girl boy mom dad granny grandpa, pet: cat fox dog bunny bear, title. Optional: age or candles (candles on the cake, 5 if neither is given), hero_line, pet_line.",
   "params": {
    "hero": "girl",
    "pet": "cat",
