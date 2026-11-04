@@ -19,7 +19,7 @@ ANIMALS = {  # fur, belly, ears, tail, muzzle, feet: everything else comes from 
     'dog': ('#c99a62', '#f4e6cf', 'floppy', 'short', 'dog', ''),
     'bunny': ('#f2eee8', '#ffd9e2', 'long', 'puff', 'bunny', ''),
     'bear': ('#9a6a46', '#d9b48a', 'round', 'none', 'bear', ''),
-    'hedgehog': ('#6b4a36', '#f4e6cf', 'small', 'none', 'none', ''),  # its own shape, see _hedgehog: only the two colours are used
+    'hedgehog': ('#6b4a36', '#f4e6cf', 'small', 'tufts', 'snout', ''),  # fur is the coat of spines; color= changes it
     'mouse': ('#b9aca0', '#f1e8e0', 'big', 'thin', 'mouse', ''),
     'frog': ('#7cc45a', '#dcf2ae', 'bulge', 'none', 'frog', ''),
     'hen': ('#f4e2c0', '#fff7e6', 'comb', 'feathers', 'beak', '#f08a3a'),  # feet: two feet of this colour instead of four legs
@@ -82,14 +82,12 @@ def _front(st, act):
     """How far the character reaches forward of its x, in its own units."""
     if st.words[0] in PEOPLE:
         return 0.2
-    if st.words[0] == 'hedgehog':
-        return 0.5
     return 0.3 if act == 'sit' else 0.42
 
 
 def _rear(st, act):
     """How far the character reaches behind its x, in its own units."""
-    return 0.45 if st.words[0] == 'hedgehog' else 0.22 if act == 'sit' else 0.28
+    return 0.22 if act == 'sit' else 0.28
 
 
 def _from_behind(p):
@@ -150,8 +148,6 @@ def _shoulder(st, act, x, y, facing, ar):
     """Where an arm or a paw starts, in frame coordinates."""
     if st.words[0] in PEOPLE:
         u, v = 0.02, -0.56
-    elif st.words[0] == 'hedgehog':
-        u, v = 0.2, -0.2
     else:
         u, v = (0.1, -0.42) if act == 'sit' else (0.18, -0.35)
     return x + u * _size(st) * ar * facing, y + v * _size(st)
@@ -176,7 +172,7 @@ def _aims(st, t, x, y, facing):
     if _from_behind(p):
         if st is not p:
             return {}
-        u, v = (0.0, -0.42) if m.words[0] == 'hedgehog' else (-0.02, -0.3)
+        u, v = -0.02, -0.3
         fx, fy = mx + u * so * ar * side, my + v * so
         return {'front': local(fx, fy), 'back': local(fx + side * 0.1 * so * ar, fy - 0.06 * so)}
     if p.words[1] == 'hug':  # round the other one's back
@@ -612,6 +608,12 @@ def _muzzle_bear(M, F, hx, hy, hr, belly, fur, mood):
     _mouth(F, mood, hx + 0.03, hy + hr * 0.54, 0.05, hr * 0.09, 0.012)
 
 
+def _ears_small(E, Ei, hx, hy, hr, fur, belly):
+    for ex in (-0.13, 0.17):
+        E.circle(hx + ex, hy - hr * 0.95, 0.06, _mix(belly, fur, 0.2))
+        Ei.circle(hx + ex, hy - hr * 0.95, 0.03, '#f4b8c4')
+
+
 def _ears_big(E, Ei, hx, hy, hr, fur, belly):
     for ex in (-0.2, 0.22):
         E.circle(hx + ex, hy - hr * 0.8, 0.15, fur)
@@ -646,10 +648,29 @@ def _tail_feathers(T, x, y, t, fur, belly):
         T.ellipse(x - 0.04, y - 0.1 - 0.05 * k, 0.17, 0.07, _dark(fur, 0.92), angle=a)
 
 
+def _tail_tufts(T, x, y, t, fur, belly):
+    """No tail: a hedgehog's coat, soft round tufts along its back."""
+    for k in range(9):
+        a = math.pi * (0.5 + 1.0 * k / 8)
+        T.circle(x + 0.3 + 0.36 * math.cos(a), y - 0.03 + 0.28 * math.sin(a), 0.1, fur)
+
+
 def _whiskers(F, hx, hy, hr, col='#5a5a66'):
     for sgn, ex in ((-1, -0.09), (1, 0.15)):
         for dy in (0.02, 0.07):
             F.line([(hx + ex, hy + hr * 0.3 + dy), (hx + ex + sgn * 0.13, hy + hr * 0.27 + dy * 1.6)], col, 0.007)
+
+
+def _muzzle_snout(M, F, hx, hy, hr, belly, fur, mood):
+    """A hedgehog's face: dark tufts round the back of the head, a pale face that narrows into a cone, a black bead nose."""
+    for k in range(7):
+        a = math.pi * (0.85 + 0.75 * k / 6)
+        M.circle(hx + hr * 0.98 * math.cos(a), hy + hr * 0.98 * math.sin(a), 0.07, fur)
+    M.ellipse(hx + hr * 0.2, hy + hr * 0.2, hr * 0.82, hr * 0.74, belly)
+    M.poly([(hx + hr * 0.4, hy + hr * 0.02), (hx + hr * 1.5, hy + hr * 0.42), (hx + hr * 1.5, hy + hr * 0.56), (hx + hr * 0.4, hy + hr * 0.92)], belly)
+    F.circle(hx + hr * 1.55, hy + hr * 0.49, 0.048, '#2a2020')
+    F.circle(hx + hr * 1.5, hy + hr * 0.42, 0.013, '#ffffff')
+    _mouth(F, mood, hx + hr * 0.68, hy + hr * 0.68, 0.05, hr * 0.1, 0.011)
 
 
 def _muzzle_mouse(M, F, hx, hy, hr, belly, fur, mood):
@@ -692,12 +713,12 @@ def _muzzle_trunk(M, F, hx, hy, hr, belly, fur, mood):
     _mouth(F, mood, hx - 0.09, hy + hr * 0.62, 0.04, hr * 0.08, 0.011, smile=False)
 
 
-EARS = {'pointy': _ears_pointy, 'long': _ears_long, 'round': _ears_round, 'floppy': _ears_floppy,
+EARS = {'pointy': _ears_pointy, 'long': _ears_long, 'round': _ears_round, 'floppy': _ears_floppy, 'small': _ears_small,
         'big': _ears_big, 'bulge': _ears_bulge, 'comb': _ears_comb, 'flap': _ears_flap}
 TAILS = {'long': _tail_long, 'bushy': _tail_bushy, 'short': _tail_short, 'puff': _tail_puff, 'none': _tail_none,
-         'thin': _tail_thin, 'feathers': _tail_feathers}
+         'thin': _tail_thin, 'feathers': _tail_feathers, 'tufts': _tail_tufts}
 MUZZLES = {'cat': _muzzle_cat, 'fox': _muzzle_fox, 'dog': _muzzle_dog, 'bunny': _muzzle_bunny, 'bear': _muzzle_bear,
-           'mouse': _muzzle_mouse, 'frog': _muzzle_frog, 'beak': _muzzle_beak, 'trunk': _muzzle_trunk}
+           'snout': _muzzle_snout, 'mouse': _muzzle_mouse, 'frog': _muzzle_frog, 'beak': _muzzle_beak, 'trunk': _muzzle_trunk}
 
 
 def _eyes(F, hx, hy, hr, x, t, mood, gaps=(-0.07, 0.12)):
@@ -806,88 +827,6 @@ def _animal_head(piece, hx, hy, hr, fur, belly, ears, muzzle, x, t, mood):
         F.circle(hx + ex, hy + hr * 0.3, 0.04, '#f4a6b4')
 
 
-def _hedgehog(ctx, t, tl, st, f):
-    """A hedgehog in profile, a drop-shaped body: the pale face narrows forward into a cone with a black bead nose; one solid dark
-    cap of soft tufts covers the back and the crown and leaves the face, cheek and belly bare; small round ears peek out of it;
-    short paws. color= changes the cap. mood= works as for animals. Sitting, the whole drop tips back onto its seat.
-    hug, give, hold_hands and sleep work as for people, see _doll. Asleep it curls up on the pillow, nose first, under a small blanket."""
-    fur, belly = ANIMALS['hedgehog'][:2]
-    fur = st.params.get('color', fur)
-    x, y, facing = _place(st, f)
-    s = st.params.get('size', 0.22)
-    act = _act(st, t)
-    P = _pose(act, t + x * 2.3, tl, st.t1 - st.t0)
-    asleep = act == 'sleep'
-    mood = st.params.get('mood', 'sleepy' if asleep else 'happy')
-    if asleep:  # the nose lies on the pillow, the body goes on behind it
-        Local(ctx.piece(), x, y, s, facing).ellipse(-0.02, -0.07, 0.27, 0.09, '#fbf6ee')
-        x, facing = x + 0.62 * s * ctx.ar * facing, -facing
-    yb = y - (P['bob'] * 1.5 + P['lift']) * s
-    piece = lambda: Local(ctx.piece(), x, yb, s, facing)
-    speed = {'walk': 1.6, 'run': 2.6}.get(act, 0.0)
-    step = math.sin((t + x * 2.3) * 2 * math.pi * speed)
-    tilt = 0.22 if act == 'sit' else 0.05 * step - P['head'] * 0.45 + (0.1 * P['tuck'] if act == 'jump' else 0.0)
-    sn, cs = math.sin(tilt), math.cos(tilt)
-
-    def at(u, v):  # the body tips around its seat
-        return -0.15 + (u + 0.15) * cs + (v + 0.08) * sn, -0.08 - (u + 0.15) * sn + (v + 0.08) * cs
-    paw = _mix(belly, fur, 0.3)
-
-    def foot(L, u, lift, shade):
-        L.ellipse(u, -0.09 - lift, 0.065, 0.1 if act == 'sit' else 0.075, _dark(paw, shade))
-        L.ellipse(u + 0.025, -0.03 - lift, 0.075, 0.032, _dark(paw, shade))
-    lift = 0.04 if speed else 0.0
-    if act == 'jump':
-        lift = 0.0
-    Lb = piece()
-    if act == 'sit':
-        foot(Lb, 0.24, 0.0, 0.85)
-    elif not asleep:
-        foot(Lb, -0.2, max(0, -step) * lift + 0.05 * P['tuck'], 0.85)
-        foot(Lb, 0.2, max(0, step) * lift + 0.05 * P['tuck'], 0.85)
-    far = piece()
-    far.circle(*at(0.28, -0.655), 0.06, _mix(belly, fur, 0.2))
-    top = bezier([(0.57, -0.33), (0.44, -0.4), (0.36, -0.7), (-0.12, -0.8)])
-    back = bezier([(-0.12, -0.8), (-0.46, -0.82), (-0.64, -0.48), (-0.54, -0.24)])
-    under = bezier([(-0.54, -0.24), (-0.48, -0.06), (-0.2, -0.07), (0.02, -0.09)]) + bezier([(0.02, -0.09), (0.3, -0.06), (0.48, -0.14), (0.57, -0.24)])
-    piece().poly([at(u, v) for u, v in top + back + under], belly)
-    crown = bezier([(0.2, -0.675), (0.1, -0.76), (0.0, -0.8), (-0.12, -0.8)])
-    rump = bezier([(-0.54, -0.24), (-0.5, -0.12), (-0.42, -0.08), (-0.32, -0.08)])
-    edge = bezier([(-0.32, -0.08), (-0.04, -0.2), (-0.12, -0.52), (0.2, -0.675)])
-    C = piece()
-    C.poly([at(u, v) for u, v in crown + back + rump + edge], fur)
-    outer = crown + back + rump
-    for u, v in outer[::5]:  # the outline of the cap is a row of soft bumps, not rays
-        C.circle(*at(u, v), 0.075, fur)
-    for u, v in edge[:15:4]:
-        C.circle(*at(u, v), 0.05, fur)
-    for rad, n in ((0.16, 5), (0.27, 8), (0.37, 10)):  # tufts lying back along the coat, barely lighter than it
-        for k in range(n):
-            a = math.pi * (0.68 + 0.9 * (k + 0.5 * (n % 2)) / n)
-            u, v = -0.2 + rad * math.cos(a), -0.44 + rad * 0.95 * math.sin(a)
-            C.ellipse(*at(u, v), 0.07, 0.038, _mix(fur, '#ffffff', 0.07), angle=a - tilt)
-    E = piece()
-    E.circle(*at(0.04, -0.62), 0.072, _mix(belly, fur, 0.2))
-    E.circle(*at(0.045, -0.615), 0.038, '#f4b8c4')
-    F = piece()
-    F.circle(*at(0.2, -0.29), 0.05, '#f4a6b4')
-    ex, ey = at(0.3, -0.45)
-    _eyes(F, ex, ey, 0, x, t, mood, gaps=(0.0,))
-    nx, ny = at(0.59, -0.285)
-    F.circle(nx, ny, 0.055, '#2a2020')
-    F.circle(nx - 0.016, ny - 0.018, 0.014, '#ffffff')
-    mx, my = at(0.4, -0.235)
-    _mouth(F, mood, mx, my, 0.05, 0.03, 0.011)
-    if act == 'sit':
-        Lf = piece()
-        foot(Lf, 0.04, 0.0, 1.0)
-    if asleep:
-        b = 0.014 * math.sin(t * 1.7)
-        piece().poly(bezier([(-0.72, 0.02), (-0.72, -0.5 - b), (-0.1, -0.5 - b), (-0.02, 0.02)]), st.params.get('blanket', '#9fc8e8'))
-    else:
-        _carry(piece, st, t, x, yb, facing, (0.3, -0.14), _mix(belly, fur, 0.2), paw)
-
-
 def _bird(ctx, t, tl, st, f):
     """A bird on the same base: a big round head, a small body with a pale belly, button eye, cheek; a wing and a beak instead of legs and muzzle.
     mood= works as for animals, on the eye and brow only: a beak has no mouth to change."""
@@ -918,5 +857,4 @@ for _n, _look in PEOPLE.items():
     actor(_n, PERSON_ACTIONS)(lambda ctx, t, tl, st, f, _look=_look: _doll(ctx, t, tl, st, f, _look))
 for _n, _look in ANIMALS.items():
     actor(_n, ANIMAL_ACTIONS)(lambda ctx, t, tl, st, f, _look=_look: _animal(ctx, t, tl, st, f, _look))
-actor('hedgehog', ANIMAL_ACTIONS)(_hedgehog)
 actor('bird', ['fly', 'stand'])(_bird)
