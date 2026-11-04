@@ -1,7 +1,8 @@
 film title="{{title}}" style=felt fps=24 size=1920x804
 
 scene 0-5s: room(time=day,window=0.84,cozy=1,picture=0.16) garland(y=0.04,x0=0.02,x1=0.98,sag=0.04) balloon_bunch(x=0.05,y=0.74) balloon_bunch(x=0.96,y=0.74) table(x=0.5,y=0.97) cake(x=0.5,y=0.79,candles={{candles|age|5}}) gift(x=0.12,y=0.97,color=#e06c8c) gift(x=0.89,y=0.97) toys(x0=0.04,x1=0.96,y=0.99)
-{{hero}} stand at 0.33 0-5s y=0.97 facing=1
+{{hero}} stand at 0.33 0-3.2s y=0.97 facing=1 mood=surprised
+{{hero}} stand at 0.33 3.2-5s y=0.97 facing=1 mood=happy
 {{pet}} walk from offright to 0.66 0-3s y=0.98
 hedgehog walk from offright to 0.76 0.5-3.5s y=0.98
 mouse walk from offleft to 0.2 1-4s y=0.98

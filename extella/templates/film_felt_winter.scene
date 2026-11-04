@@ -2,7 +2,7 @@ film title="{{title}}" style=felt fps=24 size=1920x804
 music mood=cozy key=F tempo=80
 scene 0-7s: sky(time=night) snow_ground(top=0.66) house(x=0.3,y=0.7,s=0.9,lit=1,color=#b99be0) pine_tree(x=0.08,y=0.72,snow=1) pine_tree(x=0.9,y=0.7,s=1.3,snow=1) snowman(x=0.7,y=0.92)
 {{hero}} walk from offleft to 0.48 0-6s y=0.96
-{{hero}} stand at 0.48 6-7s y=0.96
+{{hero}} stand at 0.48 6-7s y=0.96 mood=surprised
 {{pet}} walk from offleft to 0.36 1-6s y=0.97
 {{pet}} sit at 0.36 6-7s y=0.97
 effect snow 0-7s

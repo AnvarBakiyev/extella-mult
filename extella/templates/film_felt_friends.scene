@@ -2,15 +2,17 @@ film title="{{title}}" style=felt fps=24 size=1920x804
 music mood=bright key=G tempo=112
 scene 0-7s: sky house_row(base=0.8) felt_sun(x=0.88,y=0.14,r=0.06) puff_cloud(x=0.2,y=0.12)
 {{hero}} walk from offleft to 0.42 0-6s y=0.97
-{{hero}} wave at 0.42 6-7s y=0.97
+{{hero}} wave at 0.42 6-7s y=0.97 mood=surprised
 {{friend}} walk from offright to 0.6 0-6s y=0.97
-{{friend}} wave at 0.6 6-7s y=0.97 facing=-1
+{{friend}} wave at 0.6 6-7s y=0.97 facing=-1 mood=surprised
 {{pet}} walk from offleft to 0.28 1-6s y=0.98
 {{pet}} sit at 0.28 6-7s y=0.98
 fade in 0-1s
 scene 7-14s: sky house_row(base=0.8) felt_sun(x=0.88,y=0.14,r=0.06) puff_cloud(x=0.2,y=0.12)
-{{hero}} dance at 0.42 7-14s y=0.97
-{{friend}} dance at 0.6 7-14s y=0.97 facing=-1
+{{friend}} stand at 0.6 7-9s y=0.97 facing=-1
+{{hero}} hug {{friend}} 7-9s
+{{hero}} dance at 0.42 9-14s y=0.97
+{{friend}} dance at 0.6 9-14s y=0.97 facing=-1
 {{pet}} jump at 0.28 7-14s y=0.98
 effect hearts 7-14s at=0.51,0.55
 text "{{title}}" font at 0.5,0.18 size=0.12 color=#c5583e 8-12.5s hold=1

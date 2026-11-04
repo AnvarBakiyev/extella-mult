@@ -2,13 +2,15 @@ film title="{{title}}" style=felt fps=24 size=1920x804
 music mood=bright key=D tempo=104
 scene 0-7s: sky(time=dawn) hills(top=0.62) school(x=0.72,y=0.8,s=1.0) round_tree(x=0.15,y=0.7) fence(y=0.88,x0=0,x1=0.4) felt_sun(x=0.2,y=0.2,r=0.07)
 {{hero}} walk from offleft to 0.45 0-6s y=0.96
-{{hero}} stand at 0.45 6-7s y=0.96
+{{hero}} stand at 0.45 6-7s y=0.96 mood=surprised
 {{friend}} run from offright to 0.6 2-6s y=0.96
 {{friend}} wave at 0.6 6-7s y=0.96 facing=-1
 fade in 0-1s
 scene 7-14s: sky hills(top=0.62) school(x=0.72,y=0.8,s=1.0) round_tree(x=0.15,y=0.7) fence(y=0.88,x0=0,x1=0.4)
-{{hero}} dance at 0.45 7-14s y=0.96
-{{friend}} dance at 0.6 7-14s y=0.96 facing=-1
+{{friend}} stand at 0.6 7-9s y=0.96 facing=-1
+{{hero}} hold_hands {{friend}} 7-9s
+{{hero}} dance at 0.45 9-14s y=0.96
+{{friend}} dance at 0.6 9-14s y=0.96 facing=-1
 effect notes 7-14s at=0.52,0.45
 text "{{title}}" font at 0.5,0.18 size=0.1 color=#3a5a9a 8-12s hold=1
 sfx chime at 7.5s

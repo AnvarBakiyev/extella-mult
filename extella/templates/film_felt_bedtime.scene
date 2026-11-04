@@ -1,8 +1,12 @@
 film title="{{title}}" style=felt fps=24 size=1920x804
 music mood=calm key=F tempo=66
 scene 0-14s: room(time=night,window=0.7) bed(x=0.3,y=0.95,s=1.3) lamp(x=0.08,y=0.95)
-{{hero}} sit at 0.33 0-14s y=0.79 size=0.3
-{{pet}} sit at 0.52 0-14s y=0.97
+{{hero}} sit at 0.33 0-5s y=0.79 size=0.3 mood=happy
+{{hero}} sit at 0.33 5-8s y=0.79 size=0.3 mood=sleepy
+{{hero}} sleep 8-14s size=0.4
+{{pet}} sit at 0.62 0-5s y=0.97 facing=-1
+{{pet}} sit at 0.62 5-8s y=0.97 facing=-1 mood=sleepy
+{{pet}} sleep at 0.62 8-14s y=0.97
 effect notes 1-13s at=0.45,0.45
 effect sparkles 0-14s at=0.7,0.33 r=0.1
 fade in 0-1.5s

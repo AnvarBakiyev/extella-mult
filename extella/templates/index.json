@@ -10,7 +10,7 @@
  },
  {
   "name": "film_felt_park",
-  "description": "Felt, 16 s: a walk in the park. The hero walks across the hills with a pet, butterflies, after a short rain a rainbow, the hero waves. Fill: hero: girl boy mom dad granny grandpa, pet: cat fox dog bunny bear, title.",
+  "description": "Felt, 16 s: a walk in the park. The hero walks across the hills with a pet, butterflies, sad in a short rain, then a rainbow, the hero waves and hugs the pet. Fill: hero: girl boy mom dad granny grandpa, pet: cat fox dog bunny bear, title.",
   "params": {
    "hero": "boy",
    "pet": "dog",
@@ -19,7 +19,7 @@
  },
  {
   "name": "film_felt_school",
-  "description": "Felt, 14 s: the first day at school. Dawn, the hero walks to school, a friend runs up and waves, they dance together. Fill: hero: girl boy mom dad granny grandpa, friend (another person), title.",
+  "description": "Felt, 14 s: the first day at school. Dawn, the hero walks to school, a friend runs up and waves, they hold hands and dance together. Fill: hero: girl boy mom dad granny grandpa, friend (another person), title.",
   "params": {
    "hero": "girl",
    "friend": "boy",
@@ -54,7 +54,7 @@
  },
  {
   "name": "film_felt_bedtime",
-  "description": "Felt, 14 s: bedtime. Night in the room, the hero yawns on the bed, the lamp glows, a lullaby plays and stars twinkle in the window. Fill: hero: girl boy mom dad granny grandpa, pet: cat fox dog bunny bear, title.",
+  "description": "Felt, 14 s: bedtime. Night in the room, the hero sits on the bed, gets sleepy, lies down and falls asleep, the pet falls asleep by the bed; the lamp glows, a lullaby plays and stars twinkle in the window. Fill: hero: girl boy mom dad granny grandpa, pet: cat fox dog bunny bear, title.",
   "params": {
    "hero": "boy",
    "pet": "bear",
@@ -63,7 +63,7 @@
  },
  {
   "name": "film_felt_friends",
-  "description": "Felt, 14 s: friends meet in a colourful street. The hero and a friend walk towards each other, wave and dance, hearts float up. Fill: hero: girl boy mom dad granny grandpa, friend (another person), pet: cat fox dog bunny bear, title.",
+  "description": "Felt, 14 s: friends meet in a colourful street. The hero and a friend walk towards each other, wave, hug and dance, hearts float up. Fill: hero: girl boy mom dad granny grandpa, friend (another person), pet: cat fox dog bunny bear, title.",
   "params": {
    "hero": "girl",
    "friend": "granny",
