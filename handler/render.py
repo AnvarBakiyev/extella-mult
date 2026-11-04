@@ -88,8 +88,9 @@ def render_frame(prog, t, out_size):
             lc.piece = piece
             return lc
 
-        night = prog.style == 'felt' and not any(n == 'room' for n, _ in sc.elements) and any(n == 'sky' and p.get('time') == 'night' for n, p in sc.elements)
-        room_night = prog.style == 'felt' and any(n == 'room' and p.get('time') == 'night' for n, p in sc.elements)
+        INSIDE = ('room', 'kitchen', 'classroom', 'shop', 'underwater', 'city_night')  # places that draw their own background, no sky needed
+        night = prog.style == 'felt' and (any(n == 'city_night' for n, _ in sc.elements) or (not any(n in INSIDE for n, _ in sc.elements) and any(n == 'sky' and p.get('time') == 'night' for n, p in sc.elements)))
+        room_night = prog.style == 'felt' and any(n in INSIDE and p.get('time') == 'night' for n, p in sc.elements)
         tint = (0.55, 0.6, 0.85) if night else ((0.82, 0.78, 0.72) if room_night else None)
 
         def shade(img):
@@ -138,14 +139,14 @@ def render_frame(prog, t, out_size):
                     still[0] = False
     order = list(sc.elements)
     if prog.style == 'felt':  # depth order whatever order the program lists them in: sky, far, ground, the rest
-        DEPTH = {'sky': 0, 'felt_sky': 0, 'room': 0, 'mountains': 1, 'planet': 1, 'rainbow': 1, 'felt_sun': 1, 'puff_cloud': 1,
+        DEPTH = {'sky': 0, 'felt_sky': 0, 'room': 0, 'kitchen': 0, 'classroom': 0, 'shop': 0, 'underwater': 0, 'city_night': 0, 'mountains': 1, 'planet': 1, 'rainbow': 1, 'felt_sun': 1, 'puff_cloud': 1,
                  'hills': 2, 'ground': 2, 'snow_ground': 2, 'moon_ground': 2, 'felt_sea': 2, 'river': 3}
         order = sorted(order, key=lambda e: DEPTH.get(e[0], 4))
-        if any(n == 'room' for n, _ in order):
+        if any(n in INSIDE for n, _ in order):
             order = [e for e in order if e[0] not in ('sky', 'felt_sky')]
     for k, (name, params) in enumerate([] if prog.style in ('3d', 'toon') else order):
         if felt:
-            layer(lambda c, name=name, params=params: elems[name](c, t, tl, params), 0.35 if k == 0 else 1.0, keep=(name in ('sky', 'felt_sky')), cache=True)
+            layer(lambda c, name=name, params=params: elems[name](c, t, tl, params), 0.35 if k == 0 else 1.0, keep=(name in ('sky', 'felt_sky', 'city_night')), cache=True)
         else:
             elems[name](ctx, t, tl, params)
     # actors, effects, text in program order; 'hold=1' keeps an effect at its end state until the scene ends

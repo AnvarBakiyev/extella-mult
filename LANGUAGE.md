@@ -65,6 +65,27 @@ Any person can look different: `skin=light|tan|brown|dark` or `#rrggbb`, `hair=#
 | `garland` | A string of felt light bulbs across the wall: y (top), x0, x1, sag, bulbs. |
 | `balloon_bunch` | Three felt balloons tied together, swaying: x, y (where the strings are tied), s. |
 | `toys` | Small things on the floor so a room is not empty: blocks, a ball, a party hat, confetti: x0, x1, y. |
+| `kitchen` | A whole kitchen: tiled wall, fridge, cupboards, a stove with a pot, a sink, a window: color (wall), cupboard, pot, window, time, floor. |
+| `classroom` | A classroom from inside: a green blackboard, a clock, a window, books, a teacher's table, small desks: color, board, window, time, floor, desks=0. |
+| `shop` | A small grocery from inside: shelves of boxes, jars and fruit, a striped awning, a counter with scales and a till: color, awning, floor, seed. |
+| `underwater` | The sea from inside: bands of blue water, faint rays, a sandy bottom, corals and stones: color, floor, seed. |
+| `city_night` | A city at night: stars, a moon, lit windows that change slowly, street lamps, a street: base, moon, seed. |
+| `ferris_wheel` | A big wheel that turns, with hanging cabins: x, y (ground), r, speed, cabins. |
+| `carousel` | A merry-go-round with a striped roof and horses going round: x, y (ground), s, speed. |
+| `stall` | A fair stall with a striped canopy: x, y (ground), s, color. |
+| `bunting` | A string of triangle flags: y (top), x0, x1, sag, flags. |
+| `barn` | A red barn with crossed doors and a hay loft: x, y (ground), s, color. |
+| `haystack` | A round haystack: x, y (ground), s. |
+| `tractor` | A little tractor: x, y (ground), s, color; drive=0.05 moves it right per second. |
+| `seaweed` | Seaweed swaying under water: x, y (bottom), s, color. |
+| `fish` | Bright fish swimming across: count, y0, y1, seed. |
+
+`kitchen`, `classroom`, `shop`, `underwater` and `city_night` each fill the whole frame, so a scene needs no `sky` with them; `time=night` dims the indoor places. Heroes stand on them with `y=0.95` to `y=0.97`. A fair and a farm are built from parts:
+```
+scene 0-8s: sky ground(top=0.72,kind=meadow) ferris_wheel(x=0.74,y=0.74) carousel(x=0.24,y=0.8) stall(x=0.5,y=0.78) bunting(y=0.04)
+scene 8-16s: sky hills(top=0.56) ground(top=0.72,kind=meadow) barn(x=0.22,y=0.76) haystack(x=0.46,y=0.78) tractor(x=0.8,y=0.92) fence(y=0.8,x0=0.55,x1=1)
+scene 16-24s: underwater seaweed(x=0.2,y=0.85) seaweed(x=0.74,y=0.85,s=1.2) fish
+```
 
 Elements have no seconds and no actions. To move one, use its parameters: `rocket(flying=1,rise=0.3,tilt=20,spin=40)`; a falling rocket is `rise=-0.1` with `spin`, a crashed one `tilt=84`.
 

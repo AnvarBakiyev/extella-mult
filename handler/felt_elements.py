@@ -692,3 +692,373 @@ def ground(ctx, t, tl, p):
         for k in range(8):
             x = (k / 8 + tl * p.get('speed', 0)) % 1.0
             _poly(ctx, [(x, top + 0.12), (x + 0.05, top + 0.12), (x + 0.05, top + 0.13), (x, top + 0.13)], '#f4f4f4')
+
+
+def _box(ctx, x0, y0, x1, y1, col):
+    _poly(ctx, [(x0, y0), (x1, y0), (x1, y1), (x0, y1)], col)
+
+
+def _indoors(ctx, p, wall, floor_a, floor_b):
+    """A wall and a floor of big felt tiles, the base of every indoor place; returns the floor line."""
+    fl = p.get('floor', 0.78)
+    _box(ctx, 0, 0, 1, fl, p.get('color', wall))
+    _box(ctx, 0, fl, 1, 1, floor_a)
+    for k in range(12):
+        for row in range(2):
+            if (k + row) % 2:
+                _box(ctx, k / 12, fl + row * (1 - fl) / 2, (k + 1) / 12, fl + (row + 1) * (1 - fl) / 2, floor_b)
+    return fl
+
+
+def _window(ctx, wx, wy, w, h, time):
+    F = _pc(ctx)
+    _box(F, wx - w, wy, wx + w, wy + h, '#ffffff')
+    G = _pc(ctx)
+    _box(G, wx - w * 0.9, wy + 0.015, wx + w * 0.9, wy + h - 0.015, {'night': '#2a3a78', 'sunset': '#f2a07a'}.get(time, '#a9d8f2'))
+    G.line([(wx, wy + 0.015), (wx, wy + h - 0.015)], '#ffffff', 0.006)
+
+
+@element('kitchen')
+def kitchen(ctx, t, tl, p):
+    """A whole kitchen: tiled wall, fridge, cupboards, a stove with a pot, a sink, a window. color (wall), cupboard, window, time, floor."""
+    fl = _indoors(ctx, p, '#f6ecd2', '#d9b98c', '#c9a678')
+    cup = p.get('cupboard', '#8fc7b8')
+    for k in range(20):
+        ctx.line([(k / 20, 0.3), (k / 20, fl)], _shade_hex(p.get('color', '#f6ecd2'), 0.96), 0.002)
+    _window(ctx, p.get('window', 0.42), 0.14, 0.09, 0.26, p.get('time', 'day'))
+    Fr = _pc(ctx)
+    _box(Fr, 0.04, 0.2, 0.16, fl + 0.03, '#e9eef2')
+    Fr.line([(0.04, 0.42), (0.16, 0.42)], '#b8c4cc', 0.005)
+    _box(_pc(ctx), 0.14, 0.3, 0.148, 0.39, '#9aa6b0')
+    _box(_pc(ctx), 0.14, 0.46, 0.148, 0.58, '#9aa6b0')
+    for x0 in (0.56, 0.7, 0.84):
+        U = _pc(ctx)
+        _box(U, x0, 0.08, x0 + 0.13, 0.3, cup)
+        _ell(_pc(ctx), x0 + 0.1, 0.26, 0.009, 0.009, '#f6c453')
+    C = _pc(ctx)
+    _box(C, 0.18, 0.56, 0.98, fl + 0.03, cup)
+    _box(_pc(ctx), 0.17, 0.53, 0.99, 0.565, '#e8d9b8')
+    for x0 in (0.2, 0.33, 0.8):
+        _box(_pc(ctx), x0, 0.6, x0 + 0.11, fl - 0.01, _shade_hex(cup, 0.9))
+    St = _pc(ctx)
+    _box(St, 0.53, 0.53, 0.72, fl + 0.03, '#d7dde2')
+    _box(_pc(ctx), 0.56, 0.62, 0.69, fl - 0.01, '#5a6470')
+    Pt = _pc(ctx)
+    _box(Pt, 0.58, 0.43, 0.67, 0.53, p.get('pot', '#e0605a'))
+    _box(_pc(ctx), 0.572, 0.415, 0.678, 0.44, _shade_hex(p.get('pot', '#e0605a'), 0.85))
+    _ell(_pc(ctx), 0.625, 0.405, 0.014, 0.012, '#3a3a4a')
+    Sk = _pc(ctx)
+    _box(Sk, 0.3, 0.52, 0.46, 0.54, '#b8c4cc')
+    Sk.line([(0.38, 0.52), (0.38, 0.45), (0.41, 0.45), (0.41, 0.48)], '#9aa6b0', 0.011)
+
+
+@element('classroom')
+def classroom(ctx, t, tl, p):
+    """A classroom from inside: a green blackboard with chalk, a clock, a window, a shelf of books, a teacher's table, small desks. color (wall), board, window, time, floor, desks=0 removes the desks."""
+    fl = _indoors(ctx, p, '#e6efdc', '#d8b488', '#caa478')
+    _box(_pc(ctx), 0.27, 0.1, 0.73, 0.54, '#a8743f')
+    B = _pc(ctx)
+    _box(B, 0.285, 0.125, 0.715, 0.515, p.get('board', '#3f6e5a'))
+    B.line([(0.32, 0.22), (0.44, 0.22)], '#f4f4e8', 0.007)
+    B.line([(0.32, 0.3), (0.5, 0.3)], '#f4f4e8', 0.007)
+    B.line([(0.32, 0.38), (0.4, 0.38)], '#f4f4e8', 0.007)
+    _ell(B, 0.6, 0.3, 0.09, 0.09, '#f4f4e8')
+    _ell(B, 0.6, 0.3, 0.075, 0.075, p.get('board', '#3f6e5a'))
+    _box(_pc(ctx), 0.27, 0.54, 0.73, 0.56, '#8a5a3a')
+    _ell(_pc(ctx), 0.5, 0.06, 0.05, 0.05, '#ffffff')
+    Ck = _pc(ctx)
+    Ck.line([(0.5, 0.06), (0.5, 0.032)], '#3a3a4a', 0.006)
+    Ck.line([(0.5, 0.06), (0.513, 0.07)], '#3a3a4a', 0.006)
+    _window(ctx, p.get('window', 0.13), 0.14, 0.09, 0.32, p.get('time', 'day'))
+    _box(_pc(ctx), 0.8, 0.26, 0.98, 0.285, '#a8743f')
+    Bk = _pc(ctx)
+    for k, col in enumerate(HOUSE):
+        _box(Bk, 0.81 + k * 0.02, 0.17 + 0.012 * (k % 3), 0.828 + k * 0.02, 0.26, col)
+    Td = _pc(ctx)
+    _box(Td, 0.78, 0.6, 0.98, 0.64, '#b98a58')
+    _box(Td, 0.8, 0.64, 0.82, fl + 0.03, '#a8743f')
+    _box(Td, 0.94, 0.64, 0.96, fl + 0.03, '#a8743f')
+    if p.get('desks', 1):
+        for x0 in (0.06, 0.28, 0.5):
+            D = _pc(ctx)
+            _box(D, x0, 0.66, x0 + 0.15, 0.69, '#e0c48c')
+            _box(D, x0 + 0.015, 0.69, x0 + 0.03, fl + 0.05, '#7f8fa0')
+            _box(D, x0 + 0.12, 0.69, x0 + 0.135, fl + 0.05, '#7f8fa0')
+
+
+@element('shop')
+def shop(ctx, t, tl, p):
+    """A small grocery from inside: shelves of boxes, jars and fruit, a striped awning, a counter with scales and a till. color (wall), awning, floor."""
+    fl = _indoors(ctx, p, '#fbeed6', '#e4d0ae', '#d6bf98')
+    r = np.random.default_rng(int(p.get('seed', 6)))
+    for k, y in enumerate((0.3, 0.46, 0.62)):
+        Sf = _pc(ctx)
+        _box(Sf, 0.05, y, 0.68, y + 0.02, '#a8743f')
+        G = _pc(ctx)
+        x = 0.06
+        while x < 0.6:
+            kind, col = r.integers(3), HOUSE[int(r.integers(len(HOUSE)))]
+            if kind == 0:
+                h = 0.07 + 0.04 * r.random()
+                _box(G, x, y - h, x + 0.04, y, col)
+                _box(G, x + 0.006, y - h * 0.7, x + 0.034, y - h * 0.35, '#fff7e6')
+                x += 0.048
+            elif kind == 1:
+                _box(G, x + 0.003, y - 0.08, x + 0.03, y, col)
+                _box(G, x + 0.008, y - 0.1, x + 0.025, y - 0.08, '#fbfbf6')
+                x += 0.04
+            else:
+                for j in range(3):
+                    _ell(G, x + 0.012 + j * 0.026, y - 0.027, 0.027, 0.027, ('#e0605a', '#f6c453', '#8cc26a')[k])
+                x += 0.08
+    aw = p.get('awning', '#e0605a')
+    A = _pc(ctx)
+    for k in range(20):
+        col = aw if k % 2 == 0 else '#fbfbf6'
+        _poly(A, [(k / 20, 0), ((k + 1) / 20, 0), ((k + 1) / 20, 0.09), ((k + 0.5) / 20, 0.125), (k / 20, 0.09)], col)
+    C = _pc(ctx)
+    _box(C, 0.7, 0.56, 0.99, fl + 0.05, '#c98a5a')
+    _box(_pc(ctx), 0.69, 0.53, 1.0, 0.565, '#a8743f')
+    Tl = _pc(ctx)
+    _box(Tl, 0.9, 0.41, 0.98, 0.53, '#7f8fa0')
+    _box(_pc(ctx), 0.91, 0.425, 0.97, 0.465, '#bfe6d0')
+    Sc = _pc(ctx)
+    _box(Sc, 0.74, 0.5, 0.82, 0.53, '#d7dde2')
+    Sc.line([(0.78, 0.5), (0.78, 0.45)], '#9aa6b0', 0.01)
+    _ell(Sc, 0.78, 0.44, 0.075, 0.016, '#d7dde2')
+
+
+@element('ferris_wheel')
+def ferris_wheel(ctx, t, tl, p):
+    """A big wheel that turns, with hanging cabins: x, y (ground), r (radius, of the frame height), speed (turns a minute), cabins."""
+    x, y, r = p.get('x', 0.7), p.get('y', 0.8), p.get('r', 0.3)
+    n, a0 = int(p.get('cabins', 8)), t * p.get('speed', 3) * math.pi / 30
+    ar = ctx.ar
+    cy = y - r * 1.15
+    L = _pc(ctx)
+    L.line([(x - r * 0.6 * ar, y), (x, cy)], '#8a6a9a', 0.016)
+    L.line([(x + r * 0.6 * ar, y), (x, cy)], '#8a6a9a', 0.016)
+    R = _pc(ctx)
+    pts = [(x + r * ar * math.cos(k * math.pi / 30), cy + r * math.sin(k * math.pi / 30)) for k in range(61)]
+    R.line(pts, '#f2a0b8', 0.012)
+    for k in range(n):
+        a = a0 + 2 * math.pi * k / n
+        R.line([(x, cy), (x + r * ar * math.cos(a), cy + r * math.sin(a))], '#f2c4d0', 0.006)
+    _ell(_pc(ctx), x, cy, 0.024, 0.024, '#f6c453')
+    for k in range(n):
+        a = a0 + 2 * math.pi * k / n
+        px, py = x + r * ar * math.cos(a), cy + r * math.sin(a)
+        C = _pc(ctx)
+        C.line([(px, py), (px, py + 0.03)], '#7a6a7a', 0.004)
+        _ell(C, px, py + 0.055, 0.042, 0.03, HOUSE[k % len(HOUSE)])
+        _box(C, px - 0.0165, py + 0.02, px + 0.0165, py + 0.045, HOUSE[k % len(HOUSE)])
+
+
+@element('carousel')
+def carousel(ctx, t, tl, p):
+    """A merry-go-round with a striped roof and horses that go round: x, y (ground), s, speed."""
+    x, y, s = p.get('x', 0.3), p.get('y', 0.85), p.get('s', 1.0)
+    w, h = 0.17 * s, 0.42 * s
+    _ell(_pc(ctx), x, y - 0.02 * s, w / ctx.ar, 0.035 * s, '#d9a860')
+    _box(_pc(ctx), x - 0.008 * s, y - h, x + 0.008 * s, y, '#f6c453')
+    for k in range(5):
+        a = t * p.get('speed', 1.2) + k * 2 * math.pi / 5
+        front = math.sin(a) > 0
+        px = x + w * 0.82 * math.cos(a)
+        bob = 0.015 * s * math.sin(a * 2 + k)
+        if not front:
+            _carousel_horse(_pc(ctx), px, y, h, s, bob, k, math.sin(a + 1.57) < 0)
+    R = _pc(ctx)
+    n = 10
+    for k in range(n):
+        col = '#e0605a' if k % 2 == 0 else '#fbfbf6'
+        _poly(R, [(x, y - h - 0.14 * s), (x - w + 2 * w * k / n, y - h), (x - w + 2 * w * (k + 1) / n, y - h)], col)
+    _box(_pc(ctx), x - w, y - h, x + w, y - h + 0.03 * s, '#f6c453')
+    _ell(_pc(ctx), x, y - h - 0.15 * s, 0.018 * s, 0.018 * s, '#f6c453')
+    for k in range(5):
+        a = t * p.get('speed', 1.2) + k * 2 * math.pi / 5
+        if math.sin(a) > 0:
+            _carousel_horse(_pc(ctx), x + w * 0.82 * math.cos(a), y, h, s, 0.015 * s * math.sin(a * 2 + k), k, math.sin(a + 1.57) < 0)
+
+
+def _carousel_horse(c, px, y, h, s, bob, k, left):
+    d = -1 if left else 1
+    ar = c.ar
+    c.line([(px, y - h), (px, y - 0.03 * s)], '#d9d9de', 0.005 * s)
+    by = y - 0.17 * s + bob
+    col = HOUSE[k % len(HOUSE)]
+    u = 0.07 * s * ar  # half a body, on screen
+    for lx, ly in ((-0.75, 0.065), (-0.35, 0.075), (0.35, 0.075), (0.75, 0.065)):
+        c.line([(px + d * lx * u, by + 0.015 * s), (px + d * lx * u * 1.15, by + ly * s)], _shade_hex(col, 0.85), 0.014 * s)
+    c.line([(px - d * u * 0.9, by - 0.01 * s), (px - d * u * 1.5, by + 0.035 * s)], '#fbfbf6', 0.012 * s)
+    _ell(c, px, by, 0.07 * s, 0.036 * s, col)
+    c.line([(px + d * u * 0.7, by - 0.01 * s), (px + d * u * 1.15, by - 0.065 * s)], col, 0.03 * s)
+    _ell(c, px + d * u * 1.45, by - 0.07 * s, 0.03 * s, 0.021 * s, col)
+    _ell(c, px + d * u * 1.45, by - 0.076 * s, 0.005 * s, 0.005 * s, '#2a2020')
+    c.line([(px + d * u * 0.55, by - 0.035 * s), (px + d * u * 1.0, by - 0.095 * s)], '#fbfbf6', 0.01 * s)
+
+
+@element('stall')
+def stall(ctx, t, tl, p):
+    """A fair stall with a striped canopy and a counter: x, y (ground), s, color."""
+    x, y, s, col = p.get('x', 0.5), p.get('y', 0.85), p.get('s', 1.0), p.get('color', '#4f9fd0')
+    w = 0.09 * s
+    _box(_pc(ctx), x - w, y - 0.3 * s, x + w, y - 0.1 * s, '#fbeed6')
+    for u in (-1, 1):
+        _box(_pc(ctx), x + u * w - 0.005 * s, y - 0.34 * s, x + u * w + 0.005 * s, y, '#a8743f')
+    _box(_pc(ctx), x - w, y - 0.12 * s, x + w, y, col)
+    C = _pc(ctx)
+    for k in range(8):
+        c = col if k % 2 == 0 else '#fbfbf6'
+        x0, x1 = x - w * 1.15 + 2.3 * w * k / 8, x - w * 1.15 + 2.3 * w * (k + 1) / 8
+        _poly(C, [(x0 + (x - x0) * 0.2, y - 0.44 * s), (x1 + (x - x1) * 0.2, y - 0.44 * s), (x1, y - 0.33 * s), (x0, y - 0.33 * s)], c)
+
+
+@element('bunting')
+def bunting(ctx, t, tl, p):
+    """A string of little triangle flags across the frame: y (top), x0, x1, sag, flags."""
+    y, x0, x1, n, sag = p.get('y', 0.06), p.get('x0', 0.0), p.get('x1', 1.0), int(p.get('flags', 18)), p.get('sag', 0.05)
+    pts = [(x0 + (x1 - x0) * k / 40, y + sag * 4 * (k / 40) * (1 - k / 40)) for k in range(41)]
+    ctx.line(pts, '#7a6a5a', 0.003)
+    F = _pc(ctx)
+    for k in range(n):
+        f = (k + 0.5) / n
+        fx, fy = x0 + (x1 - x0) * f, y + sag * 4 * f * (1 - f)
+        _poly(F, [(fx - 0.014, fy), (fx + 0.014, fy), (fx, fy + 0.07)], HOUSE[k % len(HOUSE)])
+
+
+@element('barn')
+def barn(ctx, t, tl, p):
+    """A red barn with white crossed doors and a hay loft: x, y (ground), s, color."""
+    x, y, s, col = p.get('x', 0.3), p.get('y', 0.8), p.get('s', 1.0), p.get('color', '#c9544a')
+    w, h = 0.13 * s, 0.3 * s
+    B = _pc(ctx)
+    _poly(B, [(x - w, y), (x + w, y), (x + w, y - h), (x + w * 0.6, y - h - 0.12 * s), (x, y - h - 0.2 * s), (x - w * 0.6, y - h - 0.12 * s), (x - w, y - h)], col)
+    R = _pc(ctx)
+    R.line([(x - w * 1.08, y - h + 0.01 * s), (x - w * 0.6, y - h - 0.12 * s), (x, y - h - 0.2 * s), (x + w * 0.6, y - h - 0.12 * s), (x + w * 1.08, y - h + 0.01 * s)], '#fbfbf6', 0.016 * s)
+    D = _pc(ctx)
+    _box(D, x - w * 0.42, y - h * 0.62, x + w * 0.42, y, '#fbfbf6')
+    _box(_pc(ctx), x - w * 0.36, y - h * 0.57, x + w * 0.36, y, _shade_hex(col, 0.8))
+    X = _pc(ctx)
+    X.line([(x - w * 0.36, y - h * 0.57), (x + w * 0.36, y)], '#fbfbf6', 0.012 * s)
+    X.line([(x + w * 0.36, y - h * 0.57), (x - w * 0.36, y)], '#fbfbf6', 0.012 * s)
+    _box(_pc(ctx), x - w * 0.2, y - h - 0.09 * s, x + w * 0.2, y - h + 0.01 * s, '#fbfbf6')
+    _box(_pc(ctx), x - w * 0.15, y - h - 0.075 * s, x + w * 0.15, y - h, '#5a3a2a')
+
+
+@element('haystack')
+def haystack(ctx, t, tl, p):
+    """A round haystack: x, y (ground), s."""
+    x, y, s = p.get('x', 0.6), p.get('y', 0.85), p.get('s', 1.0)
+    _ell(_pc(ctx), x, y - 0.1 * s, 0.17 * s, 0.11 * s, '#e8c35a')
+    H = _pc(ctx)
+    for k in range(9):
+        u = (k - 4) / 4
+        H.line([(x + u * 0.05 * s, y - 0.17 * s + abs(u) * 0.05 * s), (x + u * 0.062 * s, y - 0.05 * s)], '#cfa63f', 0.005 * s)
+
+
+@element('tractor')
+def tractor(ctx, t, tl, p):
+    """A little tractor: x, y (ground), s, color; drive=0.05 moves it right per second, and its wheels turn."""
+    x, y, s, col = p.get('x', 0.7), p.get('y', 0.88), p.get('s', 1.0), p.get('color', '#5fae4e')
+    x += p.get('drive', 0) * tl
+    spin = t * p.get('drive', 0) * 40
+    B = _pc(ctx)
+    _box(B, x - 0.03 * s, y - 0.17 * s, x + 0.09 * s, y - 0.09 * s, col)
+    _box(B, x - 0.055 * s, y - 0.26 * s, x + 0.012 * s, y - 0.09 * s, col)
+    _box(_pc(ctx), x - 0.045 * s, y - 0.245 * s, x + 0.002 * s, y - 0.17 * s, '#bfe0f0')
+    _box(_pc(ctx), x + 0.065 * s, y - 0.23 * s, x + 0.073 * s, y - 0.17 * s, '#5a5a64')
+    for wx, r in ((-0.04, 0.095), (0.075, 0.055)):
+        W = _pc(ctx)
+        _ell(W, x + wx * s, y - r * s, r * s, r * s, '#3a3a44')
+        _ell(W, x + wx * s, y - r * s, r * 0.5 * s, r * 0.5 * s, '#f6c453')
+        W.line([(x + wx * s, y - r * s), (x + wx * s + r * 0.2 * s * math.cos(spin), y - r * s + r * 0.45 * s * math.sin(spin))], '#a8843f', 0.008 * s)
+
+
+@element('underwater')
+def underwater(ctx, t, tl, p):
+    """The sea from inside: bands of blue water with soft waves of light, a sandy bottom from floor= down, rocks and corals. color (top water). Add seaweed and fish for life."""
+    fl, top = p.get('floor', 0.8), p.get('color', '#5cc0d8')
+    _box(ctx, 0, 0, 1, 1, top)
+    for k in range(1, 6):
+        y = k / 6 * fl
+        col = _shade_hex(top, 1 - 0.1 * k)
+        pts = [(i / 40, y + 0.012 * math.sin(i / 40 * 14 + k * 1.7)) for i in range(41)]
+        _poly(ctx, pts + [(1, 1), (0, 1)], col)
+    for x0 in (0.08, 0.3, 0.55, 0.78):  # faint rays, straight on the water so they have no felt edge
+        for k in range(1, 5):
+            y = k / 6 * fl
+            _poly(ctx, [(x0 - k * 0.02, y - fl / 6), (x0 + 0.05 - k * 0.02, y - fl / 6), (x0 + 0.03 - k * 0.02, y), (x0 - 0.02 - k * 0.02, y)], _shade_hex(top, 1.05 - 0.1 * (k - 1)))
+    S = _pc(ctx)
+    pts = [(i / 40, fl + 0.02 * math.sin(i / 40 * 9)) for i in range(41)]
+    _poly(S, pts + [(1, 1), (0, 1)], '#e8d6a0')
+    r = np.random.default_rng(int(p.get('seed', 5)))
+    for x0 in (0.1, 0.36, 0.64, 0.9):
+        C = _pc(ctx)
+        col = ('#f28b6b', '#f2a0b8', '#f6c453', '#b99be0')[int(r.integers(4))]
+        for k in range(5):
+            a = -1.57 + (k - 2) * 0.45
+            C.line([(x0, fl + 0.03), (x0 + 0.05 * math.cos(a), fl + 0.03 + 0.15 * math.sin(a))], col, 0.02)
+            _ell(C, x0 + 0.05 * math.cos(a), fl + 0.03 + 0.15 * math.sin(a), 0.016, 0.016, col)
+        _ell(_pc(ctx), x0 + 0.06, fl + 0.06, 0.05, 0.03, '#a8a8b4')
+
+
+@element('seaweed')
+def seaweed(ctx, t, tl, p):
+    """Seaweed swaying under water: x, y (bottom), s, color."""
+    x, y, s, col = p.get('x', 0.2), p.get('y', 0.85), p.get('s', 1.0), p.get('color', '#4f9a6e')
+    for k, dx in enumerate((-0.016, 0.0, 0.016)):
+        W = _pc(ctx)
+        pts = []
+        for i in range(21):
+            f = i / 20
+            pts.append((x + dx * s + 0.02 * s * f * math.sin(t * 1.3 + f * 4 + k), y - (0.34 + 0.08 * k % 0.16) * s * f))
+        W.line(pts, _shade_hex(col, 1 - 0.1 * k), 0.022 * s)
+
+
+@element('fish')
+def fish(ctx, t, tl, p):
+    """A few bright fish swimming across: count, y0, y1 (where they swim), seed."""
+    n, y0, y1 = int(p.get('count', 6)), p.get('y0', 0.15), p.get('y1', 0.65)
+    r = np.random.default_rng(int(p.get('seed', 9)))
+    for k in range(n):
+        d = 1 if r.random() < 0.5 else -1
+        sp, ph, yy, s = 0.03 + 0.03 * r.random(), r.random(), y0 + (y1 - y0) * r.random(), 0.6 + 0.6 * r.random()
+        x = (ph + d * sp * t) % 1.2 - 0.1
+        y = yy + 0.012 * math.sin(t * 2 + k)
+        col = HOUSE[k % len(HOUSE)]
+        F = _pc(ctx)
+        ar = ctx.ar
+        _poly(F, [(x - d * 0.05 * s * ar, y), (x - d * 0.1 * s * ar, y - 0.03 * s), (x - d * 0.1 * s * ar, y + 0.03 * s)], col)
+        _ell(F, x, y, 0.06 * s, 0.033 * s, col)
+        _ell(_pc(ctx), x + d * 0.032 * s * ar, y - 0.008 * s, 0.008 * s, 0.008 * s, '#2a2020')
+
+
+@element('city_night')
+def city_night(ctx, t, tl, p):
+    """A city at night: dark sky with stars and a moon, far and near houses with lit windows, street lamps with a glow, a street from base= down. Lights twinkle slowly. Put no sky with it; heroes get the night light by themselves."""
+    base = p.get('base', 0.78)
+    sky(ctx, t, tl, {'time': 'night'})
+    _ell(_pc(ctx), p.get('moon', 0.82), 0.14, 0.06, 0.06, P['moon'])
+    r = np.random.default_rng(int(p.get('seed', 8)))
+    for layer_k, (h0, col) in enumerate(((0.5, '#2c3768'), (0.36, '#3c4a80'))):
+        L = _pc(ctx)
+        x = -0.02
+        while x < 1.02:
+            w, h = 0.06 + 0.05 * r.random(), h0 * (0.7 + 0.5 * r.random())
+            _box(L, x, base - h, x + w, base, col)
+            for wy in np.arange(base - h + 0.03, base - 0.04, 0.06):
+                for wx in np.arange(x + 0.01, x + w - 0.018, 0.024):
+                    if r.random() < 0.55:
+                        on = 0.5 + 0.5 * math.sin(t * 0.5 + wx * 90 + wy * 70) > 0.12
+                        _box(L, wx, wy, wx + 0.013, wy + 0.03, '#ffd97a' if on else '#54609a')
+            x += w + 0.004
+    S = _pc(ctx)
+    _box(S, 0, base, 1, 1, '#4a4f72')
+    for k in range(9):
+        _box(S, k / 9 + 0.02, base + 0.12, k / 9 + 0.07, base + 0.13, '#d8c86a')
+    for x0 in p.get('lamps', (0.14, 0.5, 0.86)):
+        _ell(_pc(ctx), x0, base - 0.29, 0.08, 0.08, '#5f6496')
+        Lp = _pc(ctx)
+        Lp.line([(x0, base + 0.04), (x0, base - 0.27)], '#20264e', 0.012)
+        _ell(_pc(ctx), x0, base - 0.29, 0.03, 0.03, '#ffe9a0')
