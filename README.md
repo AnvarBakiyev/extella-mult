@@ -16,6 +16,18 @@ The look is felt and plasticine: every tree, house and character part is a cut-o
 | download | 0.3 MB |
 | speed | about 35 seconds for a 16-second film on an Apple M-series laptop (v3; v2 took about 5 minutes) |
 
+## Extella Puppet (v4): satirical felt-puppet episodes
+
+A second agent on the same handler, for grown-ups: deadpan TV formats, an absurd situation played straight, an unexpected last line. The language is [PUPPET](LANGUAGE-PUPPET.md). The library comes in three free packs, installed together by the expert `puppet_install` (or pick with `packs=core,premium`):
+
+| pack | what is inside | licence |
+|---|---|---|
+| **premium** | 67 generated picture sets: 24 talking characters (mouth and blink frames) and 43 places. The best-looking ones | ours, free |
+| **core** | 383 felt characters built by code (155 with full bodies that walk and gesture), 683 places, 99 animated effects, 273 props | ours, free |
+| **community** | 227 CC0 sounds, 68 music tracks, OFL fonts; see `ATTRIBUTION.md` inside | CC0 / OFL, credited |
+
+The agent works in three calls, each under the platform's 120-second limit: write an episode; `render ep_<name>`; `status ep_<name> <job>`. A 40-second film renders in about a minute on an Apple M-series laptop.
+
 ## In numbers
 
 From our tests on 3 November 2026, agent on DeepSeek-V4-Flash:

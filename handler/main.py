@@ -1,6 +1,7 @@
 """CLI: python -m handler.main FILM.scene [--check] [--out film.mp4] [--preview] [--procs 6] [--frames t1,t2,...] [--dir DIR]"""
 import argparse
 import os
+import re
 import sys
 from .parser import parse, SceneError
 from .validate import validate
@@ -21,7 +22,33 @@ def main():
     ap.add_argument('--procs', type=int, default=6)
     ap.add_argument('--frames', default=None, help='comma-separated times in seconds; dump PNG stills instead of a film')
     ap.add_argument('--dir', default='stills')
+    ap.add_argument('--no-audio', action='store_true', help='puppet: do not need or use voice recordings (lines are silent, mouths follow the text)')
+    ap.add_argument('--size', default=None, help='puppet: render at WxH instead of the film size, e.g. 640x360')
     a = ap.parse_args()
+    head = open(a.scene, encoding='utf-8').read() if os.path.isfile(a.scene) else ''
+    if re.search(r'^\s*film\b.*\bstyle=puppet\b', head, re.M):
+        from .puppet import parse_puppet, render_puppet, PuppetError
+        try:
+            prog = parse_puppet(head, no_audio=a.no_audio)
+        except PuppetError as e:
+            print(f'ERROR: {e}', file=sys.stderr)
+            sys.exit(2)
+        for w in prog['warnings']:
+            print(f'warning: {w}', file=sys.stderr)
+        print(f"ok: '{prog['title']}' {prog['length']:g}s, {len(prog['shots'])} shots, {len(prog['casts'])} cast, "
+              f"{prog['size'][0]}x{prog['size'][1]} @ {prog['fps']} fps" + (', no voices' if prog['voices_off'] else ''), file=sys.stderr)
+        if a.check:
+            return
+        size = tuple(int(x) for x in a.size.split('x')) if a.size else None
+        if a.frames:
+            for p in render_puppet(prog, a.dir, preview=a.preview, no_audio=a.no_audio, size=size,
+                                   frames=[float(x) for x in a.frames.split(',')]):
+                print(p, file=sys.stderr)
+            return
+        out = a.out or os.path.splitext(a.scene)[0] + ('_preview.mp4' if a.preview else '.mp4')
+        render_puppet(prog, out, preview=a.preview, no_audio=a.no_audio, size=size)
+        print(f'wrote {out}', file=sys.stderr)
+        return
     try:
         prog = load(a.scene)
     except SceneError as e:

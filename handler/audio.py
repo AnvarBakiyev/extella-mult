@@ -221,7 +221,11 @@ VOICES = {'narrator': 'VlXLedwkU4YDM3HBGpiI',   # Miron, lively storyteller
           'odessa': 'RLRdvNFwJJct2XZOgfzy',     # Mishka, Odessa accent, dry irony
           'gogi': 'XNrB7jz2HCkpU5yK08kP',       # Gogi, Georgian accent, comedy
           'fairy': 'RxivyypsDodFBfmDDOZF',      # Mila, high and sweet
-          'calm': 'RD1wW20GjG2W8Fc8vVvm'}       # El, calm and friendly
+          'calm': 'RD1wW20GjG2W8Fc8vVvm',       # El, calm and friendly
+          'journalist': 'VlXLedwkU4YDM3HBGpiI', # = narrator, the interviewer of the puppet series
+          'salmon': 'RLRdvNFwJJct2XZOgfzy',     # = odessa, the salmon
+          'lady': 'TPIitICAZ8CqlGZ81AKm',       # Elen, smooth and confident woman
+          'ad': 'RxivyypsDodFBfmDDOZF'}         # = fairy, bright commercial voice
 
 
 def voice_key():
@@ -233,6 +237,16 @@ def voice_key():
         return None
 
 
+def voice_cache_path(who, text):
+    """Where the recording of one line lives; a line recorded once (by the device's key or handed in by a person) is reused."""
+    import hashlib
+    import os
+    vid = VOICES[who]
+    cache = os.path.expanduser('~/extella-mult/assets/voice_cache')
+    os.makedirs(cache, exist_ok=True)
+    return os.path.join(cache, hashlib.sha1(f'{vid}|{text}'.encode()).hexdigest()[:16] + '.mp3')
+
+
 def _voice_file(st):
     """The recording for one voice line: a given file, or ElevenLabs speech cached by text and voice."""
     import hashlib
@@ -242,9 +256,7 @@ def _voice_file(st):
     if 'file' in st.params:
         return os.path.expanduser(str(st.params['file']))
     vid = VOICES[st.params.get('who', 'narrator')]
-    cache = os.path.expanduser('~/extella-mult/assets/voice_cache')
-    os.makedirs(cache, exist_ok=True)
-    path = os.path.join(cache, hashlib.sha1(f'{vid}|{st.text}'.encode()).hexdigest()[:16] + '.mp3')
+    path = voice_cache_path(st.params.get('who', 'narrator'), st.text)
     if not os.path.isfile(path):
         req = urllib.request.Request(f'https://api.elevenlabs.io/v1/text-to-speech/{vid}?output_format=mp3_44100_128',
                                      data=json.dumps({'text': st.text, 'model_id': 'eleven_v3'}).encode(),

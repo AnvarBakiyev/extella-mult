@@ -1,0 +1,162 @@
+$extens("include.py")
+include("import os", [])
+
+def puppet_install(packs: str = "all", version: str = "v4", bundle_dir: str = "") -> dict:
+    """Installs Extella Puppet on this device: the PUPPET language handler and the felt library.
+    packs: "all" (default) or a comma list of: handler (the language, 1 MB, always installed), core (characters, places,
+    effects, props made by our code, 2.5 GB), community (CC0 sounds, music, OFL fonts, 0.5 GB), premium (67 generated
+    picture sets, the best-looking ones, 0.2 GB). version: the GitHub release tag. bundle_dir: a local folder with the
+    archives instead of downloading."""
+    import os, sys, json, subprocess, tarfile, tempfile, hashlib, shutil, platform, urllib.request
+    REL = "https://github.com/AnvarBakiyev/extella-mult/releases/download/" + version + "/"
+    ARCH = {"handler": ["puppet-handler"], "core": ["puppet-core-characters", "puppet-core-world"],
+            "community": ["puppet-community"], "premium": ["puppet-premium"]}
+    want = ["handler", "core", "community", "premium"] if str(packs).strip() in ("", "all") else \
+        ["handler"] + [p.strip() for p in str(packs).split(",") if p.strip() and p.strip() != "handler"]
+    bad = [p for p in want if p not in ARCH]
+    if bad:
+        return {"status": "error", "error": "unknown packs: " + ", ".join(bad) + "; use all or handler,core,community,premium"}
+    home = os.path.expanduser("~/extella-mult")
+    os.makedirs(home, exist_ok=True)
+    env = {k: v for k, v in os.environ.items() if k not in ("PYTHONNOUSERSITE", "PYTHONHOME", "PYTHONPATH", "VIRTUAL_ENV", "UV_PROJECT_ENVIRONMENT")}
+    steps = []
+    # a stable interpreter: the listener may run from a cache folder that gets cleaned
+    py = sys.executable or "python3"
+    cands = [shutil.which("python3.13"), shutil.which("python3.12"), shutil.which("python3.11"), shutil.which("python3.10"),
+             "/Library/Frameworks/Python.framework/Versions/Current/bin/python3", "/opt/homebrew/bin/python3", "/usr/local/bin/python3", shutil.which("python3"), shutil.which("python")]
+    for c in cands:
+        if c and os.path.exists(c) and "/.cache/" not in c:
+            v = subprocess.run(env=env, args=[c, "-c", "import sys; print(sys.version_info >= (3, 10))"], capture_output=True, text=True).stdout.strip()
+            if v == "True":
+                py = c
+                break
+    # 1. python packages
+    need = []
+    for mod, pkg in (("numpy", "numpy"), ("scipy", "scipy"), ("PIL", "pillow"), ("imageio_ffmpeg", "imageio-ffmpeg")):
+        r = subprocess.run(env=env, args=[py, "-c", "import " + mod], capture_output=True)
+        if r.returncode != 0:
+            need.append(pkg)
+    if need:
+        venv = subprocess.run(env=env, args=[py, "-c", "import sys; print(sys.base_prefix != sys.prefix)"], capture_output=True, text=True).stdout.strip() == "True"
+        r = subprocess.run(env=env, args=[py, "-m", "pip", "install", "--quiet"] + ([] if venv else ["--user"]) + need, capture_output=True, text=True)
+        if r.returncode != 0:
+            r = subprocess.run(env=env, args=[py, "-m", "pip", "install", "--quiet", "--break-system-packages"] + ([] if venv else ["--user"]) + need, capture_output=True, text=True)
+        if r.returncode != 0:
+            return {"status": "error", "step": "pip", "error": (r.stderr or r.stdout)[-600:]}
+    steps.append("python packages ok" + (" (installed " + ", ".join(need) + ")" if need else ""))
+    ff = subprocess.run(env=env, args=[py, "-c", "import imageio_ffmpeg; print(imageio_ffmpeg.get_ffmpeg_exe())"], capture_output=True, text=True).stdout.strip()
+    steps.append("ffmpeg " + ("ok" if ff else "missing"))
+    # 2. the archives: checksums from the release, then each pack
+    sums = {}
+    try:
+        src = os.path.join(bundle_dir, "SHA256SUMS") if bundle_dir else REL + "SHA256SUMS"
+        text = open(src).read() if bundle_dir else urllib.request.urlopen(src, timeout=60).read().decode()
+        for line in text.splitlines():
+            if line.strip():
+                h, n = line.split()
+                sums[n.strip("*")] = h
+    except Exception as e:
+        steps.append("no SHA256SUMS in the release (" + str(e)[:80] + "); archives are not verified")
+    tmp = tempfile.mkdtemp()
+    for pack in want:
+        for arch in ARCH[pack]:
+            fn = arch + "-" + version + ".tar.gz"
+            tar = os.path.join(tmp, fn)
+            if bundle_dir:
+                shutil.copy(os.path.join(bundle_dir, fn), tar)
+            else:
+                urllib.request.urlretrieve(REL + fn, tar)
+            if fn in sums:
+                h = hashlib.sha256()
+                with open(tar, "rb") as f:
+                    for chunk in iter(lambda: f.read(1 << 20), b""):
+                        h.update(chunk)
+                if h.hexdigest() != sums[fn]:
+                    return {"status": "error", "step": pack, "error": fn + ": checksum mismatch, the download is damaged or not ours"}
+            with tarfile.open(tar) as t:
+                for m in t.getmembers():
+                    if m.name.startswith("/") or ".." in m.name.split("/") or not (m.isfile() or m.isdir()):
+                        return {"status": "error", "step": pack, "error": "unsafe path in archive: " + m.name}
+                t.extractall(home)
+            os.remove(tar)
+            steps.append(pack + ": " + fn + " unpacked (" + str(round(os.path.getsize(tar) / 1e6) if os.path.exists(tar) else "") + ")")
+    shutil.rmtree(tmp, ignore_errors=True)
+    if not os.path.isdir(os.path.join(home, "handler")):
+        return {"status": "error", "step": "handler", "error": "no language files in ~/extella-mult/handler after unpacking"}
+    # 3. config and the cspl=scene handler on this device
+    json.dump({"python": py, "ffmpeg": ff}, open(os.path.join(home, "config.json"), "w"), indent=1)
+    import disnet
+    handler_code = r"""
+def scene(code = "", filtered_source_code = "", func_name = "", **extra):
+    import os, re, time, uuid, subprocess
+    params = dict(extra)
+    if isinstance(extra.get("kwargs"), dict):
+        params.update(extra["kwargs"])
+    home = os.path.expanduser("~/extella-mult")
+    import json
+    try:
+        py = json.load(open(os.path.join(home, "config.json"))).get("python") or "python3"
+    except Exception:
+        py = "python3"
+    if not os.path.isdir(os.path.join(home, "handler")):
+        return {"status": "error", "error": "the scene language is not installed on this device (~/extella-mult)"}
+    out = os.path.join(home, "out")
+    os.makedirs(out, exist_ok=True)
+    env = {k: v for k, v in os.environ.items() if k not in ("PYTHONNOUSERSITE", "PYTHONHOME", "PYTHONPATH", "VIRTUAL_ENV", "UV_PROJECT_ENVIRONMENT")}
+    mode = str(params.get("mode") or "check")
+    if mode == "status":
+        job = str(params.get("job") or "")
+        log = os.path.join(out, job + ".log")
+        if not job or not os.path.exists(log):
+            return {"status": "error", "error": "status needs job=<id> from mode=render"}
+        text = open(log, encoding="utf-8", errors="replace").read()
+        mp4 = os.path.join(out, job + ".mp4")
+        if "wrote " in text and os.path.exists(mp4):
+            return {"status": "done", "job": job, "video": mp4, "size_mb": round(os.path.getsize(mp4) / 1e6, 1)}
+        if "Traceback" in text or "ERROR" in text:
+            return {"status": "failed", "job": job, "error": text[-800:]}
+        return {"status": "running", "job": job, "last": text.strip().splitlines()[-1:] }
+    source = code or filtered_source_code or ""
+    def fill(m):
+        k = m.group(1)
+        return str(params[k]) if k in params else m.group(0)
+    program = re.sub(r"\{\{(\w+)\}\}", fill, source)
+    left = sorted(set(re.findall(r"\{\{(\w+)\}\}", program)))
+    lines = len([l for l in program.splitlines() if l.strip() and not l.strip().startswith("#")])
+    if left:
+        return {"status": "rejected", "errors": "fill the template values: " + ", ".join(left), "lines": lines, "film": func_name}
+    if not program.strip():
+        return {"status": "rejected", "errors": "the film program is empty", "film": func_name}
+    jid = time.strftime("%Y%m%d-%H%M%S") + "-" + uuid.uuid4().hex[:6]
+    path = os.path.join(out, jid + ".scene")
+    open(path, "w", encoding="utf-8").write(program)
+    chk = subprocess.run([py, "-m", "handler.main", path, "--check"], cwd=home, env=env, capture_output=True, text=True, timeout=120)
+    msg = (chk.stderr or "").strip()
+    if chk.returncode != 0:
+        return {"status": "rejected", "errors": msg.replace("ERROR: ", ""), "lines": lines, "film": func_name}
+    if mode == "check":
+        return {"status": "ok", "summary": msg.replace("ok: ", ""), "lines": lines, "film": func_name, "handler_version": 2}
+    if mode != "render":
+        return {"status": "error", "error": "mode must be check, render or status"}
+    log = open(os.path.join(out, jid + ".log"), "w")
+    subprocess.Popen([py, "-m", "handler.main", path, "--out", os.path.join(out, jid + ".mp4"), "--procs", "6"],
+                     cwd=home, env=env, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
+    return {"status": "started", "job": jid, "film": func_name, "summary": msg.replace("ok: ", ""), "lines": lines,
+            "next": "the video will be at ~/extella-mult/out/" + jid + ".mp4; check with mode=status job=" + jid}
+"""
+    d = disnet.Disnet(url="https://disnet.extella.ai")
+    envelope = {"filtered_source_code": "", "func_name": "", "args": None, "kwargs": None, "cspl": "scene", "response_format": None}
+    d.container(code=handler_code, func_name="scene", container_path="scene", args=None, kwargs=envelope, cspl_type="fython", push=False)
+    steps.append("cspl=scene handler registered (version 2)")
+    # 4. self-test: check a short puppet film on code characters, and on a premium set when installed
+    test = os.path.join(home, "out", "selftest_puppet.scene")
+    os.makedirs(os.path.dirname(test), exist_ok=True)
+    prog = 'film title="Extella Puppet" style=puppet fps=24 size=1280x720 voices=off\ncast ch_fox on office at 0.5,0.95 size=0.62\nshot 0-3s: office push=0.04\ntext "Extella Puppet" at 0.5,0.9 size=0.05 font=ptsans color=#ffffff halo=0.8 0-3s\n'
+    if "premium" in want:
+        prog += 'shot 3-5s: fox_lawyer push=0.03\n'
+    open(test, "w", encoding="utf-8").write(prog)
+    r = subprocess.run(env=env, args=[py, "-m", "handler.main", test, "--check"], cwd=home, capture_output=True, text=True, timeout=120)
+    ok = r.returncode == 0
+    steps.append("self-test " + ("ok" if ok else "failed: " + r.stderr[-300:]))
+    return {"status": "success" if ok else "error", "steps": steps, "packs": want, "device": platform.system() + " " + platform.machine(),
+            "home": home}
