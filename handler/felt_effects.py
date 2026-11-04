@@ -101,6 +101,8 @@ def _say_tip(ctx, prog, st, t):
         s, dx, top = a.params.get('size', 0.1), 0.25, 0.8
     if act == 'jump':
         top += 0.22
+    if act == 'sleep':
+        dx, top = 0.0, 0.42
     return x + dx * s * ctx.ar * facing, y - (top + 0.05) * s
 
 

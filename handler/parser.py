@@ -20,6 +20,7 @@ class Stmt:
         self.pos = None           # 'at' position
         self.elements = []        # for scene: [(name, params)]
         self.text = None
+        self.pairs = []           # actor: the hug, give or hold_hands lines where it is the partner
 
     def __repr__(self):
         return f"<{self.kind} L{self.line} {self.words} {self.params} {self.t0}-{self.t1}>"

@@ -65,6 +65,101 @@ def _check_pos(st, pos):
         raise SceneError(f"line {st.line}: unknown position '{pos}'; use one of {', '.join(POSITIONS)} or x,y")
 
 
+def _home(st, others, what):
+    """Where a character is before a line that names no place: where its last line ended, else where its next line starts."""
+    from .actors import _lerp_pos
+    if st.pos is not None:
+        return _lerp_pos(st, 0.0, st.params.get('y', 0.86))
+    before = [a for a in others if a.t1 <= st.t0 + 1e-6]
+    after = [a for a in others if a.t0 >= st.t1 - 1e-6]
+    if before:
+        a = before[-1]
+        return getattr(a, 'home', None) or _lerp_pos(a, 1.0, a.params.get('y', 0.86))
+    if after:
+        return _lerp_pos(after[0], 0.0, after[0].params.get('y', 0.86))
+    raise SceneError(f"line {st.line}: {st.words[0]} is not in the frame before {what}; add a line like '{st.words[0]} stand at 0.4 {max(0.0, st.t0 - 1):g}-{st.t0:g}s' or give a place with at 0.4")
+
+
+def _link_pair(prog, st, acts):
+    """Checks a hug, give or hold_hands line in words and ties it to the partner's lines."""
+    from .felt_actors import PAIR_ACTIONS, HELD, _plain, _line_at
+    name, act = st.words[0], st.words[1]
+    example = f"{name} {act} cat ball 2-3s" if act == 'give' else f"{name} {act} cat 3-5s"
+    if len(st.words) < 3:
+        raise SceneError(f"line {st.line}: {act} needs a partner: {example}")
+    mate = st.words[2]
+    known = _vocab(prog.style)[1]
+    if mate not in known:
+        raise SceneError(f"line {st.line}: '{mate}' is not a known actor, so {name} cannot {act} with it")
+    if mate == name:
+        raise SceneError(f"line {st.line}: {name} needs someone else for {act}")
+    if act not in known[mate]:
+        raise SceneError(f"line {st.line}: {mate} cannot take part in {act}; it can: {', '.join(known[mate])}")
+    if act == 'give' and (len(st.words) < 4 or st.words[3] not in HELD):
+        raise SceneError(f"line {st.line}: give needs a thing, one of {', '.join(HELD)}: {example}")
+    lines = sorted((a for a in acts if a.words[0] == mate and a.scene is st.scene and a.t0 < st.t1 and st.t0 < a.t1), key=lambda a: a.t0)
+    until = st.t0
+    for a in lines:
+        if a.t0 > until + 1e-6:
+            break
+        until = max(until, a.t1)
+    if until < st.t1 - 1e-6:
+        raise SceneError(f"line {st.line}: {mate} is not in the frame at {until:g}s, while {name} wants to {act}; add a line like '{mate} stand at 0.5 {st.t0:g}-{st.t1:g}s'")
+    for a in lines:
+        if a.words[1] in PAIR_ACTIONS or a.words[1] == 'sleep':
+            raise SceneError(f"line {st.line}: {mate} is busy at that time ({a.words[1]}, line {a.line}), so {name} cannot {act} with it")
+    others = sorted((a for a in acts if a.words[0] == name and a.scene is st.scene and a is not st), key=lambda a: a.t0)
+    st.home = _home(st, others, act)
+    for k in ('y', 'size', 'color', 'hair'):
+        for a in others:
+            if k in a.params:
+                st.params.setdefault(k, a.params[k])
+    st.ar = prog.size[1] / prog.size[0]
+    st.mates = lines
+    far = abs(st.home[0] - _plain(_line_at(lines, st.t0), st.t0)[0])
+    if far > 0.3 + 1e-6:
+        raise SceneError(f"line {st.line}: {name} and {mate} are {far:.2f} of the frame apart at {st.t0:g}s, too far for {act} (at most 0.3); move them closer or let one of them walk up first")
+    nxt = next((a for a in others if a.t0 >= st.t1 - 1e-6), None)
+    st.after = None
+    if nxt is not None and abs(nxt.t0 - st.t1) < 1e-6:
+        st.after = _plain(nxt, nxt.t0)[0] if nxt.words[1] not in PAIR_ACTIONS else None
+    for a in lines:
+        a.pairs.append(st)
+    if act == 'give':  # the thing changes hands for the rest of the scene
+        for a in acts:
+            if a.scene is st.scene and a.t0 >= st.t1 - 1e-6:
+                if a.words[0] == mate:
+                    a.params.setdefault('holds', st.words[3])
+                elif a.words[0] == name and a.params.get('holds') == st.words[3]:
+                    del a.params['holds']
+    i = max(prog.stmts.index(a) for a in lines)  # the arms of the one who starts go over the partner
+    if prog.stmts.index(st) < i:
+        prog.stmts.remove(st)
+        prog.stmts.insert(i, st)
+
+
+def _link_sleep(prog, st, acts):
+    """A sleeper with no place of its own lies in the bed of its scene; a bed holds one sleeper at a time."""
+    name = st.words[0]
+    others = sorted((a for a in acts if a.words[0] == name and a.scene is st.scene and a is not st), key=lambda a: a.t0)
+    for k in ('y', 'size', 'color', 'hair'):
+        for a in others:
+            if k in a.params and not (k == 'y' and st.pos is None):
+                st.params.setdefault(k, a.params[k])
+    beds = [p for n, p in st.scene.elements if n == 'bed']
+    if st.pos is None:
+        if not beds:
+            raise SceneError(f"line {st.line}: there is no bed in this scene for {name} to sleep in; add bed(x=0.3,y=0.95) to the scene line or give a place: {name} sleep at 0.4 {st.t0:g}-{st.t1:g}s y=0.95")
+        b = beds[0]
+        bx, by, bs = b.get('x', 0.3), b.get('y', 0.88), b.get('s', 1.0)
+        st.pos = (bx - 0.115 * bs, by - 0.13 * bs)
+        st.params.setdefault('blanket', b.get('color', '#9fc8e8'))
+        st.in_bed = True
+        for a in acts:
+            if a is not st and getattr(a, 'in_bed', False) and a.scene is st.scene and a.t0 < st.t1 and st.t0 < a.t1:
+                raise SceneError(f"line {st.line}: {a.words[0]} already sleeps in this bed at that time (line {a.line}); give {name} its own place: {name} sleep at 0.6 {st.t0:g}-{st.t1:g}s y=0.97")
+
+
 def validate(stmts):
     prog = Program(stmts)
     films = [s for s in stmts if s.kind == 'film']
@@ -132,6 +227,10 @@ def validate(stmts):
                 raise SceneError(f"line {st.line}: {name} needs an action: {', '.join(actions)}")
             if st.words[1] not in actions:
                 raise SceneError(f"line {st.line}: {name} cannot '{st.words[1]}'; it can: {', '.join(actions)}")
+            if 'holds' in st.params and prog.style == 'felt':
+                from .felt_actors import HELD
+                if st.params['holds'] not in HELD:
+                    raise SceneError(f"line {st.line}: {name} cannot hold '{st.params['holds']}'; things to hold: {', '.join(HELD)}")
             if 'mood' in st.params:
                 if prog.style != 'felt':
                     raise SceneError(f"line {st.line}: mood= works only in style=felt films")
@@ -245,6 +344,13 @@ def validate(stmts):
         for b in acts[i + 1:]:
             if a.words[0] == b.words[0] and a.t0 < b.t1 - 1e-6 and b.t0 < a.t1 - 1e-6:
                 raise SceneError(f"line {b.line}: {b.words[0]} {b.words[1]} {b.t0:g}-{b.t1:g}s overlaps {a.words[0]} {a.words[1]} {a.t0:g}-{a.t1:g}s (line {a.line}); one {a.words[0]} does one action at a time, end the first action where the second starts")
+    if prog.style == 'felt':
+        from .felt_actors import PAIR_ACTIONS
+        for st in sorted(acts, key=lambda a: a.t0):
+            if st.words[1] == 'sleep':
+                _link_sleep(prog, st, acts)
+            elif st.words[1] in PAIR_ACTIONS:
+                _link_pair(prog, st, acts)
     for st in stmts:  # a bubble hangs over its speaker, so the speaker must be in the frame while it talks
         if st.kind == 'say' and st.pos is None and not any(a.words[0] == st.words[0] and a.t0 < st.t1 and st.t0 < a.t1 for a in acts):
             raise SceneError(f"line {st.line}: {st.words[0]} says something at {st.t0:g}-{st.t1:g}s but is not in the frame then; add a line like '{st.words[0]} stand at 0.5 {st.t0:g}-{st.t1:g}s' or give the bubble a place with at x,y")

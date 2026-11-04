@@ -10,12 +10,22 @@ text "Дома лучше всего" font at 0.5,0.2 size=0.11 color=#f5d742 4-
 ```
 Scenes touch (`0-6s`, `6-12s` ...). Elements go back to front on the scene line or on their own lines under it; the renderer puts them in depth order (sky, far, ground, props). Positions are 0..1 of the frame, (0,0) is the top-left. A night sky dims the whole scene.
 ## Characters
-People: `girl`, `boy`, `mom`, `dad`, `granny`, `grandpa`. Actions: stand, walk, run, wave, jump, sit, dance, look_up.
-Animals: `cat`, `fox`, `dog`, `bunny`, `bear`, `hedgehog`, `mouse`, `frog`, `hen`, `elephant`. Actions: stand, walk, run, jump, sit, look_up. `bird`: fly, stand.
-`girl walk from offleft to 0.45 0-5s y=0.95`, `dog sit at 0.3 2-8s y=0.96 facing=-1`. Params: `y` (feet line), `size`, `facing` (1 or -1), `color`, `hair`, `holds=lantern|balloon|flower|book|gift|umbrella`. One end of a move is enough: `walk to 0.4` comes in from the nearer side. A character does one action at a time.
+People: `girl`, `boy`, `mom`, `dad`, `granny`, `grandpa`. Actions: stand, walk, run, wave, jump, sit, dance, look_up, sleep, hug, give, hold_hands.
+Animals: `cat`, `fox`, `dog`, `bunny`, `bear`, `hedgehog`, `mouse`, `frog`, `hen`, `elephant`. Actions: stand, walk, run, jump, sit, look_up, sleep, hug, give, hold_hands. `bird`: fly, stand.
+`girl walk from offleft to 0.45 0-5s y=0.95`, `dog sit at 0.3 2-8s y=0.96 facing=-1`. Params: `y` (feet line), `size`, `facing` (1 or -1), `color`, `hair`, `holds=lantern|balloon|flower|book|gift|umbrella|ball`. One end of a move is enough: `walk to 0.4` comes in from the nearer side. A character does one action at a time.
 `wave` raises one hand beside the head, `dance` raises both hands, one higher in turn, `jump` raises both hands and tucks the legs in the air.
 
 `mood=happy|sad|surprised|sleepy` sets the face of a person, an animal or a bird: `fox sit at 0.5 0-4s y=0.96 mood=sad`. `happy` is the usual smile and the default; `sad` gives brows like a little roof, a mouth turned down and a tear; `surprised` gives round eyes and an "o" mouth (a hen opens its beak); `sleepy` gives closed eyes, arcs. A bird changes only its eye and brow. To change the mood, write a new line with the next seconds: `fox sit at 0.5 4-8s y=0.96 mood=happy`. This `mood` is about the face; `music mood=` is a different word for the sound.
+## Two characters together
+`girl hug cat 3-5s`, `girl hold_hands boy 3-6s`, `girl give cat ball 2-3s` work for any two people or animals (not `bird`). The first one starts the action, the second is the partner.
+- Both must be in the frame: the first one needs a place from its line before or after, or `at x`, and takes its `y`, `size`, `color` and `hair` from those lines. The partner needs its own line for the whole time, such as `cat stand at 0.5 0-6s`. The partner keeps doing that line; `cat sit` stays sitting.
+- They must stand at most 0.3 of the frame apart. The first one walks up by itself, and walks to its next line at the end. Both turn to each other. An animal is hugged from behind, so it turns away and its muzzle stays in view.
+- `give` takes one thing: `lantern`, `balloon`, `flower`, `book`, `gift`, `umbrella`, `ball`. The thing changes hands halfway; the partner keeps it in its next lines of that scene and the first one no longer has it.
+- With `hold_hands`, if the partner walks or runs, the first one goes along: `boy walk from 0.3 to 0.8 0-6s`, `girl hold_hands boy 0-6s`.
+- A partner cannot be busy with its own `hug`, `give`, `hold_hands` or `sleep`. `mood=` works on these lines too.
+
+`boy sleep 8-14s` lies down under a blanket in the bed of the scene, head on a pillow, eyes closed, breathing. `cat sleep at 0.6 8-14s y=0.97` lies anywhere, with a small pillow and blanket of its own; `blanket=#rrggbb` picks the colour. A scene needs a `bed` for a sleeper with no place, and one bed holds one sleeper. A sleeper's mood is `sleepy` unless you set it. Animals can hold things too: `dog stand at 0.5 0-3s holds=ball` shows a paw with the ball.
+
 ## Elements
 | name | what it is |
 |---|---|

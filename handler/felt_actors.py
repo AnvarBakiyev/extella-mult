@@ -1,7 +1,7 @@
 """Felt characters. Each body part is drawn on its own piece (ctx.piece()), so the felt pass gives every piece its own
 rounded edge and shadow, like an applique. Local units: 1 = the character's height, feet at v=0, top of the head near v=-1."""
 import math
-from .draw import Local, bezier
+from .draw import Local, bezier, ease
 
 FA = {}
 PEOPLE = {  # skin, hair, top, bottom, shoes, hair style, outfit, extra
@@ -24,8 +24,10 @@ ANIMALS = {  # fur, belly, ears, tail, muzzle, feet: everything else comes from 
     'hen': ('#f4e2c0', '#fff7e6', 'comb', 'feathers', 'beak', '#f08a3a'),  # feet: two feet of this colour instead of four legs
     'elephant': ('#9aa6c8', '#d8dfee', 'flap', 'thin', 'trunk', ''),
 }
-PERSON_ACTIONS = ['stand', 'walk', 'run', 'wave', 'jump', 'sit', 'dance', 'look_up']
-ANIMAL_ACTIONS = ['stand', 'walk', 'run', 'jump', 'sit', 'look_up']
+PAIR_ACTIONS = ['hug', 'give', 'hold_hands']
+PERSON_ACTIONS = ['stand', 'walk', 'run', 'wave', 'jump', 'sit', 'dance', 'look_up', 'sleep'] + PAIR_ACTIONS
+ANIMAL_ACTIONS = ['stand', 'walk', 'run', 'jump', 'sit', 'look_up', 'sleep'] + PAIR_ACTIONS
+HELD = ['lantern', 'balloon', 'flower', 'book', 'gift', 'umbrella', 'ball']
 FACE_MOODS = ['happy', 'sad', 'surprised', 'sleepy']
 
 
@@ -36,10 +38,184 @@ def actor(name, actions):
     return deco
 
 
+class _Turned(Local):
+    """A Local turned by rot radians around (pu, pv), which lands on (tu, tv): a head lying on a pillow."""
+
+    def __init__(self, ctx, x, y, s, flip, rot, pivot, to):
+        super().__init__(ctx, x, y, s, flip)
+        self.rot, self.pivot, self.to = rot, pivot, to
+
+    def pt(self, u, v):
+        du, dv = u - self.pivot[0], v - self.pivot[1]
+        c, n = math.cos(self.rot), math.sin(self.rot)
+        return super().pt(self.to[0] + du * c - dv * n, self.to[1] + du * n + dv * c)
+
+    def ellipse(self, u, v, ru, rv, color, angle=0.0):
+        super().ellipse(u, v, ru, rv, color, angle + self.rot)
+
+
+def _plain(st, t):
+    """Where a line of its own puts the character at time t."""
+    from .actors import _lerp_pos
+    return _lerp_pos(st, min(1.0, max(0.0, (t - st.t0) / (st.t1 - st.t0))), st.params.get('y', 0.86))
+
+
+def _line_at(lines, t):
+    return next((a for a in lines if a.t0 <= t < a.t1), None) or min(lines, key=lambda a: min(abs(t - a.t0), abs(t - a.t1)))
+
+
+def _pair_of(st, t):
+    """The hug, give or hold_hands this line takes part in at time t: its own, or the one where it is the partner."""
+    if st.words[1] in PAIR_ACTIONS:
+        return st
+    return next((p for p in st.pairs if p.t0 <= t < p.t1), None)
+
+
+def _size(st):
+    return st.params.get('size', 0.36 if st.words[0] in PEOPLE else 0.22)
+
+
+def _front(st, act):
+    """How far the character reaches forward of its x, in its own units."""
+    if st.words[0] in PEOPLE:
+        return 0.2
+    if st.words[0] == 'hedgehog':
+        return 0.5
+    return 0.3 if act == 'sit' else 0.42
+
+
+def _rear(st, act):
+    """How far the character reaches behind its x, in its own units."""
+    return 0.45 if st.words[0] == 'hedgehog' else 0.22 if act == 'sit' else 0.28
+
+
+def _from_behind(p):
+    """An animal is hugged from behind, with an arm round its body: a hug from the front would cover its muzzle."""
+    return p.words[1] == 'hug' and p.words[2] not in PEOPLE
+
+
+def _pair_slide(p):
+    return min(0.45, (p.t1 - p.t0) * 0.3)
+
+
+def _pair_x(p, t):
+    """The one who starts a pair action comes up to the partner at the start and, if it has a next line, goes to it at the end."""
+    m = _line_at(p.mates, t)
+    mx = _plain(m, t)[0]
+    home = p.home[0]
+    reach = _front(p, 'stand') * _size(p) + (_rear if _from_behind(p) else _front)(m, m.words[1]) * _size(m)
+    near = {'hug': reach * 0.85, 'give': reach + 0.2 * min(_size(p), _size(m)), 'hold_hands': reach + 0.3 * min(_size(p), _size(m))}[p.words[1]]
+    spot = mx + (1 if home >= mx else -1) * near * p.ar
+    slide = _pair_slide(p)
+    if t < p.t0 + slide:
+        return home + (spot - home) * ease((t - p.t0) / slide)
+    if p.after is not None and t > p.t1 - slide:
+        return p.after + (spot - p.after) * ease((p.t1 - t) / slide)
+    return spot
+
+
+def _act(st, t):
+    """What the body does at time t: in a pair action it stands, or walks while it comes up or goes along with the partner."""
+    w = st.words[1]
+    if w not in PAIR_ACTIONS:
+        return w
+    m = _line_at(st.mates, t).words[1]
+    if m in ('walk', 'run'):
+        return m
+    slide = _pair_slide(st)
+    return 'walk' if t < st.t0 + slide or (st.after is not None and t > st.t1 - slide) else 'stand'
+
+
 def _place(st, f):
     from .actors import _lerp_pos, _facing
+    t = st.t0 + f * (st.t1 - st.t0)
+    if st.words[1] in PAIR_ACTIONS:
+        m = _line_at(st.mates, t)
+        x, mx = _pair_x(st, t), _plain(m, t)[0]
+        if st.words[1] == 'hold_hands' and m.words[1] in ('walk', 'run'):
+            return x, st.home[1], _facing(m)
+        return x, st.home[1], 1 if mx >= x else -1
     x, y = _lerp_pos(st, f, st.params.get('y', 0.86))
+    p = _pair_of(st, t)
+    if p and not (p.words[1] == 'hold_hands' and st.words[1] in ('walk', 'run')):
+        towards = 1 if _pair_x(p, t) >= x else -1
+        return x, y, -towards if _from_behind(p) else towards
     return x, y, _facing(st)
+
+
+def _shoulder(st, act, x, y, facing, ar):
+    """Where an arm or a paw starts, in frame coordinates."""
+    if st.words[0] in PEOPLE:
+        u, v = 0.02, -0.56
+    elif st.words[0] == 'hedgehog':
+        u, v = 0.2, -0.2
+    else:
+        u, v = (0.1, -0.42) if act == 'sit' else (0.18, -0.35)
+    return x + u * _size(st) * ar * facing, y + v * _size(st)
+
+
+def _aims(st, t, x, y, facing):
+    """Where this character's hands go at time t in a pair action, in its own units: {'front': (u, v), 'back': (u, v)}, and
+    'item', what its hand holds during a give. Empty outside a pair action."""
+    p = _pair_of(st, t)
+    if p is None:
+        return {}
+    ar, m = p.ar, _line_at(p.mates, t)
+    px, (mx, my) = _pair_x(p, t), _plain(m, t)
+    a = _shoulder(p, _act(p, t), px, p.home[1], 1 if mx >= px else -1, ar)
+    b = _shoulder(m, m.words[1], mx, my, 1 if px >= mx else -1, ar)
+    mine, other = (a, b) if st is p else (b, a)
+    s, so = _size(st), _size(m if st is p else p)
+    side = 1 if other[0] >= mine[0] else -1
+
+    def local(fx, fy):
+        return (fx - x) / (s * ar * facing), (fy - y) / s
+    if _from_behind(p):
+        if st is not p:
+            return {}
+        u, v = (0.0, -0.42) if m.words[0] == 'hedgehog' else (-0.02, -0.3)
+        fx, fy = mx + u * so * ar * side, my + v * so
+        return {'front': local(fx, fy), 'back': local(fx + side * 0.1 * so * ar, fy - 0.06 * so)}
+    if p.words[1] == 'hug':  # round the other one's back
+        fx, fy = other[0] + side * 0.07 * so * ar, other[1] + 0.03 * so
+        return {'front': local(fx, fy), 'back': local(fx, fy - 0.08 * so)}
+    if p.words[1] == 'hold_hands':
+        grip = local((a[0] + b[0]) / 2, max(a[1], b[1]) + 0.16 * min(s, so))
+        return {'front' if grip[0] >= 0 else 'back': grip}
+    f = (t - p.t0) / (p.t1 - p.t0)
+    rest = mine[0] + side * 0.14 * s * ar, mine[1] + 0.2 * s
+    meet = (a[0] + b[0]) / 2, max(a[1], b[1]) + 0.04 * min(s, so)
+    k = math.sin(math.pi * min(1.0, f))
+    return {'front': local(rest[0] + (meet[0] - rest[0]) * k, rest[1] + (meet[1] - rest[1]) * k), 'item': p.words[3] if (st is p) == (f < 0.5) else None}
+
+
+def _reach(start, hand, longest=0.55):
+    """A hand that would pull the arm too long stops at the arm's end."""
+    du, dv = hand[0] - start[0], hand[1] - start[1]
+    n = math.hypot(du, dv)
+    return hand if n <= longest else (start[0] + du * longest / n, start[1] + dv * longest / n)
+
+
+def _paw(L, start, hand, fur, pad):
+    """An animal's arm, drawn only when it is needed: a hug, a hand to hold, something to carry."""
+    hand = _reach(start, hand)
+    L.line([start, hand], fur, 0.09)
+    L.ellipse(hand[0], hand[1], 0.05, 0.045, pad)
+    return hand
+
+
+def _sleeper(ctx, t, st, f, length, head):
+    """Lying down: a pillow, a blanket over the body that rises and falls with the breath, the head on the pillow."""
+    x, y, facing = _place(st, f)
+    s = _size(st)
+    piece = lambda: Local(ctx.piece(), x, y, s, facing)
+    piece().ellipse(-0.02, -0.07, 0.27, 0.09, '#fbf6ee')
+    col = st.params.get('blanket', '#9fc8e8')
+    b = 0.014 * math.sin(t * 1.7)
+    hump = bezier([(0.1, 0.02), (0.14, -0.4 - b), (length * 0.75, -0.34 - b), (length, 0.02)])
+    piece().poly(hump, col)
+    piece().curve([(0.15, -0.12), (0.2, -0.26 - b), (0.3, -0.27 - b)], _mix(col, '#ffffff', 0.5), 0.05)
+    head(lambda: _Turned(ctx.piece(), x, y, s, facing, -1.3, (0.0, 0.0), (0.0, -0.19)))
 
 
 def _dark(c, k=0.75):
@@ -193,14 +369,25 @@ def _doll(ctx, t, tl, st, f, look):
     People differ only by colours, hair, outfit and one extra (glasses, moustache).
     wave: one hand up beside the head; dance: both hands up, one higher in turn; jump: both hands up, legs tucked in the air.
     mood=happy|sad|surprised|sleepy sets the face: happy is the usual smile; sad has roof-like brows, a mouth turned down and
-    a tear; surprised has round eyes and an 'o' mouth; sleepy has closed eyes, arcs. A new mood is a new line with its own seconds."""
+    a tear; surprised has round eyes and an 'o' mouth; sleepy has closed eyes, arcs. A new mood is a new line with its own seconds.
+    hug, give and hold_hands work for any two people or animals: 'girl hug cat 3-5s', 'girl give cat ball 2-3s', 'girl hold_hands boy
+    3-6s'. The first one comes up to the second, who must be in the frame and within 0.3 of the frame; both turn to each other and
+    reach out; an animal is hugged from behind, so its muzzle stays in view. After a give the second one keeps the thing until the scene ends. If the second one walks, hold_hands walks along.
+    sleep lies down under a blanket, eyes closed: 'boy sleep 8-14s' on the bed of the scene, 'cat sleep at 0.6 8-14s y=0.97' anywhere."""
     skin, hair, top, bottom, shoes, style, outfit, extra = look
     top = st.params.get('color', top)
     hair = st.params.get('hair', hair)
+    if st.words[1] == 'sleep':
+        _sleeper(ctx, t, st, f, 1.0, lambda piece: _doll_head(piece, 0.0, 0.0, skin, hair, style, extra, 0.02, False, st.params.get('mood', 'sleepy'), t))
+        return
     x, y, facing = _place(st, f)
     s = st.params.get('size', 0.36)
-    P = _pose(st.words[1], t + (x * 3.1), tl, st.t1 - st.t0)
+    act = _act(st, t)
+    P = _pose(act, t + (x * 3.1), tl, st.t1 - st.t0)
     mood = st.params.get('mood', 'happy')
+    aims = _aims(st, t, x, y, facing)
+    if aims and _pair_of(st, t).words[1] == 'hug':
+        P['lean'] = 0.1
     yb = y - (P['bob'] + P['lift'] - 0.22 * P['sit']) * s  # sitting: the seat, not the feet, rests on the y line
     piece = lambda: Local(ctx.piece(), x, yb, s, facing)
     hip, shoulder = (0.01, -0.3), (0.02, -0.56)
@@ -219,8 +406,14 @@ def _doll(ctx, t, tl, st, f, look):
             L.ellipse(kx + 0.025, ky - 0.005, 0.065, 0.045, _dark(shoes, shade))
             L.line([(kx - 0.035, ky - 0.05), (kx + 0.04, ky - 0.05)], _dark(shoes, shade), 0.035)
 
-    def arm(a, shade):
+    def arm(a, shade, aim=None):
         L = piece()
+        if aim:  # reaching for the partner: a soft arm that sags a little on its way
+            start = shoulder[0] + 0.07 * (1 if aim[0] >= 0 else -1), shoulder[1]
+            ax, ay = _reach(start, aim)
+            L.curve([start, ((start[0] + ax) / 2, (start[1] + ay) / 2 + 0.04), (ax, ay)], _dark(top, shade), 0.085)
+            L.ellipse(ax, ay, 0.045, 0.05, _dark(skin, shade))
+            return ax, ay
         up = min(1.0, max(0.0, (abs(a) - 1.2) / 0.7))  # a raised arm starts at the edge of the body and reaches past the head
         out = math.copysign(up, a)
         sx0, sy0 = shoulder[0] + 0.1 * out + P['lean'] * 0.3 * up, shoulder[1]
@@ -229,22 +422,22 @@ def _doll(ctx, t, tl, st, f, look):
         L.curve([(sx0, sy0), ((sx0 + ax) / 2 + 0.07 * out, (sy0 + ay) / 2 + 0.03 * up), (ax, ay)], _dark(top, shade), 0.085)
         L.ellipse(ax, ay + 0.01, 0.045, 0.05, _dark(skin, shade))
         return ax, ay
-    legs_b, legs_f = (P['leg_b'], P['leg_f']) if st.words[1] not in ('stand', 'wave', 'look_up') else (0.0, 0.0)
+    legs_b, legs_f = (P['leg_b'], P['leg_f']) if act not in ('stand', 'wave', 'look_up') else (0.0, 0.0)
     leg(legs_b, 0.85, -0.055)
-    arm(P['arm_b'], 0.85)
+    arm(P['arm_b'], 0.85, aims.get('back'))
     leg(legs_f, 1.0, 0.06)
     sx = P['lean'] * 0.3
     _doll_body(piece, outfit, top, bottom, sx)
     hx, hy = 0.02 + P['lean'] * 0.4, -0.78
     _doll_head(piece, hx, hy, skin, hair, style, extra, hy + 0.02 + P['head'] * 0.05, (t * 0.37 + x) % 1.0 < 0.04, mood, t)
-    ax, ay = arm(P['arm_f'], 1.0)
-    held = st.params.get('holds')
+    ax, ay = arm(P['arm_f'], 1.0, aims.get('front'))
+    held = aims['item'] if 'item' in aims else st.params.get('holds')
     if held:
         _held(piece(), ax, ay, str(held), t)
 
 
 def _held(L, hx, hy, what, t):
-    """Something in the front hand: lantern balloon flower book gift umbrella."""
+    """Something in the front hand: lantern balloon flower book gift umbrella ball."""
     if what == 'lantern':
         L.line([(hx, hy), (hx, hy + 0.05)], '#5a4a3a', 0.012)
         L.poly([(hx - 0.075, hy + 0.05), (hx + 0.075, hy + 0.05), (hx, hy + 0.0)], '#3a3a4a')
@@ -265,6 +458,9 @@ def _held(L, hx, hy, what, t):
     elif what == 'gift':
         L.poly([(hx - 0.05, hy - 0.05), (hx + 0.05, hy - 0.05), (hx + 0.05, hy + 0.05), (hx - 0.05, hy + 0.05)], '#f28bb0')
         L.line([(hx, hy - 0.05), (hx, hy + 0.05)], '#f6d353', 0.015)
+    elif what == 'ball':
+        L.circle(hx, hy - 0.05, 0.075, '#e0526f')
+        L.curve([(hx - 0.07, hy - 0.05), (hx, hy - 0.02), (hx + 0.07, hy - 0.05)], '#fff4d8', 0.02)
     elif what == 'umbrella':
         L.line([(hx, hy), (hx, hy - 0.4)], '#5a4a3a', 0.01)
         L.poly([(hx - 0.22, hy - 0.4), (hx - 0.15, hy - 0.5), (hx, hy - 0.56), (hx + 0.15, hy - 0.5), (hx + 0.22, hy - 0.4)], '#e05a5a')
@@ -464,19 +660,24 @@ def _animal(ctx, t, tl, st, f, look):
     """The base of every animal: a big round head, a small body with a pale belly, short thick legs with pads, button eyes
     and round cheeks. An animal is only its colours, ears, tail, muzzle and, for a hen, two feet.
     mood=happy|sad|surprised|sleepy sets the face as for people: happy is the usual look; sad has roof-like brows, a mouth turned
-    down and a tear; surprised has round eyes and an 'o' mouth (a hen opens its beak); sleepy has closed eyes, arcs."""
+    down and a tear; surprised has round eyes and an 'o' mouth (a hen opens its beak); sleepy has closed eyes, arcs.
+    hug, give, hold_hands and sleep work as for people, see _doll: an animal then shows a paw. holds= also shows a paw with the thing."""
     fur, belly, ears, tail, muzzle, feet = look
     fur = st.params.get('color', fur)
+    if st.words[1] == 'sleep':
+        _sleeper(ctx, t, st, f, 0.85, lambda piece: _animal_head(piece, 0.0, 0.0, 0.26, fur, belly, ears, muzzle, 0.0, t, st.params.get('mood', 'sleepy')))
+        return
     x, y, facing = _place(st, f)
     s = st.params.get('size', 0.22)
-    P = _pose(st.words[1], t + x * 2.3, tl, st.t1 - st.t0)
+    act = _act(st, t)
+    P = _pose(act, t + x * 2.3, tl, st.t1 - st.t0)
     mood = st.params.get('mood', 'happy')
     yb = y - (P['bob'] * 1.5 + P['lift']) * s
     piece = lambda: Local(ctx.piece(), x, yb, s, facing)
-    sit = st.words[1] == 'sit'
+    sit = act == 'sit'
     paw = _mix(belly, fur, 0.35)
-    moving = st.words[1] in ('walk', 'run')
-    step = math.sin((t + x * 2.3) * 2 * math.pi * (2.6 if st.words[1] == 'run' else 1.6)) if moving else 0.0
+    moving = act in ('walk', 'run')
+    step = math.sin((t + x * 2.3) * 2 * math.pi * (2.6 if act == 'run' else 1.6)) if moving else 0.0
 
     def stub(L, cx, lift, shade):
         L.ellipse(cx, -0.1 - lift, 0.075, 0.11, _dark(fur, shade))
@@ -510,6 +711,24 @@ def _animal(ctx, t, tl, st, f, look):
         Lf = piece()
         stub(Lf, -0.13, max(0, step) * 0.05, 1.0)
         stub(Lf, 0.17, max(0, -step) * 0.05, 1.0)
+    _animal_head(piece, hx, hy, hr, fur, belly, ears, muzzle, x, t, mood)
+    _carry(piece, st, t, x, yb, facing, (0.1, -0.42) if sit else (0.18, -0.35), fur, paw)
+
+
+def _carry(piece, st, t, x, y, facing, start, fur, pad):
+    """An animal's paw: reaching for the partner in a pair action, or held out with what it holds."""
+    aims = _aims(st, t, x, y, facing)
+    held = aims['item'] if 'item' in aims else st.params.get('holds')
+    hand = aims.get('front') or aims.get('back') or ((start[0] + 0.24, start[1] + 0.02) if held else None)
+    if hand is None:
+        return
+    hx, hy = _paw(piece(), start, hand, fur, pad)
+    if held:
+        _held(piece(), hx, hy, str(held), t)
+
+
+def _animal_head(piece, hx, hy, hr, fur, belly, ears, muzzle, x, t, mood):
+    """Ears, the round head, the muzzle, eyes and cheeks of an animal."""
     if ears != 'floppy':
         EARS[ears](piece(), piece(), hx, hy, hr, fur, belly)
     piece().circle(hx, hy, hr, fur)
@@ -528,14 +747,19 @@ def _animal(ctx, t, tl, st, f, look):
 def _hedgehog(ctx, t, tl, st, f):
     """A hedgehog in profile, a drop-shaped body: the pale face narrows forward into a cone with a black bead nose; one solid dark
     cap of soft tufts covers the back and the crown and leaves the face, cheek and belly bare; small round ears peek out of it;
-    short paws. color= changes the cap. mood= works as for animals. Sitting, the whole drop tips back onto its seat."""
+    short paws. color= changes the cap. mood= works as for animals. Sitting, the whole drop tips back onto its seat.
+    hug, give, hold_hands and sleep work as for people, see _doll. Asleep it curls up on the pillow, nose first, under a small blanket."""
     fur, belly = ANIMALS['hedgehog'][:2]
     fur = st.params.get('color', fur)
     x, y, facing = _place(st, f)
     s = st.params.get('size', 0.22)
-    act = st.words[1]
+    act = _act(st, t)
     P = _pose(act, t + x * 2.3, tl, st.t1 - st.t0)
-    mood = st.params.get('mood', 'happy')
+    asleep = act == 'sleep'
+    mood = st.params.get('mood', 'sleepy' if asleep else 'happy')
+    if asleep:  # the nose lies on the pillow, the body goes on behind it
+        Local(ctx.piece(), x, y, s, facing).ellipse(-0.02, -0.07, 0.27, 0.09, '#fbf6ee')
+        x, facing = x + 0.62 * s * ctx.ar * facing, -facing
     yb = y - (P['bob'] * 1.5 + P['lift']) * s
     piece = lambda: Local(ctx.piece(), x, yb, s, facing)
     speed = {'walk': 1.6, 'run': 2.6}.get(act, 0.0)
@@ -556,7 +780,7 @@ def _hedgehog(ctx, t, tl, st, f):
     Lb = piece()
     if act == 'sit':
         foot(Lb, 0.24, 0.0, 0.85)
-    else:
+    elif not asleep:
         foot(Lb, -0.2, max(0, -step) * lift + 0.05 * P['tuck'], 0.85)
         foot(Lb, 0.2, max(0, step) * lift + 0.05 * P['tuck'], 0.85)
     far = piece()
@@ -595,6 +819,11 @@ def _hedgehog(ctx, t, tl, st, f):
     if act == 'sit':
         Lf = piece()
         foot(Lf, 0.04, 0.0, 1.0)
+    if asleep:
+        b = 0.014 * math.sin(t * 1.7)
+        piece().poly(bezier([(-0.72, 0.02), (-0.72, -0.5 - b), (-0.1, -0.5 - b), (-0.02, 0.02)]), st.params.get('blanket', '#9fc8e8'))
+    else:
+        _carry(piece, st, t, x, yb, facing, (0.3, -0.14), _mix(belly, fur, 0.2), paw)
 
 
 def _bird(ctx, t, tl, st, f):
