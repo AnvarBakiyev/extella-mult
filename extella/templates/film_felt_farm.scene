@@ -1,0 +1,16 @@
+film title="{{title}}" style=felt fps=24 size=1920x804
+music mood=bright key=G tempo=104
+scene 0-7s: sky hills(top=0.56) ground(top=0.72,kind=meadow) barn(x=0.2,y=0.76) haystack(x=0.44,y=0.78) fence(y=0.8,x0=0.55,x1=1) tractor(x=0.1,y=0.92,drive=0.06)
+{{hero}} walk from offright to 0.62 0-4s y=0.96
+{{hero}} stand at 0.62 4-7s y=0.96 facing=-1 mood=surprised
+hen walk from 0.34 to 0.46 0-7s y=0.95
+{{hero}} say "{{hero_line|Привет, курочка!}}" 4.2-6.2s
+fade in 0-1s
+scene 7-14s: sky hills(top=0.56) ground(top=0.72,kind=meadow) barn(x=0.2,y=0.76) haystack(x=0.44,y=0.78) fence(y=0.8,x0=0.55,x1=1) tractor(x=0.78,y=0.93)
+hen jump at 0.46 7-14s y=0.95
+{{hero}} stand at 0.62 7-8s y=0.96 facing=-1
+{{hero}} give hen flower 8-10s
+{{hero}} wave at 0.62 10-14s y=0.96
+effect butterflies 7-14s at=0.6,0.45
+text "{{title}}" font at 0.55,0.16 size=0.11 color=#c5583e 9-13s hold=1
+fade out 13-14s

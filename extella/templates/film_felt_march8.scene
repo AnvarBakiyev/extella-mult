@@ -1,0 +1,18 @@
+film title="{{title}}" style=felt fps=24 size=1920x804
+music mood=bright key=G tempo=100
+scene 0-12s: room(time=day,window=0.8,cozy=1,picture=0.14) table(x=0.86,y=0.97) balloon_bunch(x=0.05,y=0.74) toys(x0=0.04,x1=0.5,y=0.99)
+{{hero}} walk from offleft to 0.42 0-3s y=0.97 holds=flower
+{{hero}} stand at 0.42 3-4s y=0.97 holds=flower
+{{who}} stand at 0.62 0-3s y=0.96 facing=-1
+{{who}} stand at 0.62 3-6.5s y=0.96 facing=-1 mood=surprised
+{{hero}} say "{{hero_line|С праздником!}}" 3-4.6s
+{{hero}} give {{who}} flower 4.6-6.5s
+{{who}} stand at 0.62 6.5-12s y=0.96 facing=-1
+{{who}} say "{{who_line|Спасибо!}}" 6.6-8s
+{{hero}} stand at 0.42 6.5-8s y=0.97
+{{hero}} hug {{who}} 8-10.5s
+{{hero}} stand at 0.42 10.5-12s y=0.97
+effect hearts 8-12s at=0.52,0.5
+text "{{title}}" font at 0.5,0.18 size=0.11 color=#c5583e 8.5-11.5s hold=1
+fade in 0-1s
+fade out 11-12s

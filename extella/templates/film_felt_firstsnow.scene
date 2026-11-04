@@ -1,0 +1,19 @@
+film title="{{title}}" style=felt fps=24 size=1920x804
+music mood=calm key=D tempo=84
+scene 0-7s: sky ground(top=0.72,kind=meadow) round_tree(x=0.2,y=0.72) round_tree(x=0.82,y=0.7,s=1.2) fence(y=0.8,x0=0,x1=0.3)
+{{hero}} walk from offleft to 0.45 0-4s y=0.96
+{{hero}} look_up at 0.45 4-7s y=0.96 mood=surprised
+{{pet}} walk from offleft to 0.32 1-5s y=0.97
+{{pet}} sit at 0.32 5-7s y=0.97
+{{hero}} say "{{hero_line|Снег!}}" 4.6-6.4s
+effect snow 4-7s
+fade in 0-1s
+scene 7-14s: sky snow_ground(top=0.68) pine_tree(x=0.12,y=0.72,snow=1) pine_tree(x=0.88,y=0.7,s=1.3,snow=1) snowman(x=0.68,y=0.92)
+{{hero}} jump at 0.45 7-11s y=0.96
+{{pet}} jump at 0.32 7-11s y=0.97
+{{pet}} stand at 0.32 11-14s y=0.97
+{{hero}} hug {{pet}} 11-14s
+effect snow 7-14s
+text "{{title}}" font at 0.5,0.2 size=0.11 color=#3a5a9a 8-12.5s hold=1
+sfx chime at 7.5s
+fade out 13-14s

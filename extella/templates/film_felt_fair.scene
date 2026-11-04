@@ -1,0 +1,17 @@
+film title="{{title}}" style=felt fps=24 size=1920x804
+music mood=bright key=C tempo=120
+scene 0-7s: sky ground(top=0.72,kind=meadow) ferris_wheel(x=0.76,y=0.74) carousel(x=0.22,y=0.8) stall(x=0.5,y=0.78) bunting(y=0.04)
+{{friend}} walk from offleft to 0.56 0-6s y=0.96
+{{friend}} stand at 0.56 6-7s y=0.96
+{{hero}} stand at 0.1 0-1s y=0.96
+{{hero}} hold_hands {{friend}} 1-6s
+{{hero}} wave at 0.44 6-7s y=0.96 mood=surprised
+effect balloons 1-7s
+fade in 0-1s
+scene 7-14s: sky ground(top=0.72,kind=meadow) ferris_wheel(x=0.76,y=0.74) carousel(x=0.22,y=0.8) stall(x=0.5,y=0.78) bunting(y=0.04)
+{{hero}} jump at 0.44 7-14s y=0.96
+{{friend}} dance at 0.62 7-14s y=0.96 facing=-1
+effect sparkles 7-14s at=0.76,0.38 r=0.2
+text "{{title}}" font at 0.5,0.24 size=0.085 color=#c5583e 8-12.5s hold=1
+sfx chime at 7.5s
+fade out 13-14s

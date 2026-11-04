@@ -3,7 +3,7 @@
 Всё это делается только при переносе в рабочую версию, по решению владельца. Сейчас в Extella ничего не менялось.
 
 1. `say`: синтаксис, параметры, лимит 90 букв и 4 строки, герой должен быть в кадре, облачка расходятся сами, но лучше говорить по очереди.
-2. Новые персонажи: `hedgehog`, `mouse`, `frog`, `hen`, `elephant`, всего 17.
+2. Новые персонажи: `hedgehog`, `mouse`, `frog`, `hen`, `elephant`.
 3. Новые элементы: `garland`, `balloon_bunch`, `toys`, `room(cozy=1)` с `panel`, `curtain`, `picture`.
 4. Синтаксис шаблонов `{{a|b|5}}`.
 5. Шаблон `film_felt_birthday`: новое описание, 10 секунд, необязательные `age`, `candles`, `hero_line`, `pet_line`. Обновить и эксперта в агенте Mult.
@@ -27,3 +27,5 @@
 23. Внешность людей: `skin`, `hairstyle`, `hair`, `color`, примеры детей разной внешности. Один и тот же набор писать на каждой строке героя; `hug`, `give`, `hold_hands`, `sleep` берут его из других строк.
 24. Новые места: `kitchen`, `classroom`, `shop`, `underwater`, `city_night` заполняют весь кадр, `sky` с ними не нужен. Парк и ферма собираются из частей: `ferris_wheel`, `carousel`, `stall`, `bunting`, `barn`, `haystack`, `tractor`, а `seaweed` и `fish` оживляют подводный мир. Примеры сцен есть в `LANGUAGE.md`.
 25. «Как сделать красиво»: героев ставить на `y=0.95`–`0.97`, перед мебелью. Для ночного города не добавлять `sky`: ночной свет на героях включается сам.
+26. Новые шаблоны: `film_felt_newyear`, `film_felt_march8`, `film_felt_firstsnow`, `film_felt_visit`, `film_felt_doctor`, `film_felt_farm`, `film_felt_fair`, `film_felt_undersea`, описания и параметры в `extella/templates/index.json`. Всего 16. Обновить и эксперта в агенте Mult.
+27. Новый герой `doctor`, всего 18 персонажей. Новый предмет `medicine`.

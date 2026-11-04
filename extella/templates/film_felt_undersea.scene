@@ -1,0 +1,13 @@
+film title="{{title}}" style=felt fps=24 size=1920x804
+music mood=wonder key=A tempo=76
+scene 0-12s: underwater seaweed(x=0.14,y=0.85) seaweed(x=0.78,y=0.85,s=1.2) fish
+{{hero}} walk from offleft to 0.4 0-4s y=0.94 mood=surprised
+{{hero}} wave at 0.4 4-12s y=0.94
+{{friend}} walk from offright to 0.62 1-5s y=0.95
+{{friend}} jump at 0.62 5-12s y=0.95 facing=-1
+{{hero}} say "{{hero_line|Как красиво!}}" 4.4-6.2s
+effect bubbles 0-12s at=0.3,0.8
+effect bubbles 2-12s at=0.72,0.8
+text "{{title}}" font at 0.5,0.16 size=0.11 color=#fff4d8 7-11s hold=1
+fade in 0-1s
+fade out 11-12s

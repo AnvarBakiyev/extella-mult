@@ -1,0 +1,21 @@
+film title="{{title}}" style=felt fps=24 size=1920x804
+music mood=bright key=F tempo=96
+scene 0-5s: sky hills(top=0.58) forest(base=0.68) ground(top=0.76,kind=path) flowers(y=0.84,x0=0,x1=1)
+{{hero}} walk from offleft to 0.9 0-5s y=0.96 holds=gift
+{{pet}} walk from offleft to 0.72 0.6-5s y=0.97
+fade in 0-1s
+scene 5-10s: sky hills(top=0.6) house(x=0.74,y=0.78,s=1.1,color=#f4b07a) bush(x=0.5,y=0.76,flowers=1) fence(y=0.82,x0=0,x1=0.4) ground(top=0.8,kind=path)
+{{hero}} walk from offleft to 0.4 5-7.5s y=0.96 holds=gift
+{{elder}} wave at 0.58 5-7.5s y=0.96 facing=-1
+{{elder}} stand at 0.58 7.5-10s y=0.96 facing=-1
+{{hero}} hug {{elder}} 7.5-10s
+{{elder}} say "{{elder_line|Заходи!}}" 5.6-7.2s
+scene 10-16s: kitchen
+{{hero}} stand at 0.38 10-11s y=0.97 holds=gift
+{{elder}} stand at 0.58 10-16s y=0.96 facing=-1
+{{hero}} give {{elder}} gift 11-13s
+{{hero}} wave at 0.38 13-16s y=0.97
+{{pet}} sit at 0.2 10-16s y=0.98
+effect hearts 13-16s at=0.48,0.5
+text "{{title}}" font at 0.5,0.14 size=0.1 color=#c5583e 12.5-15.5s hold=1
+fade out 15-16s

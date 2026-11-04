@@ -70,5 +70,76 @@
    "pet": "cat",
    "title": "Друзья"
   }
+ },
+ {
+  "name": "film_felt_newyear",
+  "description": "Felt, 14 s: New Year at home. A night room with a fir tree, gifts and a garland; the hero sees the tree, jumps for joy, hugs the pet. Fill: hero: girl boy mom dad granny grandpa, pet: cat fox dog bunny bear, title. Optional: hero_line.",
+  "params": {
+   "hero": "girl",
+   "pet": "cat",
+   "title": "С Новым годом!"
+  }
+ },
+ {
+  "name": "film_felt_march8",
+  "description": "Felt, 12 s: the Eighth of March. The hero comes in with a flower, gives it to a dear person, who is surprised and thanks the hero; they hug, hearts float up. Fill: hero: girl boy mom dad granny grandpa, who (another person), title. Optional: hero_line, who_line.",
+  "params": {
+   "hero": "boy",
+   "who": "mom",
+   "title": "С 8 Марта!"
+  }
+ },
+ {
+  "name": "film_felt_firstsnow",
+  "description": "Felt, 14 s: the first snow. The hero walks in the autumn yard, looks up surprised as snow begins; then everything is white, the hero jumps for joy by a snowman and hugs the pet. Fill: hero: girl boy mom dad granny grandpa, pet: cat fox dog bunny bear, title. Optional: hero_line.",
+  "params": {
+   "hero": "girl",
+   "pet": "dog",
+   "title": "Первый снег"
+  }
+ },
+ {
+  "name": "film_felt_visit",
+  "description": "Felt, 16 s: a visit to granny. The hero and a pet walk through the woods with a gift, the elder waves at the house, they hug, in the kitchen the hero gives the gift. Fill: hero: girl boy mom dad, elder: granny grandpa, pet: cat fox dog bunny bear, title. Optional: elder_line.",
+  "params": {
+   "hero": "girl",
+   "elder": "granny",
+   "pet": "dog",
+   "title": "В гости к бабушке"
+  }
+ },
+ {
+  "name": "film_felt_doctor",
+  "description": "Felt, 14 s: the doctor. A sad patient sits on the bed, the doctor comes and gives medicine, the patient gets well and jumps for joy. Fill: patient: bear cat fox dog bunny girl boy, title. Optional: doctor_line, patient_line.",
+  "params": {
+   "patient": "bear",
+   "title": "Доктор лечит мишку"
+  }
+ },
+ {
+  "name": "film_felt_farm",
+  "description": "Felt, 14 s: on the farm. A red barn, a haystack, a tractor drives past, the hero meets a hen and gives it a flower. Fill: hero: girl boy mom dad granny grandpa, title. Optional: hero_line.",
+  "params": {
+   "hero": "boy",
+   "title": "На ферме"
+  }
+ },
+ {
+  "name": "film_felt_fair",
+  "description": "Felt, 14 s: a fair. A turning wheel, a carousel, a stall and flags; the hero and a friend walk in hand in hand, then jump and dance. Fill: hero: girl boy mom dad granny grandpa, friend (another person), title.",
+  "params": {
+   "hero": "girl",
+   "friend": "boy",
+   "title": "Парк аттракционов"
+  }
+ },
+ {
+  "name": "film_felt_undersea",
+  "description": "Felt, 12 s: under the sea. Fish swim past seaweed and corals, the hero walks along the bottom surprised and meets a friend. Fill: hero: girl boy mom dad granny grandpa, friend: frog cat fox dog bunny bear, title. Optional: hero_line.",
+  "params": {
+   "hero": "girl",
+   "friend": "frog",
+   "title": "Подводный мир"
+  }
  }
 ]

@@ -11,6 +11,7 @@ PEOPLE = {  # skin, hair, top, bottom, shoes, hair style, outfit, extra
     'dad': ('#e8bd98', '#3a2a22', '#5f9e6e', '#45506a', '#3a2a22', 'short', 'suit', ''),
     'granny': ('#f3dcc8', '#d8d8dc', '#9b7bc4', '#9b7bc4', '#6a5a7a', 'bun', 'dress', 'glasses'),
     'grandpa': ('#ecc9a9', '#cfcfd4', '#c9834f', '#5a5a64', '#3a2a22', 'bald', 'suit', 'moustache'),
+    'doctor': ('#f3d6bc', '#3a2a22', '#f4f6f8', '#7fb6e8', '#4a5a6a', 'short', 'coat', 'doctor'),
 }
 ANIMALS = {  # fur, belly, ears, tail, muzzle, feet: everything else comes from the shared base in _animal
     'cat': ('#9aa0ad', '#eef0f4', 'pointy', 'long', 'cat', ''),
@@ -27,7 +28,7 @@ ANIMALS = {  # fur, belly, ears, tail, muzzle, feet: everything else comes from 
 PAIR_ACTIONS = ['hug', 'give', 'hold_hands']
 PERSON_ACTIONS = ['stand', 'walk', 'run', 'wave', 'jump', 'sit', 'dance', 'look_up', 'sleep'] + PAIR_ACTIONS
 ANIMAL_ACTIONS = ['stand', 'walk', 'run', 'jump', 'sit', 'look_up', 'sleep'] + PAIR_ACTIONS
-HELD = ['lantern', 'balloon', 'flower', 'book', 'gift', 'umbrella', 'ball']
+HELD = ['lantern', 'balloon', 'flower', 'book', 'gift', 'umbrella', 'ball', 'medicine']
 FACE_MOODS = ['happy', 'sad', 'surprised', 'sleepy']
 SKINS = {'light': '#f7dcc4', 'tan': '#e3b48c', 'brown': '#b67f55', 'dark': '#7d5236'}
 HAIRSTYLES = ['bob', 'bun', 'short', 'bald', 'braids', 'ponytail', 'curly', 'afro']
@@ -410,6 +411,11 @@ def _doll_head(piece, hx, hy, skin, hair, style, extra, ey, blink, mood, t):
         F.line([(hx + 0.005, ey), (hx + 0.025, ey)], '#5a4a6a', 0.008)
     if mood == 'sad':
         _tear(F, hx - 0.06, ey + 0.045, 0.016, t)
+    if extra == 'doctor':  # a white cap with a red cross
+        C = piece()
+        C.ellipse(hx + 0.012, hy - 0.15, 0.115, 0.055, '#fbfbf6')
+        C.line([(hx + 0.012, hy - 0.175), (hx + 0.012, hy - 0.125)], '#e0526f', 0.018)
+        C.line([(hx - 0.013, hy - 0.15), (hx + 0.037, hy - 0.15)], '#e0526f', 0.018)
 
 
 def _doll(ctx, t, tl, st, f, look):
@@ -488,7 +494,7 @@ def _doll(ctx, t, tl, st, f, look):
 
 
 def _held(L, hx, hy, what, t):
-    """Something in the front hand: lantern balloon flower book gift umbrella ball."""
+    """Something in the front hand: lantern balloon flower book gift umbrella ball medicine."""
     if what == 'lantern':
         L.line([(hx, hy), (hx, hy + 0.05)], '#5a4a3a', 0.012)
         L.poly([(hx - 0.075, hy + 0.05), (hx + 0.075, hy + 0.05), (hx, hy + 0.0)], '#3a3a4a')
@@ -509,6 +515,11 @@ def _held(L, hx, hy, what, t):
     elif what == 'gift':
         L.poly([(hx - 0.05, hy - 0.05), (hx + 0.05, hy - 0.05), (hx + 0.05, hy + 0.05), (hx - 0.05, hy + 0.05)], '#f28bb0')
         L.line([(hx, hy - 0.05), (hx, hy + 0.05)], '#f6d353', 0.015)
+    elif what == 'medicine':
+        L.poly([(hx - 0.04, hy - 0.11), (hx + 0.04, hy - 0.11), (hx + 0.04, hy + 0.02), (hx - 0.04, hy + 0.02)], '#7fc4e8')
+        L.poly([(hx - 0.022, hy - 0.15), (hx + 0.022, hy - 0.15), (hx + 0.022, hy - 0.11), (hx - 0.022, hy - 0.11)], '#fbfbf6')
+        L.line([(hx - 0.022, hy - 0.05), (hx + 0.022, hy - 0.05)], '#e0526f', 0.016)
+        L.line([(hx, hy - 0.072), (hx, hy - 0.028)], '#e0526f', 0.016)
     elif what == 'ball':
         L.circle(hx, hy - 0.05, 0.075, '#e0526f')
         L.curve([(hx - 0.07, hy - 0.05), (hx, hy - 0.02), (hx + 0.07, hy - 0.05)], '#fff4d8', 0.02)

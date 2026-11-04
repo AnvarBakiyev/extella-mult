@@ -1,0 +1,20 @@
+film title="{{title}}" style=felt fps=24 size=1920x804
+music mood=cozy key=C tempo=96
+scene 0-7s: room(time=night,window=0.86,cozy=1,curtain=#5f9e6e,picture=0.56) garland(y=0.04,x0=0.02,x1=0.98,sag=0.04) pine_tree(x=0.24,y=0.97,s=2.3) gift(x=0.14,y=0.97,color=#e06c8c) gift(x=0.33,y=0.97) lamp(x=0.93,y=0.96,on=1)
+{{hero}} walk from offright to 0.52 0-4s y=0.96
+{{hero}} stand at 0.52 4-7s y=0.96 facing=-1 mood=surprised
+{{pet}} walk from offright to 0.7 1-5s y=0.97
+{{pet}} sit at 0.7 5-7s y=0.97 facing=-1
+{{hero}} say "{{hero_line|Ёлка!}}" 4.2-6.2s
+effect sparkles 0-7s at=0.24,0.5 r=0.16
+fade in 0-1s
+scene 7-14s: room(time=night,window=0.86,cozy=1,curtain=#5f9e6e,picture=0.56) garland(y=0.04,x0=0.02,x1=0.98,sag=0.04) pine_tree(x=0.24,y=0.97,s=2.3) gift(x=0.14,y=0.97,color=#e06c8c) gift(x=0.33,y=0.97) lamp(x=0.93,y=0.96,on=1)
+{{hero}} jump at 0.52 7-10s y=0.96
+{{pet}} jump at 0.7 7-10s y=0.97 facing=-1
+{{pet}} stand at 0.7 10-14s y=0.97 facing=-1
+{{hero}} hug {{pet}} 10-12.5s
+{{hero}} dance at 0.52 12.5-14s y=0.96
+effect sparkles 7-14s at=0.24,0.5 r=0.18
+text "{{title}}" font at 0.53,0.46 size=0.1 8-12.5s hold=1
+sfx chime at 7.5s
+fade out 13-14s
