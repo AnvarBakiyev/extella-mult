@@ -374,5 +374,8 @@ def validate(stmts):
     if any(s.kind == 'say' for s in stmts):
         from .felt_effects import say_warnings
         prog.warnings += say_warnings(prog)
+    if prog.style == 'felt':
+        from .felt_checks import composition_warnings
+        prog.warnings += composition_warnings(prog)
     prog.music.sort(key=lambda s: s.at)
     return prog

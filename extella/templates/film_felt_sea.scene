@@ -1,6 +1,6 @@
 film title="{{title}}" style=felt fps=24 size=1920x804
 music mood=calm key=A tempo=72
-scene 0-14s: sky(time=sunset) felt_sun(x=0.5,y=0.52,r=0.08) felt_sea(top=0.58) boat(x=0.1,y=0.64,speed=0.035) lighthouse(x=0.88,y=0.6) ground(kind=sand,top=0.84)
+scene 0-14s: sky(time=sunset) felt_sun(x=0.5,y=0.52,r=0.08) felt_sea(top=0.58) boat(x=0.1,y=0.64,speed=0.035) lighthouse(x=0.88,y=0.6,s=1.25) ground(kind=sand,top=0.84)
 {{hero}} sit at 0.3 0-7s y=0.97
 {{hero}} wave at 0.3 7-14s y=0.97
 {{pet}} sit at 0.18 0-9s y=0.98

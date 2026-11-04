@@ -110,6 +110,13 @@ Elements have no seconds and no actions. To move one, use its parameters: `rocke
 
 Params: `size` (letter height, 0.05), `width` (widest line as a fraction of the frame, 0.26), `side=left|right` (which way the bubble leans; by default towards the middle of the frame), `color` (the felt, #rrggbb), `at x,y` (a bubble with no speaker in the frame). A bubble holds up to 90 letters and 4 lines; longer speech goes in two `say` lines one after the other. The speaker must be in the frame at that time and the line must stay inside one scene. Give each line about a second per three words, and say lines one after the other when you can: two bubbles that would touch slide apart by themselves (sideways, or the later one up when there is no room), and `--check` prints a warning. `say` works only in `style=felt`; it draws words, it does not speak them.
 
+## Warnings
+`--check` prints `warning:` lines and the handler returns them as `warnings`. A film with warnings still renders, but read them and fix the scene:
+- a character is outside the frame: for most of a line that stands still, or on the whole way of a walk (coming in from `offleft` is fine);
+- an element is outside the frame;
+- an object covers less than 3% of the frame. Small things on purpose are not counted: `felt_sun`, `puff_cloud`, `bush`, `gift`, `flowers`, `toys`, `fish`, `seaweed`, `bunting`, `garland`, `fence`;
+- two speech bubbles would touch.
+
 ## Text, sound, camera
 `text "Привет!" font at 0.5,0.2 size=0.11 color=#c5583e 9-12s hold=1` writes any text. `music mood=bright key=C tempo=110` (moods wonder dark bright tense cozy calm) plays that mood's own short melody; `music tune=birthday key=G` picks one by name, with its own mood and tempo: `hop`, `home`, `breeze`, `stars`, `shadow`, `chase`, `birthday`, `twinkle`, `jingle`, `lullaby`; `tune=none` plays free notes. A second `music ... at 8s` changes the music from that second. `sfx chime at 6s`, `fade in 0-1s`, `fade out 15-16s`, `camera zoom 1.0-1.1 0-6s`, `camera pan right 0-6s`.
 

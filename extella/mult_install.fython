@@ -152,16 +152,18 @@ def scene(code = "", filtered_source_code = "", func_name = "", **extra):
     open(path, "w", encoding="utf-8").write(program)
     chk = subprocess.run([py, "-m", "handler.main", path, "--check"], cwd=home, env=env, capture_output=True, text=True, timeout=120)
     msg = (chk.stderr or "").strip()
+    warnings = [l[len("warning: "):] for l in msg.splitlines() if l.startswith("warning: ")]
+    msg = "\n".join(l for l in msg.splitlines() if not l.startswith("warning: "))
     if chk.returncode != 0:
         return {"status": "rejected", "errors": msg.replace("ERROR: ", ""), "lines": lines, "film": func_name}
     if mode == "check":
-        return {"status": "ok", "summary": msg.replace("ok: ", ""), "lines": lines, "film": func_name, "handler_version": 2}
+        return {"status": "ok", "summary": msg.replace("ok: ", ""), "lines": lines, "film": func_name, "handler_version": 2, "warnings": warnings}
     if mode != "render":
         return {"status": "error", "error": "mode must be check, render or status"}
     log = open(os.path.join(out, jid + ".log"), "w")
     subprocess.Popen([py, "-m", "handler.main", path, "--out", os.path.join(out, jid + ".mp4"), "--procs", "6"],
                      cwd=home, env=env, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
-    return {"status": "started", "job": jid, "film": func_name, "summary": msg.replace("ok: ", ""), "lines": lines,
+    return {"status": "started", "job": jid, "film": func_name, "summary": msg.replace("ok: ", ""), "lines": lines, "warnings": warnings,
             "next": "the video will be at ~/extella-mult/out/" + jid + ".mp4; check with mode=status job=" + jid + " only if the user asks"}
 """
     d = disnet.Disnet(url="https://disnet.extella.ai")

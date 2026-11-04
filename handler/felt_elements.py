@@ -655,10 +655,11 @@ def gift(ctx, t, tl, p):
     """A wrapped present: x, y (bottom), s, color."""
     x, y, s = p.get('x', 0.5), p.get('y', 0.86), p.get('s', 1.0)
     col = p.get('color', '#7fb6e8')
-    _poly(ctx, [(x - 0.035 * s, y), (x + 0.035 * s, y), (x + 0.035 * s, y - 0.06 * s), (x - 0.035 * s, y - 0.06 * s)], col)
-    ctx.line([(x, y), (x, y - 0.06 * s)], '#f6d353', 0.008 * s)
-    _ell(ctx, x - 0.012 * s, y - 0.066 * s, 0.012 * s, 0.008 * s, '#f6d353')
-    _ell(ctx, x + 0.012 * s, y - 0.066 * s, 0.012 * s, 0.008 * s, '#f6d353')
+    _poly(ctx, [(x - 0.04 * s, y), (x + 0.04 * s, y), (x + 0.04 * s, y - 0.15 * s), (x - 0.04 * s, y - 0.15 * s)], col)
+    ctx.line([(x, y), (x, y - 0.15 * s)], '#f6d353', 0.018 * s)
+    ctx.line([(x - 0.04 * s, y - 0.075 * s), (x + 0.04 * s, y - 0.075 * s)], '#f6d353', 0.018 * s)
+    _ell(ctx, x - 0.014 * s, y - 0.165 * s, 0.03 * s, 0.018 * s, '#f6d353')
+    _ell(ctx, x + 0.014 * s, y - 0.165 * s, 0.03 * s, 0.018 * s, '#f6d353')
 
 
 @element('lamp')
