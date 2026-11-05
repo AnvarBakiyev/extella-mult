@@ -73,7 +73,7 @@ def pages(nums):
     out = []
     for f in sorted(glob.glob(os.path.join(d, '*.md'))):
         if os.path.basename(f)[:2] in nums:
-            out.append(open(f, encoding='utf-8').read().strip().lstrip('# ').replace('\n', ' '))
+            out.append(open(f, encoding='utf-8').read().strip().lstrip('# '))
     return ' || '.join(out)
 
 
