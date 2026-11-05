@@ -13,7 +13,7 @@ shot 0-6s: <set | plate | stage> push=0.05 pan=right focus=0.5,0.4 handheld=1 sn
 cast <char> on <plate> at x,y [size=0.62] [facing=left|right] [mood=neutral] [as=<stage>]
 cast <char> on <plate> at x,y body=full [size=0.7] ...      the whole puppet; x,y is where its feet stand
 act <char> <move> A-Bs [to=x]                                walk, run, wave, point, shrug, jump, dance, sit, nod, ...
-act <char> holding <prop> A-Bs  |  prop <name> in=<char>.hand  a prop in the hand
+prop <name> in=<char>.hand [size=0.12] A-Bs              a full-body puppet holds a prop (in=<char>.left_hand: the other hand)
 say <set | char> "реплика" at 0.4s [who=voice] [mood=neutral|happy|angry|shocked] [file=recording.mp3]
 voice "реплика" at 12s [who=deep] [file=...]                 off screen
 text "РЕКЛАМА" at 0.5,0.15 size=0.1 color=#ffffff [font=ptsans|oswald|caveat] [halo=0.8] 30-33s

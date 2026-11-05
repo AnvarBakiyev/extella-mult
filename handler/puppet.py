@@ -23,6 +23,7 @@ say <set | char> "реплика" at 0.4s [who=voice] [mood=neutral|happy|angry|
 voice "реплика" at 12s [who=deep]
 text "РЕКЛАМА" at 0.5,0.15 size=0.1 color=#ffffff [font=oswald] 30-33s
 prop <name> at x,y size=0.15 [bob=0.01] 12-18s
+prop <name> in=<char>.hand [size=0.12] 12-18s: a full-body puppet holds it (in=<char>.left_hand for the other hand)
 fx <effect> 2-6s [at x,y] [opacity=1]
 sfx <name> at 3.2s [gain=1]
 music mood=tense key=D tempo=80 [A-Bs]  |  music file=<name> [A-Bs] [gain=0.5]
@@ -264,6 +265,7 @@ def parse_puppet(src, no_audio=False):
     from .audio import VOICES
     film, shots, casts, says, texts, fades, music, sfx, fx, cuts = {}, [], [], [], [], [], [], [], [], []
     acts = {}
+    held = []
     warnings = []
     lines = [L for L in (_tokenize(n, raw) for n, raw in enumerate(src.splitlines(), 1)) if L is not None]
     for L in lines:
@@ -380,7 +382,17 @@ def parse_puppet(src, no_audio=False):
                 raise PuppetError(f"line {n}: no prop '{nm}' on this device" + _hint(nm, props_list(), 'prop ' + nm))
             if L.t0 is None:
                 raise PuppetError(f"line {n}: a prop needs its time: prop {L.words[0]} at 0.7,0.8 size=0.15 12-18s")
-            texts.append(L)
+            if len(L.words) > 1:
+                raise PuppetError(f"line {n}: a prop is either placed or held: prop {L.words[0]} at x,y size=0.15 A-Bs, "
+                                  f"or prop {L.words[0]} in=<character>.hand A-Bs; '{' '.join(L.words[1:])}' is not part of it")
+            if 'in' in L.params:
+                m = re.fullmatch(r'([a-z0-9_]+)\.(hand|left_hand|right_hand)', str(L.params['in']))
+                if not m:
+                    raise PuppetError(f"line {n}: in= names who holds it: prop {L.words[0]} in=<character>.hand 12-18s")
+                L.holder, L.side = m.group(1), 'L' if m.group(2) == 'left_hand' else 'R'
+                held.append(L)
+            else:
+                texts.append(L)
         elif head == 'fx':
             if not L.words or L.words[0] not in lib.effects():
                 nm = L.words[0] if L.words else ''
@@ -531,6 +543,10 @@ def parse_puppet(src, no_audio=False):
                               f"add cast {who} on <plate> at x,y body=full")
         al.sort(key=lambda L: L.t0)
     _check_crowding(casts, acts, length)
+    for L in held:
+        if not any(c.words[0] == L.holder and c.body for c in casts):
+            raise PuppetError(f"line {L.n}: {L.holder} holds {L.words[0]} but is not cast with body=full; "
+                              f"add cast {L.holder} on <plate> at x,y body=full")
     for L in says + texts + fades + fx + sfx:
         t = L.at if L.at is not None else L.t0
         if t < 0 or t >= length:
@@ -538,7 +554,7 @@ def parse_puppet(src, no_audio=False):
     size = tuple(int(x) for x in str(film.get('size', '1920x1080')).split('x'))
     return dict(title=str(film.get('title', '')), fps=int(film.get('fps', 24)), size=size, length=length,
                 shots=shots, says=says, texts=texts, fades=fades, music=music, casts=casts, stages=stages,
-                sfx=sfx, fx=fx, cuts=cuts, warnings=warnings, voices_off=voices_off, acts=acts,
+                sfx=sfx, fx=fx, cuts=cuts, warnings=warnings, voices_off=voices_off, acts=acts, held=held,
                 look=str(film.get('look', 'warm')))
 
 
@@ -621,17 +637,35 @@ class BodyPuppet:
         c = A.clip(move)
         return dist_px / max(1e-6, A.stride(self.p, move) * k) * c.loop[1]
 
-    def sprite(self, move, t, mood, mouth, blink, hpx, flip):
+    # moves whose arms only hang or swing: a held prop bends that forearm forward to carry it
+    CARRY = {'idle', 'stand', 'walk', 'run', 'nod', 'head_shake', 'laugh', 'bow', 'thinking', 'jump', 'dance'}
+
+    def sprite(self, move, t, mood, mouth, blink, hpx, flip, hold=()):
+        """The posed puppet scaled to hpx tall, its ground point (ox, oy) and the palm centre of each side in hold."""
         A = self.A
-        arr, (ox, oy) = self.p.render(A.play(move, t, self.p), expr=mood, mouth=mouth, blink=blink)
+        pose = A.play(move, t, self.p)
+        if hold and move in self.CARRY:
+            pose = dict(pose)
+            for side in hold:
+                pose['upper_arm_' + side] = pose.get('upper_arm_' + side, 0) * 0.3 + (12 if side == 'R' else -12)
+                pose['lower_arm_' + side] = 78 if side == 'R' else -78
+                pose['hand_' + side] = 0
+        arr, (ox, oy) = self.p.render(pose, expr=mood, mouth=mouth, blink=blink)
         img = A.to_image(arr)
         k = hpx / self.h0
+        hands = {}
+        if hold:
+            M, s = self.p.place(pose), self.p.scale
+            for side in hold:
+                hx, hy = self.p.anchor(M, 'hand_' + side)
+                hands[side] = ((hx * s + ox) * k, (hy * s + oy) * k)
         img = img.resize((max(1, int(img.width * k)), max(1, int(img.height * k))), Image.LANCZOS)
         ox, oy = ox * k, oy * k
         if flip:
             img = img.transpose(Image.FLIP_LEFT_RIGHT)
             ox = img.width - ox
-        return img, ox, oy
+            hands = {sd: (img.width - x, y) for sd, (x, y) in hands.items()}
+        return img, ox, oy, hands
 
 
 class Puppet:
@@ -934,13 +968,19 @@ class Renderer:
         hpx = float(c.params.get('size', 0.7)) * H / ch
         if move in ('walk', 'run') and walked is not None:
             mt = bp.gait_time(move, abs(x - walked) / cw * W, hpx)
-        spr, ox, oy = bp.sprite(move, mt, mood, mouth or 'closed', blink, hpx, facing == 'left')
+        held = [L for L in self.prog.get('held', []) if L.holder == who and L.t0 <= t < L.t1]
+        spr, ox, oy, hands = bp.sprite(move, mt, mood, mouth or 'closed', blink, hpx, facing == 'left',
+                                       hold=tuple(dict.fromkeys(L.side for L in held)))
         px = (x - x0) / cw * W - ox
         py = (y - y0) / ch * H - oy
         if self.look != 'none':
             spr = _volume(spr)
             _shadow(out, spr, px, py, feet=(px + ox, py + oy, hpx * 0.28))
         _paste_clipped(out, spr, int(round(px)), int(round(py)))
+        for L in held:   # the prop sits in the palm, over the puppet
+            im = _held_prop(L.words[0], float(L.params.get('size', 0.12)) * H / ch, facing == 'left')
+            hx, hy = hands[L.side]
+            _paste_clipped(out, im, int(round(px + hx - im.width / 2)), int(round(py + hy - im.height * 0.55)))
 
     def shot_frame(self, sh, t, i):
         if sh.src == 'set':
@@ -1114,6 +1154,21 @@ class Renderer:
         buf = np.tanh(buf[:int(length * SR)] * 1.1) * 0.9
         from scipy.io import wavfile
         wavfile.write(wav, SR, (buf * 32767).astype(np.int16))
+
+
+def _held_prop(name, hpx, flip):
+    key = ('held', name, int(hpx), flip)
+    if key not in _PROP_CACHE:
+        im = Image.open(props_list()[name]).convert('RGBA')
+        im = im.crop(im.getbbox() or (0, 0, im.width, im.height))
+        h = max(2, int(hpx))
+        im = im.resize((max(1, int(im.width * h / im.height)), h), Image.LANCZOS)
+        if flip:
+            im = im.transpose(Image.FLIP_LEFT_RIGHT)
+        if len(_PROP_CACHE) > 200:
+            _PROP_CACHE.clear()
+        _PROP_CACHE[key] = im
+    return _PROP_CACHE[key]
 
 
 def _volume(spr, light=1.0):
