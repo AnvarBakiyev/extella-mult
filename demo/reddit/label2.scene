@@ -1,0 +1,4 @@
+film title="label" style=felt fps=24 size=900x150
+scene 0-1s: room(window=2,floor=1.2,color=#f6ecd8)
+text "Before: v3" font at 0.5,0.3 size=0.36 one_color=#5A3E36 0-0.2s hold=1
+text "(no emotions, no speech bubbles)" font at 0.5,0.74 size=0.28 one_color=#5A3E36 0-0.2s hold=1

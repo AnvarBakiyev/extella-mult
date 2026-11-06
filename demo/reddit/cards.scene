@@ -1,0 +1,6 @@
+film title="cards" style=felt fps=24 size=SIZE
+scene 0-2s: room(window=2,floor=1.2,color=#f6ecd8)
+text "Same script, two versions" font at 0.5,0.5 size=S1 one_color=#5A3E36 0-0.8s hold=1
+scene 2-5s: room(window=2,floor=1.2,color=#f6ecd8)
+text "Better library ->" font at 0.5,0.42 size=S2 one_color=#5A3E36 2-2.7s hold=1
+text "every cartoon gets better" font at 0.5,0.58 size=S2 one_color=#5A3E36 2.3-3s hold=1

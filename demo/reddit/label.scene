@@ -1,0 +1,3 @@
+film title="label" style=felt fps=24 size=SIZE
+scene 0-1s: room(window=2,floor=1.2,color=#f6ecd8)
+text "WORDS" font at 0.5,0.5 size=LS one_color=#5A3E36 0-0.2s hold=1
