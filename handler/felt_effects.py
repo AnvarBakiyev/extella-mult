@@ -130,7 +130,7 @@ def say_layout(ctx, t, st, prog):
     bottom = ty - 0.085 * H + (1 - op) * 0.012 * H
     bottom = max(bottom, bh + m + px * 0.5)
     return dict(opacity=op, px=px, fnt=fnt, lines=lines, lh=lh, left=left, right=left + bw, top=bottom - bh, bottom=bottom, tip=(tx, ty),
-                color=st.params.get('color', '#fffaf0'), start_x=_say_tip(ctx, prog, st, st.t0)[0])
+                color=st.params.get('color', '#fffaf0'), ink=st.params.get('one_color', '#4a3228'), start_x=_say_tip(ctx, prog, st, st.t0)[0])
 
 
 def _say_hit(a, b):
@@ -233,7 +233,7 @@ def say_words(ctx, lay):
     cx = (lay['left'] + lay['right']) / 2
     y0 = (lay['top'] + lay['bottom']) / 2 - lay['lh'] * len(lay['lines']) / 2
     for i, s in enumerate(lay['lines']):
-        ctx.d.text((cx, y0 + lay['lh'] * (i + 0.5)), s, font=lay['fnt'], fill='#4a3228', anchor='mm')
+        ctx.d.text((cx, y0 + lay['lh'] * (i + 0.5)), s, font=lay['fnt'], fill=lay['ink'], anchor='mm')
 
 
 def felt_letters(ctx, t, tl, st, f):

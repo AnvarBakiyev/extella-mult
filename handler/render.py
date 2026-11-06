@@ -194,7 +194,7 @@ def render_frame(prog, t, out_size):
     for st in prog.stmts:
         if st.kind == 'fade' and st.t0 <= t <= st.t1:
             f = _progress(st, t)
-            dark = max(dark, 1 - f if st.words[0] == 'in' else f)
+            dark = max(dark, 1 - abs(2 * f - 1) if st.params.get('dip') else 1 - f if st.words[0] == 'in' else f)
         elif st.kind == 'fade' and st.words[0] == 'in' and t < st.t0:
             dark = 1.0
     if dark > 0:

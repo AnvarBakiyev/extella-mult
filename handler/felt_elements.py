@@ -492,9 +492,41 @@ def lighthouse(ctx, t, tl, p):
     _poly(ctx, [(x - 0.03 * s, y - 0.28 * s), (x + 0.03 * s, y - 0.28 * s), (x, y - 0.32 * s)], '#3a3a4a')
 
 
+def _door(ctx, t, p, fl):
+    """A door in the wall of a room; it swings open over half a second from door_open on."""
+    x, w, top, bottom = p['door'], 0.075, fl - 0.46, fl + 0.03
+    F = _pc(ctx)
+    _poly(F, [(x - w - 0.012, bottom), (x - w - 0.012, top - 0.025), (x + w + 0.012, top - 0.025), (x + w + 0.012, bottom)], '#a8743f')
+    _poly(_pc(ctx), [(x - w, bottom), (x - w, top), (x + w, top), (x + w, bottom)], '#ffe2a8')
+    k = min(1.0, max(0.0, (t - p.get('door_open', 1e9)) / 0.5))
+    D = _pc(ctx)
+    left = x - w + 2 * w * k * 0.82
+    col = p.get('door_color', '#c98a5a')
+    _poly(D, [(left, bottom), (left, top), (x + w, top), (x + w, bottom)], col)
+    if k < 0.5:
+        _ell(_pc(ctx), left + 0.016, (top + bottom) / 2 + 0.03, 0.016, 0.016, '#f6c453')
+        for y0, y1 in ((top + 0.04, top + 0.22), (top + 0.27, bottom - 0.05)):
+            _poly(_pc(ctx), [(left + 0.03, y0), (x + w - 0.018, y0), (x + w - 0.018, y1), (left + 0.03, y1)], _shade_hex(col, 0.88))
+
+
+def _armchair(ctx, p):
+    """A soft armchair seen from the front, wide enough for someone to sit in."""
+    x, y, s = p['armchair'], p.get('armchair_y', 0.9), p.get('armchair_s', 1.0)
+    col = p.get('armchair_color', '#d9a679')
+    w = 0.095 * s
+    for u in (-0.75, 0.75):
+        _poly(_pc(ctx), [(x + u * w - 0.006 * s, y), (x + u * w + 0.006 * s, y), (x + u * w + 0.006 * s, y - 0.05 * s), (x + u * w - 0.006 * s, y - 0.05 * s)], '#7a5a3a')
+    _ell(_pc(ctx), x, y - 0.29 * s, 0.13 * s, 0.17 * s, _shade_hex(col, 0.9))
+    _poly(_pc(ctx), [(x - w, y - 0.04 * s), (x + w, y - 0.04 * s), (x + w, y - 0.17 * s), (x - w, y - 0.17 * s)], col)
+    for u in (-1, 1):
+        _ell(_pc(ctx), x + u * w, y - 0.13 * s, 0.05 * s, 0.1 * s, _shade_hex(col, 1.08))
+
+
 @element('room')
 def room(ctx, t, tl, p):
-    """Inside a home: a wall (color), a wooden floor from floor= down, a window with the sky (time)."""
+    """Inside a home: a wall (color), a wooden floor from floor= down, a window with the sky (time). snow=1 shows snow falling behind
+    the window. door=0.1 adds a door at that x; door_open=9.5 opens it at that second of the film. armchair=0.45 adds an armchair
+    at that x, armchair_y (floor line), armchair_s (size): a person who sits there has y about armchair_y - 0.13 * armchair_s."""
     wall, fl = p.get('color', '#f4e3c3'), p.get('floor', 0.78)
     _poly(ctx, [(0, 0), (1, 0), (1, fl), (0, fl)], wall)
     _poly(ctx, [(0, fl), (1, fl), (1, 1), (0, 1)], '#c99a6a')
@@ -519,8 +551,18 @@ def room(ctx, t, tl, p):
         _heart(_pc(ctx), px_, py_ + 0.08, 0.03, '#ef6f8e')
     _poly(ctx, [(wx - 0.11, wy), (wx + 0.11, wy), (wx + 0.11, wy + 0.3), (wx - 0.11, wy + 0.3)], '#ffffff')
     _poly(ctx, [(wx - 0.1, wy + 0.02), (wx + 0.1, wy + 0.02), (wx + 0.1, wy + 0.28), (wx - 0.1, wy + 0.28)], sky_c)
+    if p.get('snow', 0):
+        for k in range(26):
+            fx = wx - 0.095 + 0.19 * ((k * 0.381 + 0.012 * math.sin(t * 1.3 + k)) % 1.0)
+            fy = wy + 0.025 + 0.25 * ((k * 0.137 + t * (0.1 + 0.03 * (k % 3))) % 1.0)
+            _ell(ctx, fx, fy, 0.006 + 0.002 * (k % 3), 0.006 + 0.002 * (k % 3), '#ffffff')
+        _poly(ctx, [(wx - 0.1, wy + 0.28), (wx - 0.1, wy + 0.262), (wx - 0.04, wy + 0.25), (wx + 0.03, wy + 0.262), (wx + 0.1, wy + 0.25), (wx + 0.1, wy + 0.28)], '#ffffff')
     ctx.line([(wx, wy + 0.02), (wx, wy + 0.28)], '#ffffff', 0.006)
     ctx.line([(wx - 0.1, wy + 0.15), (wx + 0.1, wy + 0.15)], '#ffffff', 0.006)
+    if 'door' in p:
+        _door(ctx, t, p, fl)
+    if 'armchair' in p:
+        _armchair(ctx, p)
     if p.get('cozy', 0):
         for side in (-1, 1):
             c = _pc(ctx)
